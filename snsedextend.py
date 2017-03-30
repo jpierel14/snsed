@@ -14,9 +14,6 @@ from pylab import *
 #sndataroot = os.environ['SNDATA_ROOT']
 # sndataroot = os.environ['NON1A']
 
-MINWAVE = 300     # min wavelength for extrapolation (Angstroms)
-MAXWAVE = 18000   # max wavelength for extrapolation (Angstroms)
-
 VBAND=5500
 HBAND=15414
 KBAND=22000
@@ -77,7 +74,7 @@ def find_nearest(array,value):
     else:
         return idx,array[idx]
 
-def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, maxwave=MAXWAVE, Npt=4):
+def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
     """ use a linear fit of the first/last Npt  points on the SED
     to extrapolate  """
 
@@ -193,7 +190,7 @@ def extendNon1a(iVH,iVK,sedlist,showplots):
         newsedfile=os.path.splitext(os.path.basename( sedfile ))[0]+'EXT'+os.path.splitext(os.path.basename( sedfile ))[1]
 
         print("EXTRAPOLATING %s"%sedfile)
-        extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, maxwave=MAXWAVE, Npt=4 )
+        extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4 )
         if showplots:
             plotsed(newsedfile,day=showplots-1)
 
