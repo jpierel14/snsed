@@ -185,7 +185,7 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, maxwave=MAXWAVE, Npt=4):
 def extendNon1a(iVH,iVK,sedlist,showplots):
     import glob
     import shutil
-    sedlist = glob.glob("non1a/.SED") if not sedlist else sedlist
+    sedlist = glob.glob("./*.SED") if not sedlist else sedlist
     #sedlist=['sn91T-nugent.SED']
     for sedfile in sedlist : 
         #newsedfile =  'non1a/' + os.path.basename( sedfile )
