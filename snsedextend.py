@@ -29,11 +29,6 @@ vLeftEdge=VBAND-vWidth/2
 hLeftEdge=HBAND-hWidth/2
 kLeftEdge=KBAND-kWidth/2
 
-defaultH=1.5e-9
-defaultK=1.1e-10
-
-
-
 
 def getsed(sedfile) : 
     d,w,f = loadtxt( sedfile, unpack=True,comments='#') 
