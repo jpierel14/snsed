@@ -2,6 +2,8 @@ J.R. Pierel & S.Rodney
 
 2017.03.31
 
+__SUMMARY__
+
 Extrapolate SED up to H and K bands, allowing user to define V-H and V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the H (V) band will correspond to the user-defined V-H (V-K).
 
 __SETUP__
@@ -10,7 +12,8 @@ __SETUP__
 	look for your filenames (or .SED files) in the '~/SNDATA_ROOT/snsed/NON1A' directory. The directory you
 	place this file in will be populated with the extended SED files (same filename). Careful, as this means
 	that the SED files will be overwritten if you are running the script from within the NON1A directory. An
-	error.log file is also created, containing error messages from running the script. 
+	error.log file is also created, containing error messages from running the script.
+	
 __SYNOPSIS__
 
 	```
