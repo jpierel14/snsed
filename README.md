@@ -18,7 +18,7 @@ error.log file is also created, containing error messages from running the scrip
 __SYNOPSIS__
 
 	
-	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K>
+	`<python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K>>`
 	
 
 __DESCRIPTION__
