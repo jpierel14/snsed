@@ -7,6 +7,7 @@ __SUMMARY__
 Extrapolate SED up to H and K bands, allowing user to define V-H and V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the H (V) band will correspond to the user-defined V-H (V-K).
 
 __SETUP__
+
 	The script assumes that you have set the SNDATA_ROOT environment variable (automatically set if you
 	run the normal SNDATA setup process). Then you can place this script inside any directory, and it will
 	look for your filenames (or .SED files) in the '~/SNDATA_ROOT/snsed/NON1A' directory. The directory you
