@@ -49,10 +49,10 @@ __DESCRIPTION__
 
 __OTHER INFO__
 
-At the top of the script the following global variables are set. You can change this to affect the
+At the top of the script the following global variables are set. You can change these to affect the
 respective parameter (in angstroms):
 
-      	Center of V,H,K bands:
+        Center of V,H,K bands:
 		VBAND=5500
 		HBAND=15414
 		KBAND=22000
