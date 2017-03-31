@@ -1,36 +1,38 @@
 #! /usr/bin/env python
-#S.rodney
-# 2011.05.04
-"""
-Extrapolate the Hsiao SED down to 300 angstroms
-to allow the W filter to reach out to z=2.5 smoothly
-in the k-correction tables
-"""
+#S.rodney & J.R. Pierel
+# 2017.03.31
 
 import os,sys,getopt
 from numpy import *
 from pylab import * 
 
-#sndataroot = os.environ['SNDATA_ROOT']
-# sndataroot = os.environ['NON1A']
+#Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable)
+sndataroot = os.environ['SNDATA_ROOT']
 
+#User can define center of V,H,K bands (angstrom)
 VBAND=5500
 HBAND=15414
 KBAND=22000
 
+#User can define width of V,H,K bands (angstrom)
 vWidth=3000
 hWidth=17109-13719
 kWidth=4000
 
+#finds the left edge based on the two above variables
 vLeftEdge=VBAND-vWidth/2
 hLeftEdge=HBAND-hWidth/2
 kLeftEdge=KBAND-kWidth/2
 
 
 def getsed(sedfile) : 
+    """
+    Helper function that reads an SED file into a useable format.
+    :param sedfile: SED filename to read (string)
+    """
+
     d,w,f = loadtxt( sedfile, unpack=True,comments='#') 
     
-    #d = d.astype(int)
     days = unique( d ) 
 
     dlist = [ d[ where( d == day ) ] for day in days ]
@@ -39,9 +41,18 @@ def getsed(sedfile) :
 
     return( dlist, wlist, flist )
 
+
 def plotsed( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,**kwarg): 
+    """
+    Simple plotting function to visualize the SED file.
+    :param sedfile: SED filename to read (string)
+    :param day: The day you want to plot, or 'all'
+    :param normalize: Boolean to normalize the data
+    :param MINWAVE: Allows user to plot in a specific window, left edge
+    :param MAXWAVE: Allows user to plot in a specific window, right edge
+    """
     dlist,wlist,flist = getsed( sedfile ) 
-    #days = unique( dlist ) 
+
     for i in range( len(wlist) ) : 
         if MINWAVE:
             idx1,val= find_nearest(wlist[i],MINWAVE)
@@ -53,21 +64,24 @@ def plotsed( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,**kwarg):
             idx2=None
 
         thisday = dlist[i][0]
-        #defaults = { 'label':str(thisday) } 
-        #plotarg = dict( kwarg.items() + defaults.items() )
+
         if day!='all' : 
             if abs(thisday-day)>0.6 : continue
         if normalize : 
             plot( wlist[i], flist[i]/flist[i].max()+thisday, **kwarg )
             show()
         else : 
-            #idx,val=find_nearest(wlist[i],hLeftEdge)
-            #idx2,val=find_nearest(wlist[i],kLeftEdge+kWidth)
             plot( wlist[i][idx1:idx2], flist[i][idx1:idx2], label=str(thisday), **kwarg )
             show()
-        # user_in=raw_input('%i : return to continue'%i)
+
 
 def find_nearest(array,value):
+    """
+    Helper function to find the nearest value in an array
+    :param array: The array to search
+    :param value: The value you want to match
+    """
+
     idx = np.searchsorted(array, value, side="left")
     if idx > 0 and (idx == len(array) or math.fabs(value - array[idx-1]) < math.fabs(value - array[idx])):
         return idx-1,array[idx-1]
@@ -75,8 +89,11 @@ def find_nearest(array,value):
         return idx,array[idx]
 
 def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
-    """ use a linear fit of the first/last Npt  points on the SED
-    to extrapolate  """
+    """ use a linear fit of the first/last Npt points on the SED
+    to extrapolate to H band (if necessary), then calculates the slope
+    necessary across H and K bands to end up with the user-defined values
+    for V-H and V-K
+    """
 
     from scipy import interpolate as scint
     from scipy import stats
@@ -116,11 +133,11 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
 
         wN=wnew[-1]
         fN=fnew[-1]
-        
-        if wN !=val or fN == 0:
-            raise RuntimeError("Extrapolation from end of data to H band failed.")
 
+        #geometrically matches area and then calculates necessary line slope
         hArea=vArea-iVH
+        if hArea<0:
+            log.write('WARNING: Input of V-H led to a negative area in H Band for day %i. \n'%i)
         if fN > 2*hArea/hWidth:
             log.write('WARNING: Only part of H band has positive flux for day %i \n'%(i+1))
             error=True
@@ -132,7 +149,7 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
         area=x*y+.5*x*(fN-y)
         
         if abs(area-hArea)>.01*hArea:
-            log.write('WARNING: The parameters you chose led to an integration in the H-Band of %e instead of %e for day %i \n'%(vArea-area,iVH,i+1))
+            log.write('WARNING: The parameters you chose led to an integration in the H-Band of %e instead of %e for day %i \n'%(vArea-area,iVH,i))
             error=True
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
 
@@ -145,13 +162,13 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
 
         wN=wnew[-1]
         fN=fnew[-1]
-
-        if wN !=kLeftEdge or fN == 0:
-            raise RuntimeError("Extrapolation from end of data to K band failed.")
-    
+        
+        #geometrically matches area and then calculates necessary line slope
         kArea=vArea-iVK
+        if hArea<0:
+            log.write('WARNING: Input of V-K led to a negative area in K Band for day %i. \n'%i)
         if fN > 2*kArea/kWidth:
-            log.write('WARNING: Only part of K band has positive flux for day %i \n'%(i+1))
+            log.write('WARNING: Only part of K band has positive flux for day %i \n'%(i))
             error=True
             x=2*kArea/fN
             y=0
@@ -161,7 +178,7 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
         area=x*y+.5*x*(fN-y)
         
         if abs(area-kArea)>.01*kArea:
-            log.write('WARNING: The parameters you chose led to an integration in the K-Band of %e instead of %e for day %i \n'%(vArea-area,iVK,i+1))
+            log.write('WARNING: The parameters you chose led to an integration in the K-Band of %e instead of %e for day %i \n'%(vArea-area,iVK,i))
             error=True
 
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
@@ -180,25 +197,32 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
     return( newsedfile )
 
 def extendNon1a(iVH,iVK,sedlist,showplots):
+    """
+    Function called in main which runs the extrapolation algorithm.
+    :param iVH: input V-H
+    :param iVK: input V-K
+    :param sedlist: list of files to analyze (or none if all in current directory)
+    :param showplots: None if you don't want plotting, otherwise it's 'all' if you want to plot all days or a single day (i.e. 3)
+    """
     import glob
     import shutil
-    sedlist = glob.glob("./*.SED") if not sedlist else sedlist
-    #sedlist=['sn91T-nugent.SED']
-    for sedfile in sedlist : 
-        #newsedfile =  'non1a/' + os.path.basename( sedfile )
-        #newsedfile =  os.path.basename( sedfile )
-        newsedfile=os.path.splitext(os.path.basename( sedfile ))[0]+'EXT'+os.path.splitext(os.path.basename( sedfile ))[1]
 
-        print("EXTRAPOLATING %s"%sedfile)
+    if not sedlist:
+        sedlist = glob.glob(os.path.join(sndataroot,"snsed","NON1A","*.SED"))
+    else:
+        sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
+    for sedfile in sedlist : 
+        newsedfile=os.path.basename(sedfile)
+        print("EXTRAPOLATING %s"%os.path.basename(sedfile))
         extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4 )
         if showplots:
             plotsed(newsedfile,day=showplots-1)
 
-        print("     Done with %s.\a\a\a"%sedfile)
+        print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
 
 def main():
-    opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","hj=","jk="])
+    opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk="])
     iVH=None
     iVK=None
     showplots=None
@@ -214,16 +238,16 @@ def main():
             iVH=float(arg)
         elif opt=='--vk': #then v-k was given
             iVK=float(arg)
-        elif opt == '--hj': #then h-j was given
-            HJ=float(arg)
+        elif opt == '--jh': #then j-h was given
+            JH=float(arg)
         elif opt == '--jk': #then j-k was given
             JK=float(arg)
-    if not iVH and iVK and JK and HJ:
-        iVH=iVK-JK-HJ
+    if not iVH and iVK and JK and JH:
+        iVH=iVK-JK+JH
     elif not iVH:
         raise RuntimeError("V-H not given.")
-    if not iVK and iVH and JK and HJ:
-        iVK=iVH+HJ+JK
+    if not iVK and iVH and JK and JH:
+        iVK=iVH-JH+JK
     elif not iVK:
         raise RuntimeError("V-K not given.")
     
