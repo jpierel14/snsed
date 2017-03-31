@@ -12,7 +12,9 @@ SETUP
 	that the SED files will be overwritten if you are running the script from within the NON1A directory. An
 	error.log file is also created, containing error messages from running the script. 
 SYNOPSIS
+	```
 	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K>
+	```
 
 DESCRIPTION
 	The options are as follows:
