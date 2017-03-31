@@ -8,12 +8,12 @@ Extrapolate SED up to H and K bands, allowing user to define V-H and V-K. Extrap
 
 __SETUP__
 
-	The script assumes that you have set the SNDATA_ROOT environment variable (automatically set if you
-	run the normal SNDATA setup process). Then you can place this script inside any directory, and it will
-	look for your filenames (or .SED files) in the '~/SNDATA_ROOT/snsed/NON1A' directory. The directory you
-	place this file in will be populated with the extended SED files (same filename). Careful, as this means
-	that the SED files will be overwritten if you are running the script from within the NON1A directory. An
-	error.log file is also created, containing error messages from running the script.
+The script assumes that you have set the SNDATA_ROOT environment variable (automatically set if you
+run the normal SNDATA setup process). Then you can place this script inside any directory, and it will
+look for your filenames (or .SED files) in the '~/SNDATA_ROOT/snsed/NON1A' directory. The directory you
+place this file in will be populated with the extended SED files (same filename). Careful, as this means
+that the SED files will be overwritten if you are running the script from within the NON1A directory. An
+error.log file is also created, containing error messages from running the script.
 	
 __SYNOPSIS__
 
@@ -49,14 +49,14 @@ __DESCRIPTION__
 
 __OTHER INFO__
 
-      At the top of the script the following global variables are set. You can change this to affect the
-      respective parameter (in angstroms):
+At the top of the script the following global variables are set. You can change this to affect the
+respective parameter (in angstroms):
 
-      		 Center of V,H,K bands:
-			VBAND=5500
-			HBAND=15414
-			KBAND=22000
-		 Width of V,H,K bands:
-		        vWidth=3000
-			hWidth=3390
-			kWidth=4000
+      	Center of V,H,K bands:
+		VBAND=5500
+		HBAND=15414
+		KBAND=22000
+	Width of V,H,K bands:
+	      	vWidth=3000
+		hWidth=3390
+		kWidth=4000
