@@ -4,19 +4,21 @@ J.R. Pierel & S.Rodney
 
 Extrapolate SED up to H and K bands, allowing user to define V-H and V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the H (V) band will correspond to the user-defined V-H (V-K).
 
-SETUP
+__SETUP__
 	The script assumes that you have set the SNDATA_ROOT environment variable (automatically set if you
 	run the normal SNDATA setup process). Then you can place this script inside any directory, and it will
 	look for your filenames (or .SED files) in the '~/SNDATA_ROOT/snsed/NON1A' directory. The directory you
 	place this file in will be populated with the extended SED files (same filename). Careful, as this means
 	that the SED files will be overwritten if you are running the script from within the NON1A directory. An
 	error.log file is also created, containing error messages from running the script. 
-SYNOPSIS
+__SYNOPSIS__
+
 	```
 	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K>
 	```
 
-DESCRIPTION
+__DESCRIPTION__
+
 	The options are as follows:
 
 	-i  	    This allows user to define a filename (example.SED) or list of filenames
@@ -41,7 +43,8 @@ DESCRIPTION
 	--jk	    User defined J-K
 
 
-OTHER INFO
+__OTHER INFO__
+
       At the top of the script the following global variables are set. You can change this to affect the
       respective parameter (in angstroms):
 
