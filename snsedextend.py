@@ -2,7 +2,7 @@
 #S.rodney & J.R. Pierel
 # 2017.03.31
 
-import os,sys,getopt
+import os,sys,getopt,warnings
 from numpy import *
 from pylab import * 
 
@@ -15,8 +15,8 @@ HBAND=15414
 KBAND=22000
 
 #User can define width of V,H,K bands (angstrom)
-vWidth=3000
-hWidth=17109-13719
+vWidth=2000
+hWidth=3390
 kWidth=4000
 
 #finds the left edge based on the two above variables
@@ -105,7 +105,6 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
 
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
-    error=False
     for i in range( len(dlist) ) : 
         d,w,f = dlist[i],wlist[i],flist[i]
 
@@ -140,17 +139,14 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
             log.write('WARNING: Input of V-H led to a negative area in H Band for day %i. \n'%i)
         if fN > 2*hArea/hWidth:
             log.write('WARNING: Only part of H band has positive flux for day %i \n'%(i+1))
-            error=True
             x=2*hArea/fN
             y=0
         else:
             x=hWidth
             y=2*hArea/hWidth-fN
         area=x*y+.5*x*(fN-y)
-        
         if abs(area-hArea)>.01*hArea:
             log.write('WARNING: The parameters you chose led to an integration in the H-Band of %e instead of %e for day %i \n'%(vArea-area,iVH,i))
-            error=True
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
 
         Nredstep = len( arange( wN, kLeftEdge,  wavestep ) )
@@ -169,17 +165,14 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
             log.write('WARNING: Input of V-K led to a negative area in K Band for day %i. \n'%i)
         if fN > 2*kArea/kWidth:
             log.write('WARNING: Only part of K band has positive flux for day %i \n'%(i))
-            error=True
             x=2*kArea/fN
             y=0
         else:
             x=kWidth
             y=2*kArea/kWidth-fN
         area=x*y+.5*x*(fN-y)
-        
         if abs(area-kArea)>.01*kArea:
             log.write('WARNING: The parameters you chose led to an integration in the K-Band of %e instead of %e for day %i \n'%(vArea-area,iVK,i))
-            error=True
 
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
 
@@ -222,6 +215,7 @@ def extendNon1a(iVH,iVK,sedlist,showplots):
 
 
 def main():
+    warnings.filterwarnings("ignore")
     opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk="])
     iVH=None
     iVK=None
