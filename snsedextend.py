@@ -113,6 +113,7 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
         idx,val=find_nearest(w,vLeftEdge)
         nSteps = len( arange( val, vLeftEdge+vWidth,  wavestep ) )
         vArea=simps(f[idx:idx+nSteps+1],w[idx:idx+nSteps+1])
+        print(vArea)
         #if the data ends short of H band, extrapolates to H band
         idx,val=find_nearest(w,hLeftEdge)
         if abs(val-hLeftEdge)>wavestep:
@@ -244,7 +245,8 @@ def main():
         iVK=iVH-JH+JK
     elif not iVK:
         raise RuntimeError("V-K not given.")
-    
+    iVH=10**(-.4*(iVH))
+    iVK=10**(-.4*(iVK))
     extendNon1a(iVH,iVK,sedlist,showplots)
 
 
