@@ -4,7 +4,7 @@ J.R. Pierel & S.Rodney
 
 __SUMMARY__
 
-Extrapolate SED up to H and K bands, allowing user to define V-H and V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the H (V) band will correspond to the user-defined V-H (V-K).
+Extrapolate SED up to J, H and K bands, allowing user to define V-J, V-H and/or V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the J (H,K) band will correspond to the user-defined V-J (V-H,V-K). The script assumes that the defined color is in ABmag, but Vega can be defined using the --vega flag (see below).
 
 __SETUP__
 
@@ -18,7 +18,7 @@ error.log file is also created, containing error messages from running the scrip
 __SYNOPSIS__
 
 	
-	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K>
+	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K> --vj <V-J> --vega
 	
 
 __DESCRIPTION__
@@ -46,17 +46,23 @@ __DESCRIPTION__
 
 	--jk	    User defined J-K
 
+	--vj	    User defined V-J
+
+	--vega	    This allows user to input color in Vega instead of (assumed) AB
+
 
 __OTHER INFO__
 
 At the top of the script the following global variables are set. You can change these to affect the
 respective parameter (in angstroms):
 
-	   Center of V,H,K bands:
+	   Center of V,J,H,K bands:
 		VBAND=5500
+		JBAND=12355
 		HBAND=15414
 		KBAND=22000
-	Width of V,H,K bands:
+	Width of V,J,H,K bands:
 	      	vWidth=3000
+		jWidth=3000
 		hWidth=3390
 		kWidth=4000

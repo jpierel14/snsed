@@ -5,24 +5,46 @@
 import os,sys,getopt,warnings
 from numpy import *
 from pylab import * 
-
+from scipy import interpolate as scint
+from scipy import stats
+from scipy.integrate import simps
+import shutil
 #Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable)
 sndataroot = os.environ['SNDATA_ROOT']
 
 #User can define center of V,H,K bands (angstrom)
 VBAND=5500
+JBAND=12355
 HBAND=15414
 KBAND=22000
 
 #User can define width of V,H,K bands (angstrom)
 vWidth=2000
+jWidth=3000
 hWidth=3390
 kWidth=4000
 
 #finds the left edge based on the two above variables
 vLeftEdge=VBAND-vWidth/2
+jLeftEdge=JBAND-jWidth/2
 hLeftEdge=HBAND-hWidth/2
 kLeftEdge=KBAND-kWidth/2
+
+#dictionary of zero-points
+zp={
+    'AB':{
+        'V':26.49,
+        'J':26.25,
+        'H':25.96,
+        'K':27.855
+        },
+    'Vega':{
+        'V':26.406,
+        'J':25.35,
+        'H':24.7,
+        'K':26.005   
+        }
+}
 
 
 def getsed(sedfile) : 
@@ -51,6 +73,7 @@ def plotsed( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,**kwarg):
     :param MINWAVE: Allows user to plot in a specific window, left edge
     :param MAXWAVE: Allows user to plot in a specific window, right edge
     """
+
     dlist,wlist,flist = getsed( sedfile ) 
 
     for i in range( len(wlist) ) : 
@@ -88,17 +111,36 @@ def find_nearest(array,value):
     else:
         return idx,array[idx]
 
-def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
+
+def extrapolate_band(band,vArea,xArea,fN,wN,width,rightEdge,nextEdge,wavestep,log,index):
+    #geometrically matches area and then calculates necessary line slope
+        bArea=vArea/xArea
+        if fN > 2*bArea/width:
+            log.write('WARNING: Only part of %s band has positive flux for day %i \n'%(band,index+1))
+            x=2*bArea/fN
+            y=0
+        else:
+            x=width
+            y=2*bArea/width-fN
+        area=x*y+.5*x*(fN-y)
+        if abs(area-bArea)>.01*bArea:
+            log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea-area,fVH,index))
+        (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
+
+        Nredstep = len( arange( wN, nextEdge,  wavestep ) )
+        wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
+        fextRed = array( [ max( 0, a * wave + b ) if wave <= rightEdge else max(0,a*rightEdge+b) for wave in wextRed ] )
+        return(wextRed,fextRed)
+        
+
+
+
+def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
     """ use a linear fit of the first/last Npt points on the SED
     to extrapolate to H band (if necessary), then calculates the slope
     necessary across H and K bands to end up with the user-defined values
     for V-H and V-K
     """
-
-    from scipy import interpolate as scint
-    from scipy import stats
-    from scipy.integrate import simps
-    import shutil
     
     dlist,wlist,flist = getsed( sedfile ) 
     dlistnew, wlistnew, flistnew = [],[],[]
@@ -113,17 +155,26 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
         idx,val=find_nearest(w,vLeftEdge)
         nSteps = len( arange( val, vLeftEdge+vWidth,  wavestep ) )
         vArea=simps(f[idx:idx+nSteps+1],w[idx:idx+nSteps+1])
-        print(vArea)
-        #if the data ends short of H band, extrapolates to H band
-        idx,val=find_nearest(w,hLeftEdge)
+        #if the data ends short of next band, extrapolates to next band
+        if fVJ:
+            idx,val=find_nearest(w,jLeftEdge)
+            edge=jLeftEdge
+        elif fVH:
+            idx,val=find_nearest(w,hLeftEdge)
+            edge=hLeftEdge
+        elif fVK:
+            idx,val=find_nearest(w,kLeftEdge)
+            edge=kLeftEdge
         if abs(val-hLeftEdge)>wavestep:
+            '''
             # redward linear extrapolation from last N points
             wN = w[idx-Npt+1:idx+1]
             fN = f[idx-Npt+1:idx+1]
             (a,b,rval,pval,stderr)=stats.linregress(wN,fN)
-            Nredstep = len( arange( val, hLeftEdge,  wavestep ) )
+            '''
+            Nredstep = len( arange( val, edge,  wavestep ) )
             wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nredstep) ] )
-            fextRed = array( [ max( 0, a * wave + b ) for wave in wextRed ] )
+            fextRed = array( [ max( 0, f[idx] ) for wave in wextRed ] )
 
             wnew = append(w[:idx+1], wextRed)
             fnew = append(f[:idx+1], fextRed)
@@ -133,68 +184,46 @@ def extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4):
 
         wN=wnew[-1]
         fN=fnew[-1]
+        if fVJ:
+            if fVH: 
+                edge=hLeftEdge
+            elif fVK:
+                edge=kLeftEdge
+            else:
+                edge=max(np.max(w),jLeftEdge+jWidth)
+            wextRed,fextRed=extrapolate_band('J',vArea,fVJ,fN,wN,jWidth,jLeftEdge+jWidth,edge,wavestep,log,i)
+            wnew = append(wnew, wextRed)
+            fnew = append(fnew, fextRed)
 
-        #geometrically matches area and then calculates necessary line slope
-        hArea=vArea-iVH
-        if hArea<0:
-            log.write('WARNING: Input of V-H led to a negative area in H Band for day %i. \n'%i)
-        if fN > 2*hArea/hWidth:
-            log.write('WARNING: Only part of H band has positive flux for day %i \n'%(i+1))
-            x=2*hArea/fN
-            y=0
-        else:
-            x=hWidth
-            y=2*hArea/hWidth-fN
-        area=x*y+.5*x*(fN-y)
-        if abs(area-hArea)>.01*hArea:
-            log.write('WARNING: The parameters you chose led to an integration in the H-Band of %e instead of %e for day %i \n'%(vArea-area,iVH,i))
-        (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
+            wN=wnew[-1]
+            fN=fnew[-1]
+        if fVH:
+            if fVK:
+                edge=kLeftEdge
+            else:
+                edge=max(np.max(w),hLeftEdge+hWidth)
+            wextRed,fextRed=extrapolate_band('H',vArea,fVH,fN,wN,hWidth,hLeftEdge+hWidth,edge,wavestep,log,i)
+            wnew = append(wnew, wextRed)
+            fnew = append(fnew, fextRed)
 
-        Nredstep = len( arange( wN, kLeftEdge,  wavestep ) )
-        wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
-        fextRed = array( [ max( 0, a * wave + b ) for wave in wextRed ] )
+            wN=wnew[-1]
+            fN=fnew[-1]
+        if fVK:
+            wextRed,fextRed=extrapolate_band('K',vArea,fVK,fN,wN,kWidth,kLeftEdge+kWidth,max(np.max(w),kLeftEdge+kWidth),wavestep,log,i)
+            wnew = append(wnew, wextRed)
+            fnew = append(fnew, fextRed)
         
-        wnew = append(wnew, wextRed)
-        fnew = append(fnew, fextRed)
-
-        wN=wnew[-1]
-        fN=fnew[-1]
-        
-        #geometrically matches area and then calculates necessary line slope
-        kArea=vArea-iVK
-        if hArea<0:
-            log.write('WARNING: Input of V-K led to a negative area in K Band for day %i. \n'%i)
-        if fN > 2*kArea/kWidth:
-            log.write('WARNING: Only part of K band has positive flux for day %i \n'%(i))
-            x=2*kArea/fN
-            y=0
-        else:
-            x=kWidth
-            y=2*kArea/kWidth-fN
-        area=x*y+.5*x*(fN-y)
-        if abs(area-kArea)>.01*kArea:
-            log.write('WARNING: The parameters you chose led to an integration in the K-Band of %e instead of %e for day %i \n'%(vArea-area,iVK,i))
-
-        (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
-
-        Nredstep = len( arange( wN, kLeftEdge+kWidth,  wavestep ) )
-        wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
-        fextRed = array( [ max( 0, a * wave + b ) for wave in wextRed ] )
-        
-        wnew = append(wnew, wextRed)
-        fnew = append(fnew, fextRed)
-
         for i in range( len( wnew ) ) :
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[i], fnew[i] ))
     fout.close() 
     log.close()
     return( newsedfile )
 
-def extendNon1a(iVH,iVK,sedlist,showplots):
+def extendNon1a(fVH,fVK,fVJ,sedlist,showplots):
     """
     Function called in main which runs the extrapolation algorithm.
-    :param iVH: input V-H
-    :param iVK: input V-K
+    :param fVH: input V-H
+    :param fVK: input V-K
     :param sedlist: list of files to analyze (or none if all in current directory)
     :param showplots: None if you don't want plotting, otherwise it's 'all' if you want to plot all days or a single day (i.e. 3)
     """
@@ -208,46 +237,72 @@ def extendNon1a(iVH,iVK,sedlist,showplots):
     for sedfile in sedlist : 
         newsedfile=os.path.basename(sedfile)
         print("EXTRAPOLATING %s"%os.path.basename(sedfile))
-        extrapolatesed_linear(sedfile, newsedfile, iVH,iVK, Npt=4 )
+        extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4 )
         if showplots:
-            plotsed(newsedfile,day=showplots-1)
+            plotsed(newsedfile,day=showplots-9999)
 
         print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
 
 def main():
     warnings.filterwarnings("ignore")
-    opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk="])
-    iVH=None
-    iVK=None
+    opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk=","vj=","vega"])
+    mVJ=None
+    mVH=None
+    mVK=None
+    mJH=None
+    mJK=None
     showplots=None
     sedlist=None
+    zpsys='AB'
     for opt,arg in opts:
         if opt == '-i':
             sedlist=arg.split(',')
         elif opt == '-p':
             showplots=arg
             if showplots != 'all':
-                showplots=float(showplots)+1 #this is just because I check if showplots exists later and if you choose zero it'll think that it doesn't exist
+                showplots=float(showplots)+9999 #this is just because I check if showplots exists later and if you choose zero it'll think that it doesn't exist
         elif opt == '--vh': #then v-h was given
-            iVH=float(arg)
+            mVH=float(arg)
         elif opt=='--vk': #then v-k was given
-            iVK=float(arg)
+            mVK=float(arg)
         elif opt == '--jh': #then j-h was given
-            JH=float(arg)
+            mJH=float(arg)
         elif opt == '--jk': #then j-k was given
-            JK=float(arg)
-    if not iVH and iVK and JK and JH:
-        iVH=iVK-JK+JH
-    elif not iVH:
-        raise RuntimeError("V-H not given.")
-    if not iVK and iVH and JK and JH:
-        iVK=iVH-JH+JK
-    elif not iVK:
-        raise RuntimeError("V-K not given.")
-    iVH=10**(-.4*(iVH))
-    iVK=10**(-.4*(iVK))
-    extendNon1a(iVH,iVK,sedlist,showplots)
+            mJK=float(arg)
+        elif opt == '--vj': #then v-j was given
+            mVJ=float(arg)
+        elif opt =='--vega':
+            zpsys='Vega'
+    if not mVH:
+        if mVK and mJK and mJH:
+            mVH=mVK-mJK+mJH
+        elif mVJ and mJH:
+            mVH=mVJ+mJH
+    if not mVK: 
+        if mVH and mJK and mJH:
+            mVK=mVH-mJH+mJK
+        elif mVJ and mJK:
+            mVK=mVJ+mJK
+    if not mVJ:
+        if mVH and mJH:
+            mVJ=mVH-mJH
+        elif mVK and mJK:
+            mVJ=mVK-mJK
+    #translate color to flux ratio
+    if mVJ:
+        fVJ=10**(-.4*(mVJ-(zp[zpsys]['V']-zp[zpsys]['J'])))
+    else:
+        fVJ=None
+    if mVH:
+        fVH=10**(-.4*(mVH-(zp[zpsys]['V']-zp[zpsys]['H'])))
+    else:
+        fVH=None
+    if mVK:
+        fVK=10**(-.4*(mVK-(zp[zpsys]['V']-zp[zpsys]['K'])))
+    else: 
+        fVK=None
+    extendNon1a(fVH,fVK,fVJ,sedlist,showplots)
 
 
 if __name__ == '__main__':
