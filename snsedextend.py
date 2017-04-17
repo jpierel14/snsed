@@ -115,16 +115,22 @@ def find_nearest(array,value):
 def extrapolate_band(band,vArea,xArea,fN,wN,width,rightEdge,nextEdge,wavestep,log,index):
     #geometrically matches area and then calculates necessary line slope
         bArea=vArea/xArea
-        if fN > 2*bArea/width:
-            log.write('WARNING: Only part of %s band has positive flux for day %i \n'%(band,index+1))
-            x=2*bArea/fN
-            y=0
+        if fN*width > bArea: #negative slope
+            if .5*fN*width>bArea:
+                log.write('WARNING: Only part of %s band has positive flux for day %i \n'%(band,index+1))
+                x=2*bArea/fN
+                y=0
+            else:
+                x=width
+                y=2*bArea/width-fN
+                area=.5*(fN-y)*x+y*x
         else:
             x=width
             y=2*bArea/width-fN
-        area=x*y+.5*x*(fN-y)
+            area=x*fN+.5*x*(y-fN)
+        
         if abs(area-bArea)>.01*bArea:
-            log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea-area,fVH,index))
+            log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea-area,xArea,index))
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
 
         Nredstep = len( arange( wN, nextEdge,  wavestep ) )
@@ -165,7 +171,7 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
         elif fVK:
             idx,val=find_nearest(w,kLeftEdge)
             edge=kLeftEdge
-        if abs(val-hLeftEdge)>wavestep:
+        if abs(val-edge)>wavestep:
             '''
             # redward linear extrapolation from last N points
             wN = w[idx-Npt+1:idx+1]
@@ -239,7 +245,10 @@ def extendNon1a(fVH,fVK,fVJ,sedlist,showplots):
         print("EXTRAPOLATING %s"%os.path.basename(sedfile))
         extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4 )
         if showplots:
-            plotsed(newsedfile,day=showplots-9999)
+            if showplots == 'all':
+                plotsed(newsedfile,day=showplots)
+            else:
+                plotsed(newsedfile,day=showplots-9999)
 
         print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
