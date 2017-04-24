@@ -13,19 +13,16 @@ import shutil
 sndataroot = os.environ['SNDATA_ROOT']
 
 #User can define center of V,H,K bands (angstrom)
-VBAND=5500
 JBAND=12355
 HBAND=15414
 KBAND=22000
 
 #User can define width of V,H,K bands (angstrom)
-vWidth=2000
 jWidth=3000
 hWidth=3390
 kWidth=4000
 
 #finds the left edge based on the two above variables
-vLeftEdge=VBAND-vWidth/2
 jLeftEdge=JBAND-jWidth/2
 hLeftEdge=HBAND-hWidth/2
 kLeftEdge=KBAND-kWidth/2
@@ -33,19 +30,18 @@ kLeftEdge=KBAND-kWidth/2
 #dictionary of zero-points
 zp={
     'AB':{
-        'V':26.49,
-        'J':26.25,
-        'H':25.96,
-        'K':27.855
+        'V':-13.75,
+        'J':-14.16,
+        'H':-14.51,
+        'K':-15.11
         },
     'Vega':{
-        'V':26.406,
-        'J':25.35,
-        'H':24.7,
-        'K':26.005   
+        'V':-13.77,
+        'J':-15.07,
+        'H':-15.9,
+        'K':16.96   
         }
 }
-
 
 def getsed(sedfile) : 
     """
@@ -120,15 +116,15 @@ def extrapolate_band(band,vArea,xArea,fN,wN,width,rightEdge,nextEdge,wavestep,lo
                 log.write('WARNING: Only part of %s band has positive flux for day %i \n'%(band,index+1))
                 x=2*bArea/fN
                 y=0
+
             else:
                 x=width
                 y=2*bArea/width-fN
-                area=.5*(fN-y)*x+y*x
+            area=.5*(fN-y)*x+y*x
         else:
             x=width
             y=2*bArea/width-fN
             area=x*fN+.5*x*(y-fN)
-        
         if abs(area-bArea)>.01*bArea:
             log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea-area,xArea,index))
         (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
@@ -151,6 +147,11 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
     dlist,wlist,flist = getsed( sedfile ) 
     dlistnew, wlistnew, flistnew = [],[],[]
 
+    vWave=np.loadtxt('vWave.dat')
+    vTrans=np.loadtxt('vTrans.dat')
+    vLeftEdge=vWave[0]
+    vWidth=vWave[-1]-vWave[0]
+    interpFunc=scint.interp1d(vWave,vTrans)
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
     for i in range( len(dlist) ) : 
@@ -159,8 +160,11 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
         wavestep = w[1] - w[0]
 
         idx,val=find_nearest(w,vLeftEdge)
+        idx2,val2=find_nearest(w,vLeftEdge+vWidth)
         nSteps = len( arange( val, vLeftEdge+vWidth,  wavestep ) )
-        vArea=simps(f[idx:idx+nSteps+1],w[idx:idx+nSteps+1])
+        interp=interpFunc(np.arange(val,val2+1,10))
+        
+        vArea=simps(f[idx:idx+nSteps+1]*interp,w[idx:idx+nSteps+1])
         #if the data ends short of next band, extrapolates to next band
         if fVJ:
             idx,val=find_nearest(w,jLeftEdge)

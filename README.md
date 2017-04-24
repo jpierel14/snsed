@@ -53,16 +53,14 @@ __DESCRIPTION__
 
 __OTHER INFO__
 
-At the top of the script the following global variables are set. You can change these to affect the
+At the top of the script the following global variables are set for the tophat filters (J,H,K). You can change these to affect the
 respective parameter (in angstroms):
 
 	   Center of V,J,H,K bands:
-		VBAND=5500
 		JBAND=12355
 		HBAND=15414
 		KBAND=22000
 	Width of V,J,H,K bands:
-	      	vWidth=3000
 		jWidth=3000
 		hWidth=3390
 		kWidth=4000
