@@ -66,11 +66,15 @@ __Transmission Files__
 You may use your own transmission files to define the filters used in the extrapolation. The default filters are tophat filters for J,H, and K, and Bessell for V.
 To use your own transmission file, use the flags described above, and place the files in the appropriate folder (i.e. transmission file for V should go in vBand folder, etc.)
 Alternatively, you may change the dictionary 'filters' at the top of the script:
+
+
        filters={
 		'V':'vBand/bessellv.dat',
     		'J':'jBand/tophatJ.dat',
     		'H':'hBand/tophatH.dat',
     		'K':'kBand/tophatK.dat'
 	}
+
+
 This is the default dictionary, simply change the '.dat' filenames to the filenames of your transmission files, and place the files in the appropriate folder. The
 format of the transmission files should be two-column, with the first column being wavelength and the second column being transmission.
