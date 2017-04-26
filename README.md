@@ -1,10 +1,12 @@
 J.R. Pierel & S.Rodney 
 
-2017.03.31
+2017.04.26
 
 __SUMMARY__
 
-Extrapolate SED up to J, H and K bands, allowing user to define V-J, V-H and/or V-K. Extrapolation is improvement upon previous method in that it chooses a linear slope such that the integration of the J (H,K) band will correspond to the user-defined V-J (V-H,V-K). The script assumes that the defined color is in ABmag, but Vega can be defined using the --vega flag (see below).
+Extrapolate SED up to J, H and K bands, allowing user to define V-J, V-H and/or V-K. Extrapolation is improvement upon previous method in that
+it chooses a linear slope such that the integration of the J (H,K) band will correspond to the user-defined V-J (V-H,V-K). The script assumes
+that the defined color is in ABmag, but Vega can be defined using the --vega flag (see below).
 
 __SETUP__
 
@@ -51,16 +53,15 @@ __DESCRIPTION__
 	--vega	    This allows user to input color in Vega instead of (assumed) AB
 
 
-__OTHER INFO__
+__Transmission Files__
 
-At the top of the script the following global variables are set for the tophat filters (J,H,K). You can change these to affect the
-respective parameter (in angstroms):
-
-	   Center of V,J,H,K bands:
-		JBAND=12355
-		HBAND=15414
-		KBAND=22000
-	Width of V,J,H,K bands:
-		jWidth=3000
-		hWidth=3390
-		kWidth=4000
+You may use your own transmission files to define the filters used in the extrapolation. The default filters are tophat filters for J,H, and K, and Bessell for V.
+To use your own transmission file, change the dictionary 'filters' at the top of the script:
+       filters={
+		'V':'vBand/bessellv.dat',
+    		'J':'jBand/tophatJ.dat',
+    		'H':'hBand/tophatH.dat',
+    		'K':'kBand/tophatK.dat'
+	}
+This is the default dictionary, simply change the '.dat' filenames to the filenames of your transmission files, and place the files in the appropriate folder. The
+format of the transmission files should be two-column, with the first column being wavelength and the second column being transmission.

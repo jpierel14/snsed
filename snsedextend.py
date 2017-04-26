@@ -2,46 +2,47 @@
 #S.rodney & J.R. Pierel
 # 2017.03.31
 
-import os,sys,getopt,warnings
+import os,sys,getopt,warnings,math
 from numpy import *
 from pylab import * 
 from scipy import interpolate as scint
 from scipy import stats
 from scipy.integrate import simps
 import shutil
+from copy import deepcopy
 #Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable)
 sndataroot = os.environ['SNDATA_ROOT']
 
 #User can define center of V,H,K bands (angstrom)
-JBAND=12355
-HBAND=15414
-KBAND=22000
-
-#User can define width of V,H,K bands (angstrom)
-jWidth=3000
-hWidth=3390
-kWidth=4000
-
-#finds the left edge based on the two above variables
-jLeftEdge=JBAND-jWidth/2
-hLeftEdge=HBAND-hWidth/2
-kLeftEdge=KBAND-kWidth/2
+filters={
+    'V':'vBand/bessellv.dat',
+    'J':'jBand/f125w.dat',
+    'H':'hBand/tophatH.dat',
+    'K':'kBand/tophatK.dat'
+}
 
 #dictionary of zero-points
 zp={
     'AB':{
-        'V':-13.75,
-        'J':-14.16,
-        'H':-14.51,
-        'K':-15.11
+        'V':None,
+        'J':None,
+        'H':None,
+        'K':None
         },
     'Vega':{
-        'V':-13.77,
-        'J':-15.07,
-        'H':-15.9,
-        'K':16.96   
+        'V':-0.02,
+        'J':-0.91,
+        'H':-1.39,
+        'K':-1.85   
         }
 }
+
+colToFilter={
+    'fVJ':'J',
+    'fVH':'H',
+    'fVK':'K'
+}
+
 
 def getsed(sedfile) : 
     """
@@ -107,51 +108,97 @@ def find_nearest(array,value):
     else:
         return idx,array[idx]
 
+def getFilter(band):
+    w,t=loadtxt(filters[band],unpack=True,comments='#')
+    return(w,t)
 
-def extrapolate_band(band,vArea,xArea,fN,wN,width,rightEdge,nextEdge,wavestep,log,index):
-    #geometrically matches area and then calculates necessary line slope
-        bArea=vArea/xArea
-        if fN*width > bArea: #negative slope
-            if .5*fN*width>bArea:
-                log.write('WARNING: Only part of %s band has positive flux for day %i \n'%(band,index+1))
-                x=2*bArea/fN
-                y=0
+def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
+    wavestep=w[1]-w[0]
+    idx,val=find_nearest(w,xWave[0])
+    if xWave[0]-val>wavestep:
+        Nredstep = len( arange( val, xWave[0],  wavestep ) )
+        wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nredstep) ] )
+        fextRed = array( [ 0 for wave in wextRed ] )
+        w = append(w[:idx+1], wextRed)
+        f = append(f[:idx+1], fextRed)
 
+    else:
+        w=w[:idx+1]
+        f=f[:idx+1]
+    wN=w[-1]
+    fN=f[-1]
+    bArea=vArea/color
+    x2=xWave[-1]
+    x1=wN
+    interpFunc=scint.interp1d(append(wN,x2),append(fN,0))
+    area=simps(xTrans*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
+    #(m,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,0))
+    y1=0
+    i=1
+    if area>bArea:
+        y2=0
+        while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
+            if area>bArea:
+                x3=x2
+                idx,x2=find_nearest(xWave,int((x3-x1)/2)+x1)
             else:
-                x=width
-                y=2*bArea/width-fN
-            area=.5*(fN-y)*x+y*x
-        else:
-            x=width
-            y=2*bArea/width-fN
-            area=x*fN+.5*x*(y-fN)
-        if abs(area-bArea)>.01*bArea:
-            log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea-area,xArea,index))
-        (a,b,rval,pval,stderr)=stats.linregress(append(wN,wN+x),append(fN,y))
+                x1=x2
+                idx,x2=find_nearest(xWave,int((x3-x1)/2)+x1)
+            interpFunc=scint.interp1d(append(wN,x2),append(fN,0))
+            area=simps(xTrans[0:idx+1]*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
+            i+=1
+    elif area<bArea:
+        y3=(2*bArea/(xWave[-1]-wN)-fN)/2
+        y2=y3
+        x2=xWave[-1]
+        tried=False
+        while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
+            if area>bArea:
+                y3=y2
+                y2=(y3-y1)/2+y1
+            else:
+                if not tried:
+                    while area < bArea:
+                        y3*=2
+                        interpFunc=scint.interp1d(append(wN,x2),append(fN,y3))
+                        area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+                    y2=(y3-y1)/2+y1
+                    tried=True
+                else:
+                    y1=y2
+                    y2=(y3-y1)/2+y1
 
-        Nredstep = len( arange( wN, nextEdge,  wavestep ) )
-        wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
-        fextRed = array( [ max( 0, a * wave + b ) if wave <= rightEdge else max(0,a*rightEdge+b) for wave in wextRed ] )
-        return(wextRed,fextRed)
+            interpFunc=scint.interp1d(append(wN,x2),append(fN,y2))
+            area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+            i+=1
+    if abs(area-bArea)>.001*bArea:
+        log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea/area,color,index))
+    (a,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,y2))
+    Nredstep = len( arange( wN, xWave[-1],  wavestep ) )
+    wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
+    fextRed = array( [ max( 0, a * wave + b ) if wave <= xWave[-1] else max(0,a*xWave[-1]+b) for wave in wextRed ] )
+    w = append(w, wextRed)
+    f = append(f, fextRed)
+    return(w,f)
         
 
 
 
-def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
+def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, niter=15):
     """ use a linear fit of the first/last Npt points on the SED
     to extrapolate to H band (if necessary), then calculates the slope
     necessary across H and K bands to end up with the user-defined values
     for V-H and V-K
     """
-    
+    colors=[fVJ,fVH,fVK]
     dlist,wlist,flist = getsed( sedfile ) 
     dlistnew, wlistnew, flistnew = [],[],[]
 
-    vWave=np.loadtxt('vWave.dat')
-    vTrans=np.loadtxt('vTrans.dat')
+    vWave,vTrans=getFilter('V')
     vLeftEdge=vWave[0]
     vWidth=vWave[-1]-vWave[0]
-    interpFunc=scint.interp1d(vWave,vTrans)
+    vInterpFunc=scint.interp1d(vWave,vTrans)
+
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
     for i in range( len(dlist) ) : 
@@ -162,67 +209,22 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4):
         idx,val=find_nearest(w,vLeftEdge)
         idx2,val2=find_nearest(w,vLeftEdge+vWidth)
         nSteps = len( arange( val, vLeftEdge+vWidth,  wavestep ) )
-        interp=interpFunc(np.arange(val,val2+1,10))
+        interp=vInterpFunc(arange(val,val2+1,wavestep))
         
         vArea=simps(f[idx:idx+nSteps+1]*interp,w[idx:idx+nSteps+1])
-        #if the data ends short of next band, extrapolates to next band
-        if fVJ:
-            idx,val=find_nearest(w,jLeftEdge)
-            edge=jLeftEdge
-        elif fVH:
-            idx,val=find_nearest(w,hLeftEdge)
-            edge=hLeftEdge
-        elif fVK:
-            idx,val=find_nearest(w,kLeftEdge)
-            edge=kLeftEdge
-        if abs(val-edge)>wavestep:
-            '''
-            # redward linear extrapolation from last N points
-            wN = w[idx-Npt+1:idx+1]
-            fN = f[idx-Npt+1:idx+1]
-            (a,b,rval,pval,stderr)=stats.linregress(wN,fN)
-            '''
-            Nredstep = len( arange( val, edge,  wavestep ) )
-            wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nredstep) ] )
-            fextRed = array( [ max( 0, f[idx] ) for wave in wextRed ] )
-
-            wnew = append(w[:idx+1], wextRed)
-            fnew = append(f[:idx+1], fextRed)
-        else:
-            wnew=w[:idx+1]
-            fnew=f[:idx+1]
-
-        wN=wnew[-1]
-        fN=fnew[-1]
-        if fVJ:
-            if fVH: 
-                edge=hLeftEdge
-            elif fVK:
-                edge=kLeftEdge
-            else:
-                edge=max(np.max(w),jLeftEdge+jWidth)
-            wextRed,fextRed=extrapolate_band('J',vArea,fVJ,fN,wN,jWidth,jLeftEdge+jWidth,edge,wavestep,log,i)
-            wnew = append(wnew, wextRed)
-            fnew = append(fnew, fextRed)
-
-            wN=wnew[-1]
-            fN=fnew[-1]
-        if fVH:
-            if fVK:
-                edge=kLeftEdge
-            else:
-                edge=max(np.max(w),hLeftEdge+hWidth)
-            wextRed,fextRed=extrapolate_band('H',vArea,fVH,fN,wN,hWidth,hLeftEdge+hWidth,edge,wavestep,log,i)
-            wnew = append(wnew, wextRed)
-            fnew = append(fnew, fextRed)
-
-            wN=wnew[-1]
-            fN=fnew[-1]
-        if fVK:
-            wextRed,fextRed=extrapolate_band('K',vArea,fVK,fN,wN,kWidth,kLeftEdge+kWidth,max(np.max(w),kLeftEdge+kWidth),wavestep,log,i)
-            wnew = append(wnew, wextRed)
-            fnew = append(fnew, fextRed)
-        
+        fnew=deepcopy(f)
+        wnew=deepcopy(w)
+        for col in colors:
+            if col:
+                #edge=max(np.max(w),jLeftEdge+jWidth)
+                tempName=[ k for k,v in locals().iteritems() if v is col][0]
+                tempWave,tempTrans=getFilter(colToFilter[tempName])
+                interpFunc=scint.interp1d(tempWave,tempTrans)
+                val=int(math.ceil(tempWave[0]/10))*10
+                val2=int(math.floor(tempWave[-1]/10))*10
+                tempWave=arange(val,val2+1,wavestep)
+                tempTrans=interpFunc(tempWave)
+                wnew,fnew=extrapolate_band(colToFilter[tempName],vArea,col,tempTrans,tempWave,fnew,wnew,niter,log,i)
         for i in range( len( wnew ) ) :
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[i], fnew[i] ))
     fout.close() 
@@ -247,7 +249,7 @@ def extendNon1a(fVH,fVK,fVJ,sedlist,showplots):
     for sedfile in sedlist : 
         newsedfile=os.path.basename(sedfile)
         print("EXTRAPOLATING %s"%os.path.basename(sedfile))
-        extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, Npt=4 )
+        extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, niter=50 )
         if showplots:
             if showplots == 'all':
                 plotsed(newsedfile,day=showplots)
@@ -257,7 +259,28 @@ def extendNon1a(fVH,fVK,fVJ,sedlist,showplots):
         print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
 
+def getZP(band):
+    c=299792458
+    wave,trans=getFilter(band)
+    fInterp=scint.interp1d(wave,trans)
+    if wave[1]-wave[0]>10:
+        x=np.arange(wave[0],wave[-1]+1,10)
+    else:
+        x=wave
+    y=fInterp(x)
+    xnu=c/(x*1E-10)
+
+    arr=xnu.argsort()
+    y2=y[arr[0::]]
+    x2=np.sort(xnu)
+    F=simps(y2*3.63E-20,x2)
+    return(2.5*log10(F))
+
 def main():
+    for key in zp['AB']:
+        zp['AB'][key]=getZP(key)
+        zp['Vega'][key]=zp['Vega'][key]+zp['AB'][key]
+
     warnings.filterwarnings("ignore")
     opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk=","vj=","vega"])
     mVJ=None
