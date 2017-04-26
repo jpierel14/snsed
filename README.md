@@ -70,9 +70,9 @@ Alternatively, you may change the dictionary 'filters' at the top of the script:
 
        filters={
 		'V':'vBand/bessellv.dat',
-    		'J':'jBand/tophatJ.dat',
-    		'H':'hBand/tophatH.dat',
-    		'K':'kBand/tophatK.dat'
+    	'J':'jBand/tophatJ.dat',
+    	'H':'hBand/tophatH.dat',
+	'K':'kBand/tophatK.dat'
 	}
 
 
