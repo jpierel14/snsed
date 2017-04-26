@@ -20,7 +20,7 @@ error.log file is also created, containing error messages from running the scrip
 __SYNOPSIS__
 
 	
-	python snsedextend.py -i <file1,file2,...> -p <day# or all> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K> --vj <V-J> --vega
+	python snsedextend.py -i <file1,file2,...> -p <day# or all> -v <vTrans.dat> -j <jTrans.dat> -h <hTrans.dat> -k <kTrans.dat> --vh <V-H> --vk <V-K> --jh <J-H> --jk <J-K> --vj <V-J> --vega
 	
 
 __DESCRIPTION__
@@ -35,6 +35,14 @@ __DESCRIPTION__
 
 	-p	    This allows user to flag to plot or not. If you want to plot, add the day (6)
 		    or you can plot all epochs sequentially (all)
+
+	-v	    This allows user to define a transmission file to use for the v-band.
+
+	-j	    This allows user to define a transmission file to use for the j-band.
+
+	-h	    This allows user to define a transmission file to use for the h-band.
+
+	-k	    This allows user to define a transmission file to use for the k-band.
 
 
 	--vh	    User defined V-H
@@ -56,7 +64,8 @@ __DESCRIPTION__
 __Transmission Files__
 
 You may use your own transmission files to define the filters used in the extrapolation. The default filters are tophat filters for J,H, and K, and Bessell for V.
-To use your own transmission file, change the dictionary 'filters' at the top of the script:
+To use your own transmission file, use the flags described above, and place the files in the appropriate folder (i.e. transmission file for V should go in vBand folder, etc.)
+Alternatively, you may change the dictionary 'filters' at the top of the script:
        filters={
 		'V':'vBand/bessellv.dat',
     		'J':'jBand/tophatJ.dat',

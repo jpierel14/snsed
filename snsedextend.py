@@ -16,7 +16,7 @@ sndataroot = os.environ['SNDATA_ROOT']
 #User can define center of V,H,K bands (angstrom)
 filters={
     'V':'vBand/bessellv.dat',
-    'J':'jBand/f125w.dat',
+    'J':'jBand/tophatJ.dat',
     'H':'hBand/tophatH.dat',
     'K':'kBand/tophatK.dat'
 }
@@ -118,7 +118,7 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
     if xWave[0]-val>wavestep:
         Nredstep = len( arange( val, xWave[0],  wavestep ) )
         wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nredstep) ] )
-        fextRed = array( [ 0 for wave in wextRed ] )
+        fextRed = array( [ max(0,f[idx]) for wave in wextRed ] )
         w = append(w[:idx+1], wextRed)
         f = append(f[:idx+1], fextRed)
 
@@ -133,21 +133,42 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
     interpFunc=scint.interp1d(append(wN,x2),append(fN,0))
     area=simps(xTrans*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
     #(m,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,0))
-    y1=0
     i=1
     if area>bArea:
         y2=0
+        y1=fN
+        last=0
         while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
             if area>bArea:
                 x3=x2
-                idx,x2=find_nearest(xWave,int((x3-x1)/2)+x1)
+                x2=(x3+x1)/2
+                idx,x2=find_nearest(xWave,x2)
             else:
                 x1=x2
-                idx,x2=find_nearest(xWave,int((x3-x1)/2)+x1)
+                x2=(x3+x1)/2
+                idx,x2=find_nearest(xWave,x2)
             interpFunc=scint.interp1d(append(wN,x2),append(fN,0))
             area=simps(xTrans[0:idx+1]*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
             i+=1
+            if area==last:
+                break
+            last=area
+        y1=.5*fN
+        y2=fN
+        y3=1.5*fN
+
+        while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
+            if area>bArea:
+                y3=y2
+                y2=(y3+y1)/2
+            else:
+                y1=y2
+                y2=(y3+y1)/2
+            interpFunc=scint.interp1d(append(wN,x2),append(y2,0))
+            area=simps(xTrans[0:idx+1]*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
+            i+=1
     elif area<bArea:
+        y1=0
         y3=(2*bArea/(xWave[-1]-wN)-fN)/2
         y2=y3
         x2=xWave[-1]
@@ -155,25 +176,26 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
         while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
             if area>bArea:
                 y3=y2
-                y2=(y3-y1)/2+y1
+                y2=(y3+y1)/2
             else:
                 if not tried:
                     while area < bArea:
                         y3*=2
                         interpFunc=scint.interp1d(append(wN,x2),append(fN,y3))
                         area=simps(xTrans*interpFunc(xWave),dx=wavestep)
-                    y2=(y3-y1)/2+y1
+                    y2=(y3+y1)/2
                     tried=True
                 else:
                     y1=y2
-                    y2=(y3-y1)/2+y1
+                    y2=(y3+y1)/2
 
             interpFunc=scint.interp1d(append(wN,x2),append(fN,y2))
             area=simps(xTrans*interpFunc(xWave),dx=wavestep)
             i+=1
+        y1=fN
     if abs(area-bArea)>.001*bArea:
         log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea/area,color,index))
-    (a,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,y2))
+    (a,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(y1,y2))
     Nredstep = len( arange( wN, xWave[-1],  wavestep ) )
     wextRed =  sorted( [ wN + (j+1)*wavestep for j in range(Nredstep) ] )
     fextRed = array( [ max( 0, a * wave + b ) if wave <= xWave[-1] else max(0,a*xWave[-1]+b) for wave in wextRed ] )
@@ -277,12 +299,8 @@ def getZP(band):
     return(2.5*log10(F))
 
 def main():
-    for key in zp['AB']:
-        zp['AB'][key]=getZP(key)
-        zp['Vega'][key]=zp['Vega'][key]+zp['AB'][key]
-
     warnings.filterwarnings("ignore")
-    opts,args=getopt.getopt(sys.argv[1:],"i:p:",["vh=","vk=","jh=","jk=","vj=","vega"])
+    opts,args=getopt.getopt(sys.argv[1:],"i:p:v:j:h:k:",["vh=","vk=","jh=","jk=","vj=","vega"])
     mVJ=None
     mVH=None
     mVK=None
@@ -298,6 +316,14 @@ def main():
             showplots=arg
             if showplots != 'all':
                 showplots=float(showplots)+9999 #this is just because I check if showplots exists later and if you choose zero it'll think that it doesn't exist
+        elif opt == '-v':
+            filters[opt[-1].upper()]=os.path.join('vband',arg)
+        elif opt == '-j':
+            filters[opt[-1].upper()]=os.path.join('jband',arg)
+        elif opt == '-h':
+            filters[opt[-1].upper()]=os.path.join('hband',arg)
+        elif opt == '-k':
+            filters[opt[-1].upper()]=os.path.join('kband',arg)
         elif opt == '--vh': #then v-h was given
             mVH=float(arg)
         elif opt=='--vk': #then v-k was given
@@ -325,6 +351,10 @@ def main():
             mVJ=mVH-mJH
         elif mVK and mJK:
             mVJ=mVK-mJK
+    #calculate zero points from transmission files:
+    for key in zp['AB']:
+        zp['AB'][key]=getZP(key)
+        zp['Vega'][key]=zp['Vega'][key]+zp['AB'][key]
     #translate color to flux ratio
     if mVJ:
         fVJ=10**(-.4*(mVJ-(zp[zpsys]['V']-zp[zpsys]['J'])))
