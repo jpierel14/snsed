@@ -2,7 +2,7 @@
 #S.rodney & J.R. Pierel
 # 2017.03.31
 
-import os,sys,getopt,warnings,math
+import os,sys,getopt,warnings,math,glob
 from numpy import *
 from pylab import * 
 from scipy import interpolate as scint
@@ -298,6 +298,10 @@ def getZP(band):
     F=simps(y2*3.63E-20,x2)
     return(2.5*log10(F))
 
+def findFile(filename):
+    for root, subFolders, files in os.walk('.'):
+        if filename in files:
+            return(os.path.abspath(os.path.join(root,filename)))
 def main():
     warnings.filterwarnings("ignore")
     opts,args=getopt.getopt(sys.argv[1:],"i:p:v:j:h:k:",["vh=","vk=","jh=","jk=","vj=","vega"])
@@ -317,13 +321,14 @@ def main():
             if showplots != 'all':
                 showplots=float(showplots)+9999 #this is just because I check if showplots exists later and if you choose zero it'll think that it doesn't exist
         elif opt == '-v':
-            filters[opt[-1].upper()]=os.path.join('vband',arg)
+            filters[opt[-1].upper()]=findFile(arg)
         elif opt == '-j':
-            filters[opt[-1].upper()]=os.path.join('jband',arg)
+            filters[opt[-1].upper()]=findFile(arg)
         elif opt == '-h':
-            filters[opt[-1].upper()]=os.path.join('hband',arg)
+            filters[opt[-1].upper()]=findFile(arg)
+            print(filters)
         elif opt == '-k':
-            filters[opt[-1].upper()]=os.path.join('kband',arg)
+            filters[opt[-1].upper()]=findFile(arg)
         elif opt == '--vh': #then v-h was given
             mVH=float(arg)
         elif opt=='--vk': #then v-k was given

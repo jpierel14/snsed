@@ -64,7 +64,8 @@ __DESCRIPTION__
 __Transmission Files__
 
 You may use your own transmission files to define the filters used in the extrapolation. The default filters are tophat filters for J,H, and K, and Bessell for V.
-To use your own transmission file, use the flags described above, and place the files in the appropriate folder (i.e. transmission file for V should go in vBand folder, etc.)
+To use your own transmission file, use the flags described above, and place the files in the appropriate folder (i.e. transmission file for V should go in vBand folder, etc.).
+The program will find your file even if it is not in the correct folder.
 Alternatively, you may change the dictionary 'filters' at the top of the script:
 
 
