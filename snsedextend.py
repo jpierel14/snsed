@@ -131,7 +131,8 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
     x2=xWave[-1]
     x1=wN
     interpFunc=scint.interp1d(append(wN,x2),append(fN,0))
-    area=simps(xTrans*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
+    area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+    temp=.5*(xWave[-1]-xWave[0])*fN
     #(m,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,0))
     i=1
     if area>bArea:
@@ -173,7 +174,7 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
         y2=0
     elif area<bArea:
         y1=0
-        y3=(2*bArea/(xWave[-1]-wN)-fN)/2
+        y3=fN
         y2=y3
         x2=xWave[-1]
         tried=False
