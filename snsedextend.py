@@ -135,7 +135,7 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
     #(m,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(fN,0))
     i=1
     if area>bArea:
-        y2=0
+        y2=fN
         y1=fN
         last=0
         while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
@@ -153,11 +153,13 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
             if area==last:
                 break
             last=area
-        y1=.5*fN
-        y2=fN
-        y3=1.5*fN
 
+        i=1
         while(abs(area-bArea)/(area+bArea)>.00000001 and i<niter):
+            if i==1:
+                y1=.5*fN
+                y2=fN
+                y3=1.5*fN
             if area>bArea:
                 y3=y2
                 y2=(y3+y1)/2
@@ -167,6 +169,8 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
             interpFunc=scint.interp1d(append(wN,x2),append(y2,0))
             area=simps(xTrans[0:idx+1]*interpFunc(arange(wN,x2+1,wavestep)),dx=wavestep)
             i+=1
+        y1=y2
+        y2=0
     elif area<bArea:
         y1=0
         y3=(2*bArea/(xWave[-1]-wN)-fN)/2
@@ -193,6 +197,9 @@ def extrapolate_band(band,vArea,color,xTrans,xWave,f,w,niter,log,index):
             area=simps(xTrans*interpFunc(xWave),dx=wavestep)
             i+=1
         y1=fN
+    else:
+        y1=fN
+        y2=0
     if abs(area-bArea)>.001*bArea:
         log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for day %i \n'%(band,vArea/area,color,index))
     (a,b,rval,pval,stderr)=stats.linregress(append(wN,x2),append(y1,y2))
@@ -217,10 +224,7 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, niter=15):
     dlistnew, wlistnew, flistnew = [],[],[]
 
     vWave,vTrans=getFilter('V')
-    vLeftEdge=vWave[0]
-    vWidth=vWave[-1]-vWave[0]
     vInterpFunc=scint.interp1d(vWave,vTrans)
-
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
     for i in range( len(dlist) ) : 
@@ -228,17 +232,14 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, niter=15):
 
         wavestep = w[1] - w[0]
 
-        idx,val=find_nearest(w,vLeftEdge)
-        idx2,val2=find_nearest(w,vLeftEdge+vWidth)
-        nSteps = len( arange( val, vLeftEdge+vWidth,  wavestep ) )
+        idx,val=find_nearest(w,int(math.ceil(vWave[0]/10))*10)
+        idx2,val2=find_nearest(w,int(math.floor(vWave[-1]/10))*10)
         interp=vInterpFunc(arange(val,val2+1,wavestep))
-        
-        vArea=simps(f[idx:idx+nSteps+1]*interp,w[idx:idx+nSteps+1])
+        vArea=simps(f[idx:idx2+1]*interp,w[idx:idx2+1])
         fnew=deepcopy(f)
         wnew=deepcopy(w)
         for col in colors:
             if col:
-                #edge=max(np.max(w),jLeftEdge+jWidth)
                 tempName=[ k for k,v in locals().iteritems() if v is col][0]
                 tempWave,tempTrans=getFilter(colToFilter[tempName])
                 interpFunc=scint.interp1d(tempWave,tempTrans)
@@ -326,7 +327,6 @@ def main():
             filters[opt[-1].upper()]=findFile(arg)
         elif opt == '-h':
             filters[opt[-1].upper()]=findFile(arg)
-            print(filters)
         elif opt == '-k':
             filters[opt[-1].upper()]=findFile(arg)
         elif opt == '--vh': #then v-h was given
@@ -357,19 +357,20 @@ def main():
         elif mVK and mJK:
             mVJ=mVK-mJK
     #calculate zero points from transmission files:
-    for key in zp['AB']:
-        zp['AB'][key]=getZP(key)
-        zp['Vega'][key]=zp['Vega'][key]+zp['AB'][key]
+    zp['AB']['V']=getZP('V')
     #translate color to flux ratio
     if mVJ:
+        zp['AB']['J']=getZP('J')
         fVJ=10**(-.4*(mVJ-(zp[zpsys]['V']-zp[zpsys]['J'])))
     else:
         fVJ=None
     if mVH:
+        zp['AB']['H']=getZP('H')
         fVH=10**(-.4*(mVH-(zp[zpsys]['V']-zp[zpsys]['H'])))
     else:
         fVH=None
     if mVK:
+        zp['AB']['K']=getZP('K')
         fVK=10**(-.4*(mVK-(zp[zpsys]['V']-zp[zpsys]['K'])))
     else: 
         fVK=None
