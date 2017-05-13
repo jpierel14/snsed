@@ -250,7 +250,7 @@ def extrapolatesed_linear(sedfile, newsedfile, fVH,fVK,fVJ, niter=15):
                 tempTrans=interpFunc(tempWave)
                 wnew,fnew=extrapolate_band(colToFilter[tempName],vArea,col,tempTrans,tempWave,fnew,wnew,niter,log,i)
         for i in range( len( wnew ) ) :
-            fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[i], fnew[i] ))
+            fout.write("%8.4f  %10i  %12.7e \n"%( d[0], wnew[i], fnew[i] ))
     fout.close() 
     log.close()
     return( newsedfile )
