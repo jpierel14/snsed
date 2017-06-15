@@ -25,3 +25,7 @@ sncosmo.registry.register(sncosmo.Bandpass(h_wave,h_trans,name='tophatH'),force=
 k_wave,k_trans=np.loadtxt(os.path.join('snsedextend','data','bands','kBand','tophatK.dat'),unpack=True)
 sncosmo.registry.register(sncosmo.Bandpass(k_wave,k_trans,name='tophatK'),force=True)
 
+for f in ['j','h','ks']:
+    wave,trans=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','filters',f+'.dat'),unpack=True)
+    wave*=10000
+    sncosmo.registry.register(sncosmo.Bandpass(wave,trans,name='paritel::'+f),force=True)

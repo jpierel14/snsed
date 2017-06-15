@@ -28,9 +28,10 @@ _filters={
     'V':'bessellv',
     'R':'bessellr',
     'I':'besselli',
-    'J':'cspjs',
-    'H':'csphs',
-    'K':'cspk',
+    'J':'paritel::j',
+    'H':'paritel::h',
+    'K':'paritel::ks',
+    'Ks':'paritel::ks',
     'u':'sdss::u',
     'g':'sdss::g',
     'r':'sdss::r',
@@ -501,7 +502,7 @@ def extendNon1a(colorTable,bandDict=_filters,zpsys='AB',sedlist=None,showplots=N
     for band in bandDict:
         if not isinstance(bandDict[band],sncosmo.Bandpass):
             bandDict=_bandCheck(bandDict,band)
-    colors=[col for col in colorTable.colnames if col != _get_default_prop_name('time')]
+    colors=[col for col in colorTable.colnames if '-' in col]
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters.keys():
         if band not in bandDict.keys() and band in bands:
@@ -528,7 +529,9 @@ def extendNon1a(colorTable,bandDict=_filters,zpsys='AB',sedlist=None,showplots=N
 
             blueZP=_getZP(bandDict[color[0]],zpsys)
             redZP=_getZP(bandDict[color[-1]],zpsys)
+            tempMask=colorTable[color].mask
             colorTable[color]=10**(-.4*(colorTable[color]-(blueZP-redZP)))
+            colorTable[color].mask=tempMask
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[colorTable[color].mask==False]
@@ -553,7 +556,11 @@ def bandRegister(wave,trans,band,bandName):
     sncosmo.registry.register(sncosmo.Bandpass(wave,trans,name=bandName))
     _filters[bandName]=sncosmo.get_bandpass(bandName)
 
-def curveToColor(curve,colors,bandFit=None,snType='2',bandDict=_filters,zpsys='AB',method='minuit',model=None, params=None, bounds=None, ignore=None, constants=None,verbose=True):
+
+
+
+def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsys='AB',method='minuit',
+                 model=None, params=None, bounds=None, ignore=None, constants=None,dust=None,effect_names=None,effect_frames=None,singleBand=False,verbose=True):
     #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
@@ -562,64 +569,94 @@ def curveToColor(curve,colors,bandFit=None,snType='2',bandDict=_filters,zpsys='A
     if not isinstance(colors,(tuple,list)):
         colors=[colors]
     zpMag=sncosmo.get_magsystem(zpsys)
-    curve=_standardize(sncosmo.read_lc(curve))
+    temp=sncosmo.read_lc(filename)
+
+    curve=_standardize(sncosmo.read_lc(filename))
     if _get_default_prop_name('zpsys') not in curve.colnames:
         curve[_get_default_prop_name('zpsys')]=zpsys
     colorTable=Table(masked=True)
     colorTable.add_column(Column(data=[],name=_get_default_prop_name('time')))
-
+    color_bands=['B','V','R','g','r']
+    for band in bandDict:
+        if not isinstance(bandDict[band],sncosmo.Bandpass):
+            bandDict=_bandCheck(bandDict,band)
     for color in colors:
         if verbose:
             print('Getting best fit for %s'%color)
-        blue=curve[curve[_get_default_prop_name('band')]==color[0]]
-        red=curve[curve[_get_default_prop_name('band')]==color[-1]]
-        if not isinstance(bandDict[color[0]],sncosmo.Bandpass):
-            bandDict=_bandCheck(bandDict,color[0])
-        if not isinstance(bandDict[color[-1]],sncosmo.Bandpass):
-            bandDict=_bandCheck(bandDict,color[-1])
 
+        if bandDict[color[0]].wave_eff<_UVrightBound:
+            if not bandFit:
+                bandFit=color[-1]
+            if singleBand:
+                color_bands=[color[-1]]
+            blue=curve[curve[_get_default_prop_name('band')]==color[0]]
+            red=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]]
+        else:
+            if not bandFit:
+                bandFit=color[0]
+            if singleBand:
+                color_bands=[color[0]]
+            blue=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]]
+            red=curve[curve[_get_default_prop_name('band')]==color[-1]]
+        if len(blue)==0 or len(red)==0:
+            if verbose:
+                print('Asked for coor %s but missing necessary band(s)')
+            continue
+
+        btemp=[bandDict[blue[_get_default_prop_name('band')][i]].name for i in range(len(blue))]
+        rtemp=[bandDict[red[_get_default_prop_name('band')][i]].name for i in range(len(red))]
         blue.remove_column(_get_default_prop_name('band'))
-        blue[_get_default_prop_name('band')]=bandDict[color[0]].name
+        blue[_get_default_prop_name('band')]=btemp
         red.remove_column(_get_default_prop_name('band'))
-        red[_get_default_prop_name('band')]=bandDict[color[-1]].name
+        red[_get_default_prop_name('band')]=rtemp
         if _get_default_prop_name('zp') not in blue.colnames:
-            blue[_get_default_prop_name('zp')]=zpMag.band_flux_to_mag(1,bandDict[color[0]])
+            blue[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,blue[_get_default_prop_name('band')][i]) for i in range(len(blue))]
         if _get_default_prop_name('zp') not in red.colnames:
-            red[_get_default_prop_name('zp')]=zpMag.band_flux_to_mag(1,bandDict[color[-1]])
+            red[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,red[_get_default_prop_name('band')][i]) for i in range(len(red))]
         if _get_default_prop_name('flux') not in blue.colnames:
             blue=_mag_to_flux(blue)
         if _get_default_prop_name('flux') not in red.colnames:
             red=_mag_to_flux(red)
+
         if not model:
             if verbose:
                 print('No model provided, running series of models.')
+            print(snType)
+            mod,types=np.loadtxt('hickens/models.ref',dtype='str',unpack=True)
+            modDict={mod[i]:types[i] for i in range(len(mod))}
             if snType!='1a':
-                mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'snana' in x[0]]
+                mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(snType)]==snType]
             elif snType=='1a':
                 mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'salt2' in x[0]]
+
+            '''
+            mods={mod[i]:types[i] for i in range(len(mod))}
+            mods=[x for x in mods.keys() if mods[x]=='IIn']
+            '''
             mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}
             p = Pool(processes=multiprocessing.cpu_count())
             fits=[]
+
             if len(blue)>len(red) or bandFit==color[0]:
-                for x in p.imap_unordered(_snFitWrap,[(x,blue,method,params,bounds,ignore,constants) for x in mods]):
+                for x in p.imap_unordered(_snFitWrap,[(x,blue,method,params,bounds,ignore,constants,dust,effect_names,effect_frames) for x in mods]):
                     fits.append(x)
                 p.close()
                 fitted=blue
                 notFitted=red
-                fit='Blue'
+                fit=color[0]
             elif len(blue)<len(red) or bandFit==color[-1]:
-                for x in p.imap_unordered(_snFitWrap,[(x,red,method,params,bounds,ignore,constants) for x in mods]):
+                for x in p.imap_unordered(_snFitWrap,[(x,red,method,params,bounds,ignore,constants,dust,effect_names,effect_frames) for x in mods]):
                     fits.append(x)
                 p.close()
                 fitted=red
                 notFitted=blue
-                fit='Red'
+                fit=color[-1]
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
             bestChisq=inf
-            for fit in fits:
-                if fit:
-                    res,mod=fit
+            for f in fits:
+                if f:
+                    res,mod=f
                     if res.chisq <bestChisq:
                         bestChisq=res.chisq
                         bestFit=mod
@@ -627,42 +664,79 @@ def curveToColor(curve,colors,bandFit=None,snType='2',bandDict=_filters,zpsys='A
             if verbose:
                 print('Best fit model is "%s", with a Chi-squared of %f'%(bestFit._source.name,bestChisq))
         elif len(blue)>len(red) or bandFit==color[0]:
-            bestRes,bestFit=_snFit((model,blue,method,params,bounds,ignore,constants))
+            bestRes,bestFit=_snFit((model,blue,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
             fitted=blue
             notFitted=red
-            fit='Blue'
+            fit=color[0]
             if verbose:
                 print('The model you chose (%s) completed with a Chi-squared of %f'%(model,bestRes.chisq))
         elif len(blue)<len(red) or bandFit==color[-1]:
-            bestRes,bestFit=_snFit((model,red,method,params,bounds,ignore,constants))
+            bestRes,bestFit=_snFit((model,red,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
             fitted=red
             notFitted=blue
-            fit='Red'
+            fit=color[-1]
             if verbose:
                 print('The model you chose (%s) completed with a Chi-squared of %f'%(model,bestRes.chisq))
         else:
             raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
 
-        t0=bestRes.parameters[bestRes.param_names.index('t0')]
-        tGrid,bestFlux=_snmodel_to_flux(bestFit,fitted,fitted[_get_default_prop_name('zp')][0],zpsys,fitted[_get_default_prop_name('band')][0])
-        tempTable=Table([tGrid-t0,bestFlux,bestFlux*.1],names=(_get_default_prop_name('time'),_get_default_prop_name('flux'),_get_default_prop_name('fluxerr')))
-        tempTable[_get_default_prop_name('zp')]=fitted[_get_default_prop_name('zp')][0]
-        tempTable=_flux_to_mag(tempTable)
+        #t0=bestRes.parameters[bestRes.param_names.index('t0')]
+        t0=_getBandMaxTime(bestFit,fitted,bandDict,'B',zpMag.band_flux_to_mag(1,bandDict['B']),zpsys)
+        if len(t0)==1:
+            t0=t0[0]
+        else:
+            raise RuntimeError('Multiple global maxima in best fit.')
+
+        tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
+        #corrFlux=_ccm_unred()zpMag.band_flux_to_mag(1,bandDict[fit]),
+        ugrid,UMagErr,lgrid,LMagErr=_getErrorFromModel((bestFit._source.name,fitted,method,params,bounds,ignore,constants,dust,effect_names,effect_frames),zpsys,bandDict[fit])
+        tempTable=Table([tGrid-t0,bestMag,bestMag*.1],names=(_get_default_prop_name('time'),_get_default_prop_name('mag'),_get_default_prop_name('magerr')))
         interpFunc=scint.interp1d(array(tempTable[_get_default_prop_name('time')]),array(tempTable[_get_default_prop_name('mag')]))
-        interp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
-        for i in range(len(interp)):
+        minterp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
+        interpFunc=scint.interp1d(ugrid-t0,UMagErr)
+        uinterp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
+        interpFunc=scint.interp1d(lgrid-t0,LMagErr)
+        linterp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
+        magerr=mean([minterp-uinterp,linterp-minterp],axis=0)
+
+        for i in range(len(minterp)):
             colorTable.add_row(append(notFitted[_get_default_prop_name('time')][i]-t0,[1 for j in range(len(colorTable.colnames)-1)]),mask=[True if j>0 else False for j in range(len(colorTable.colnames))])
-        if fit=='Blue':
-            colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(interp))],interp-array(notFitted[_get_default_prop_name('mag')])),mask=[True if j<(len(colorTable)-len(interp)) else False for j in range(len(colorTable))])
+        if fit==color[0]:
+            colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],minterp-array(notFitted[_get_default_prop_name('mag')])),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
+            print(bestRes.parameters[bestRes.param_names.index('t0')])
             #sncosmo.plot_lc(blue,model=bestFit,errors=bestRes.errors)
         else:
-            colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(interp))],array(notFitted[_get_default_prop_name('mag')])-interp),mask=[True if j<(len(colorTable)-len(interp)) else False for j in range(len(colorTable))])
+            colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],array(notFitted[_get_default_prop_name('mag')])-minterp),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
+            print(bestRes.parameters[bestRes.param_names.index('t0')])
             #sncosmo.plot_lc(red,model=bestFit,errors=bestRes.errors)
-
-
-        #plt.show()
+        colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
+    #plt.savefig(filename[:-3]+'pdf',format='pdf')
+        #sncosmo.write_lc(colorTable,os.path.join('hickens','type'+snType,'tables','uncorr_'+os.path.basename(filename)))
+        for name in bestFit.effect_names:
+            magCorr=_unredden(color,bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
+            colorTable[color]-=magCorr
+        #sncosmo.write_lc(colorTable,os.path.join('hickens','type'+snType,'tables','corr_'+os.path.basename(filename)))
     colorTable.sort(_get_default_prop_name('time'))
+    #plt.show()
+
     return(colorTable)
+
+def _getErrorFromModel(args,zpsys,band):
+    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
+    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]+curve[_get_default_prop_name('fluxerr')]
+    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+    ugrid,umag=_snmodel_to_mag(fit,curve,zpsys,band)
+    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]-2*curve[_get_default_prop_name('fluxerr')]
+    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+    lgrid,lmag=_snmodel_to_mag(fit,curve,zpsys,band)
+    return (ugrid,umag,lgrid,lmag)
+
+
+def _getBandMaxTime(model,table,bands,band,zp,zpsys):
+    tgrid,mflux=_snmodel_to_flux(model,table,zp,zpsys,bands[band])
+    #idx,val=_find_nearest(tgrid,min(tgrid)+30)
+    return(tgrid[where(mflux==max(mflux))])
+
 def _bandCheck(bandDict,band):
     try:
         bandDict[band]=sncosmo.get_bandpass(bandDict[band])
@@ -677,16 +751,29 @@ def _bandCheck(bandDict,band):
 def _snFitWrap(args):
     try:
         return(_snFit(args))
-    except:
+    except RuntimeError:
         return(None)
 
 def _snFit(args):
+    warnings.simplefilter('ignore')
     sn_func={'minuit': sncosmo.fit_lc, 'mcmc': sncosmo.mcmc_lc, 'nest': sncosmo.nest_lc}
-    model,curve,method,params,bounds,ignore,constants=args
-    model=sncosmo.Model(source=model)
-    params=params if params else [x for x in model.param_names]
+    dust_dict={'SFD98Map':sncosmo.SFD98Map,'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
+    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
+    if dust:
+        dust=dust_dict[dust]()
+    else:
+        dust=[]
     bounds=bounds if bounds else {}
     ignore=ignore if ignore else []
+    effects=[dust for i in range(len(effect_names))] if effect_names else []
+    effect_names=effect_names if effect_names else []
+    effect_frames=effect_frames if effect_frames else []
+    if not isinstance(effect_names,(list,tuple)):
+        effects=[effect_names]
+    if not isinstance(effect_frames,(list,tuple)):
+        effects=[effect_frames]
+    model=sncosmo.Model(source=model,effects=effects,effect_names=effect_names,effect_frames=effect_frames)
+    params=params if params else [x for x in model.param_names]
     no_bound = {x for x in params if x in _needs_bounds and x not in bounds.keys() and x not in constants.keys()}
     if no_bound:
         params=list(set(params)-no_bound)
@@ -719,6 +806,20 @@ def _flux_to_mag(table):
                                                              table[_get_default_prop_name('fluxerr')]))
     return table
 
+def _snmodel_to_mag(model,table,zpsys,band):
+    warnings.simplefilter("ignore")
+    tmin = []
+    tmax = []
+    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
+    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
+    tmin.append(model.mintime())
+    tmax.append(model.maxtime())
+    tmin = min(tmin)
+    tmax = max(tmax)
+    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
+    mMag = model.bandmag(band, zpsys,tgrid)
+    return(tgrid,mMag)
+
 def _snmodel_to_flux(model,table,zp,zpsys,band):
     warnings.simplefilter("ignore")
     tmin = []
@@ -732,3 +833,37 @@ def _snmodel_to_flux(model,table,zp,zpsys,band):
     tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
     mflux = model.bandflux(band, tgrid, zp=zp, zpsys=zpsys)
     return(tgrid,mflux)
+
+
+def _getReddeningCoeff(band):
+    wave=[10000/2.86,10000/2.78,10000/2.44,10000/2.27,10000/2.13,10000/1.43,10000/1.11,10000/.8,10000/.63,10000/.46,10000/.29]
+    a=[.913,0.958,.98,1.0,.974,0.855,0.661,0.421,0.225,0.148,0.043]
+    b=[2.14,1.898,1.284,1,.803,-.309,-.555,-.458,-.243,-.099,.159]
+    aInterpFunc=scint.interp1d(wave,a)
+    bInterpFunc=scint.interp1d(wave,b)
+    return(aInterpFunc(band.wave_eff),bInterpFunc(band.wave_eff))
+
+
+
+def _unredden(color,bands,ebv,r_v):
+    A_v=r_v*ebv
+    blue=bands[color[0]]
+    red=bands[color[-1]]
+    if not isinstance(blue,sncosmo.Bandpass):
+        blue=sncosmo.get_bandpass(blue)
+    if not isinstance(red,sncosmo.Bandpass):
+        red=sncosmo.get_bandpass(red)
+    if color[0]=='V':
+        a,b=_getReddeningCoeff(red)
+        A_blue=A_v
+        A_red=(a+b/r_v)*A_v
+    elif color[-1]=='V':
+        a,b=_getReddeningCoeff(blue)
+        A_blue=(a+b/r_v)*A_v
+        A_red=A_v
+    else:
+        a_blue,b_blue=_getReddeningCoeff(blue)
+        a_red,b_red=_getReddeningCoeff(red)
+        A_blue=(a_blue+b_blue/r_v)*A_v
+        A_red=(a_red+b_red/r_v)*A_v
+    return(A_blue-A_red)

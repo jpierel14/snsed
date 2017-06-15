@@ -27,7 +27,7 @@ from __future__ import print_function
 
 import numpy as np
 from scipy.interpolate import RectBivariateSpline
-import sncosmo
+import sncosmo,sys
 import matplotlib.pyplot as plt
 
 class ComboSource(sncosmo.Source):
@@ -65,8 +65,8 @@ class ComboSource(sncosmo.Source):
 from sncosmo.builtins import DATADIR
 #filename='SNLS-04D1la.SED'
 #filename='SDSS-018892.SED'
-filename='SDSS-019323.SED'
-filename2='SDSS-019323.SED'
+filename='../overflow_snsedextend/SDSS-013449.SED'
+filename2='SDSS-000020.SED'
 #filename='../Nugent+Scolnic_IIL.SED'
 phase1, wave1, flux1 = sncosmo.read_griddata_ascii(filename)
 phase2, wave2, flux2 = sncosmo.read_griddata_ascii(filename2)
@@ -83,27 +83,30 @@ source2=ComboSource(phase2, wave2, flux2, name='original')
 
 ##########################################################################
 # Get a spectrum at phase 10 for different parameters:
-'''
+
 from matplotlib import pyplot as plt
 
-wave = np.linspace(3000.0, 24000.0, 500)
-for w in (0.1, 0.2, 0.4, 0.6, 0.8, 1.0):
-    source.set(amplitude=w)
-    plt.plot(wave, source.flux(10., wave), label='w={:3.1f}'.format(w))
-
-plt.legend()
+wave = np.linspace(2000.0, 10000.0, 500)
+w=1.0
+source.set(amplitude=w)
+ax=plt.gca()
+plt.plot(wave, source.flux(10., wave), label='w={:3.1f}'.format(w))
+ax.set_title('SED: SDSS-013449, UV Extrapolation')
+ax.set_xlabel('Wavelength (Angstrom)')
+ax.set_ylabel('Flux')
 plt.show()
-'''
+sys.exit()
 ##########################################################################
 # The w=0 spectrum is that of the Ia model, the w=1 spectrum is that of
 # the IIp model, while intermediate spectra are weighted combinations.
 #
 # We can even fit the model to some data!
 model = sncosmo.Model(source=source)
-wave,trans=np.loadtxt('snsedextend/data/bands/kband/tophatK.dat',unpack=True)
-band=sncosmo.Bandpass(wave,trans,name='tophatk')
-sncosmo.registry.register(band)
-model.set(z=0)
+for f in ['j','h','ks']:
+    wave,trans=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','filters',f+'.dat'),unpack=True)
+    wave*=10000
+    sncosmo.registry.register(sncosmo.Bandpass(wave,trans,name='paritel::'+f),force=True)
+model.set(z=0.021308074)
 print(model.bandmag('bessellux','vega',0)-model.bandmag('bessellv','vega',0))
 '''
 wave,trans=np.loadtxt('snsedextend/kband/tophatK.dat',unpack=True)
