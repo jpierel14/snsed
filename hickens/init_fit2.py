@@ -104,8 +104,8 @@ sne=[]
 times=[]
 #plt.figure()
 for f in files:
-	#if f not in ['lc_2008ip_clipped.dat']:#,'lc_2010bq_clipped.dat']:
-	#	continue
+	if f not in ['lc_2009kn_clipped.dat','lc_2010bq_clipped.dat']:
+		continue
 	print(f)
 	t0=0
 	lc=sncosmo.read_lc(f)

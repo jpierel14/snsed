@@ -369,7 +369,40 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
 
     return(w,f)
 
+def _getBestModel(table,ir):
+    import pandas as pd
+    import pymc3 as pm
+    import snsedextend
 
+
+    modelList=['k1','k2']
+
+    temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
+    temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
+    models_lin,traces_lin=snsedextend.run_models(temp,2)
+    #print([name for name,thing in inspect.getmembers(models_lin['k2'].model)])
+
+    dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
+    dfdic.index.name = 'model'
+
+    for nm in dfdic.index:
+        dfdic.loc[nm, 'dic'] = pm.stats.dic(traces_lin[nm], models_lin[nm])
+        dfdic.loc[nm, 'waic'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
+
+    dfdic = pd.melt(dfdic.reset_index(), id_vars=['model'], var_name='poly', value_name='Information Criterion')
+
+    #g = sns.factorplot(x='model', y='Information Criterion', col='poly', hue='poly', data=dfdic, kind='bar', size=6)
+    #plt.show()
+    dfwaic = pd.DataFrame(index=modelList, columns=['lin'])
+    dfwaic.index.name = 'model'
+
+    for nm in dfwaic.index:
+        dfwaic.loc[nm, 'lin'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
+
+    best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
+    dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], var_name=ir.upper(), value_name='waic')
+
+    snsedextend.plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,typ=type,bic=dfwaic)
 
 def _extrapolatesed(sedfile, newsedfile,color,table, bands,niter=50):
     """ Interpolate the given transmission function to the wavestep of the SED, then
@@ -711,11 +744,11 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
             #sncosmo.plot_lc(red,model=bestFit,errors=bestRes.errors)
         colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
     #plt.savefig(filename[:-3]+'pdf',format='pdf')
-        #sncosmo.write_lc(colorTable,os.path.join('hickens','type'+snType,'tables','uncorr_'+os.path.basename(filename)))
+        sncosmo.write_lc(colorTable,os.path.join('modjaz','type'+snType[:2],'tables','uncorr_'+os.path.basename(filename)))
         for name in bestFit.effect_names:
             magCorr=_unredden(color,bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
             colorTable[color]-=magCorr
-        #sncosmo.write_lc(colorTable,os.path.join('hickens','type'+snType,'tables','corr_'+os.path.basename(filename)))
+        sncosmo.write_lc(colorTable,os.path.join('modjaz','type'+snType[:2],'tables','corr_'+os.path.basename(filename)))
     colorTable.sort(_get_default_prop_name('time'))
     #plt.show()
 

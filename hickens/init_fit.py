@@ -101,7 +101,7 @@ sne=[]
 times=[]
 #plt.figure()
 for f in files:
-	if f not in ['lc_2010bq.dat','lc_2008ip.dat']:
+	if f not in ['lc_2006it.dat','lc_2009ay.dat']:
 		continue
 	print(f)
 	t0=0
@@ -132,19 +132,18 @@ for f in files:
 		lc=lc[lc['MJD']<np.min(lc['MJD'])+30]
 	'''
 	print(np.min(lc['MJD']))
+
 	constants={'z':redshift[f[:-4]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dusts[f[:-4]]}
-	if f=='lc_2007aa.dat':
-		bounds={'t0':(np.min(lc['MJD'])+20,np.min(lc['MJD'])+50),'hostebv':(-1,1)}
-	elif f=='lc_2008in.dat':
-		bounds={'t0':(np.min(lc['MJD'])-5,np.min(lc['MJD'])+5),'hostebv':(-1,1)}
-	elif f=='lc_2010bq.dat':
+	if f=='lc_2010bq.dat':
 		bounds={'t0':(np.min(lc['MJD'])-10,np.min(lc['MJD'])+30),'hostebv':(-1,1)}
 	elif f=='lc_2006it.dat':
-		bounds={'t0':(np.min(lc['MJD'])-30,np.min(lc['MJD'])+5),'hostebv':(-1,1)}
-	elif f=='lc_2008bj.dat':
+		bounds={'t0':(np.min(lc['MJD'])+10,np.min(lc['MJD'])+30),'hostebv':(-1,1)}
+	elif f=='lc_2006cd.dat':
+		bounds={'t0':(np.min(lc['MJD']),np.min(lc['MJD'])+20),'hostebv':(-1,1)}
+	elif f =='lc_2007rt.dat':
+		bounds={'t0':(np.min(lc['MJD'])-30,np.min(lc['MJD'])),'hostebv':(-1,1)}
+	elif f =='lc_2009ay.dat':
 		bounds={'t0':(np.min(lc['MJD']),np.min(lc['MJD'])+10),'hostebv':(-1,1)}
-	elif f =='lc_2008ip.dat':
-		bounds={'t0':(np.min(lc['MJD'])-30,np.min(lc['MJD'])+5),'hostebv':(-1,1)}
 	else:
 		bounds={'t0':(np.min(lc['MJD'])-20,np.min(lc['MJD'])+20),'hostebv':(-1,1)}
 	mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(typ[f[:-4]])]==typ[f[:-4]]]

@@ -105,9 +105,10 @@ sne=[]
 times=[]
 #plt.figure()
 for f in files:
-	if f not in ['lc_2005bf_clipped.dat']:#,'lc_2010bq_clipped.dat']:
+	if f not in ['lc_2006jc_clipped.dat']:#,'lc_2010bq_clipped.dat']:
 		continue
 	print(f)
+	print(typ[f[:-12]])
 	t0=0
 	lc=sncosmo.read_lc(f)
 	f=f[:-8]

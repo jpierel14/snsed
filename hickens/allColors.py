@@ -115,13 +115,13 @@ def getErrors(x):
 		#rr=
 	#return(np.mean(x))
 
-t='II'
+t='IIn'
 uvcol={
-	'II':['U-B','U-V'],
+	'II':['U-B','u-B','U-V','U-r'],
 	'IIn':['U-B','u-B','u-V']
 }
 ircol={
-	'II':['B-'],
+	'II':['V-','B-'],
 	'IIn':['V-']
 }
 #UVcolorOrder=['U-B','U-V','U-r'] #typeII
@@ -172,7 +172,7 @@ for row in colors:
 				break
 
 uvdata=Table([uvtime,uvcolors,allUVColors,allUVerr],names=['time','color','mag','error'],masked=True)
-bin=np.array(np.trunc(uvdata['time']/2))
+bin=np.array(np.trunc(uvdata['time']/.001))
 uvgrouped=uvdata.group_by(bin)
 uvtime=uvgrouped['time'].groups.aggregate(np.mean)
 #uvmag=uvgrouped['mag'].groups.aggregate(uv_weighted_avg)
@@ -194,7 +194,7 @@ plt.savefig(os.path.join("type"+t,'plots','UVAverageColor.pdf'),format='pdf')
 
 for ir in ['J','H','K']:
 	irdata=Table([irtime[ir],ircolors[ir],allIRColors[ir],allIRerr[ir]],names=['time','color','mag','error'],masked=True)
-	bin=np.array(np.trunc(irdata['time']/4))
+	bin=np.array(np.trunc(irdata['time']/.001))
 	irgrouped=irdata.group_by(bin)
 	time=irgrouped['time'].groups.aggregate(np.mean)
 	#mag=irgrouped['mag'].groups.aggregate(ir_weighted_avg)

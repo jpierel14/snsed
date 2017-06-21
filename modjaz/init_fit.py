@@ -102,7 +102,7 @@ sne=[]
 times=[]
 #plt.figure()
 for f in files:
-	if f not in ['lc_2005bf.dat']:
+	if f not in ['lc_2006jc.dat']:
 		continue
 	print(f)
 	t0=0
@@ -135,7 +135,7 @@ for f in files:
 	'''
 	print(np.min(lc['MJD']))
 	constants={'z':redshift[f[:-4]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dusts[f[:-4]]}
-	bounds={'t0':(np.min(lc['MJD'])+30,np.min(lc['MJD'])+40),'hostebv':(-1,1)}
+	bounds={'t0':(np.min(lc['MJD'])-20,np.min(lc['MJD'])+20),'hostebv':(-1,1)}
 	tempType=typ[f[:-4]]
 	if '/' in tempType:
 		temp1=tempType[:tempType.rfind('/')]

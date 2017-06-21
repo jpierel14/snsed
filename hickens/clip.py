@@ -13,15 +13,12 @@ for f in files:
 	maxBand2=None
 	lc=sncosmo.read_lc(f)
 	
-	if f[:-4] in ['lc_2006it']:
+	if f[:-4] in ['lc_2008in','lc_2008ip']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+40]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-40]
-	elif f[:-4] in ['lc_2002bx','lc_2006ca','lc_2007rt','lc_2008aj','lc_2008bn','lc_2008in','lc_2009ay']:
+	elif f[:-4] in ['lc_2005kd','lc_2006it','lc_2008bj']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+30]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-30]
-	elif f[:-4] in ['lc_2005kd','lc_2008bj','lc_2008ip','lc_2009kn','lc_2010bq']:
-		lc=lc[lc['MJD']<peaks[f[:-4]]+20]
-		lc=lc[lc['MJD']>peaks[f[:-4]]-20]
 	else:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+50]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-50]

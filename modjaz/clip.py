@@ -9,8 +9,8 @@ sne,peaks=np.loadtxt('timeOfPeak.dat',dtype='str',unpack=True)
 peaks={sne[i]:float(peaks[i]) for i in range(len(sne))}
 
 for f in files:
-	#if f not in ['lc_2008ip.dat','lc_2010bq.dat']:
-	#	continue
+	if f not in ['lc_2006jc.dat']:
+		continue
 	maxBand=None
 	maxBand2=None
 	lc=sncosmo.read_lc(f)
@@ -18,12 +18,21 @@ for f in files:
 		if lc['Band'][i]=='Ks':
 			lc['Band'][i]='K'
 	#print(lc)
-	if f[:-4] in ['lc_2005hg','lc_2008aq']:
+	
+	if f[:-4] in ['lc_2008aq']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+40]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-40]
-	elif f[:-4] in ['lc_2005mf','lc_2006T','lc_2007C','lc_2009jf']:
+	elif f[:-4] in ['lc_2006jc']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+30]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-30]
+	elif f[:-4] in ['lc_2009iz']:
+		lc=lc[lc['MJD']<peaks[f[:-4]]+20]
+		lc=lc[lc['MJD']>peaks[f[:-4]]-20]
+	else:
+		lc=lc[lc['MJD']<peaks[f[:-4]]+50]
+		lc=lc[lc['MJD']>peaks[f[:-4]]-50]
+	'''
+	
 	elif f[:-4] in ['lc_2004aw','lc_2007uy','lc_2007gr']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+25]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-25]
@@ -33,9 +42,8 @@ for f in files:
 	elif f[:-4] in ['lc_2005bf']:
 		lc=lc[lc['MJD']<peaks[f[:-4]]+15]
 		lc=lc[lc['MJD']>peaks[f[:-4]]-15]
-	else:
-		lc=lc[lc['MJD']<peaks[f[:-4]]+50]
-		lc=lc[lc['MJD']>peaks[f[:-4]]-50]
+	'''
+	
 	
 	if 'U' not in lc['Band'] and 'u' not in lc['Band'] and 'J' not in lc['Band'] and 'H' not in lc['Band'] and 'Ks' not in lc['Band']:
 		#os.remove(f)
@@ -98,6 +106,7 @@ for f in files:
 		red=maxBand2
 		if red and blue:
 			print(os.path.basename(f),blue+'-'+red)
+
 	if not blue or not red:
 		remove.append(f)
 	sncosmo.write_lc(lc,f[:-4]+'_clipped.dat')

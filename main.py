@@ -185,7 +185,7 @@ from astropy.io import ascii
 import sncosmo
 
 dir='modjaz'
-type=['II']
+type=['Ib']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*clipped.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
@@ -200,7 +200,7 @@ typ={sn[i]:types[i] for i in range(len(sn))}
 sne,peaks=np.loadtxt(os.path.join(dir,'timeOfPeak.dat'),dtype='str',unpack=True)
 peaks={sne[i]:float(peaks[i]) for i in range(len(sne))}
 
-typeIColors=None
+typeColors=None
 
 for k in colors:
     if len(colors[k])>3:
@@ -208,16 +208,14 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 for i in range(len(filelist)):
-    if filelist[i]=='lc_2005hg_clipped.dat':#typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
+    if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2006jc_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
         colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
                                             bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
                                             constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
                                             dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
-        snsedextend.extendNon1a(colorTable,sedlist='SDSS-000020.SED',verbose=True)
-
-        continue
+        '''
         for color in colors[filelist[i][:-12]]:
             fig=plt.figure()
             ax=plt.gca()
@@ -230,12 +228,16 @@ for i in range(len(filelist)):
             fig.text(0.01, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical')
             plt.savefig(os.path.join(dir,"type"+type[0],"plots",filelist[i][:-12]+"_"+color[0]+color[-1]+".pdf"),format='pdf')
             plt.close()
-        if typeIColors:
-            typeIColors=vstack([typeIColors,colorTable])
+        '''
+        if typeColors:
+            typeColors=vstack([typeColors,colorTable])
         else:
-            typeIColors=colorTable
+            typeColors=colorTable
 
+
+snsedextend.extendNon1a(typeColors,sedlist=['SDSS-000020.SED','SDSS-002744.SED','SDSS-014492.SED','SDSS-019323.SED'],verbose=True)
+sys.exit()
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
-typeIColors.sort('time')
+typeColors.sort('time')
 #sncosmo.write_lc(allColors,'lcs_clipped2/tables/allColors.dat')
-ascii.write(typeIColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))

@@ -2,18 +2,347 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/#blue.lc#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.#blue.lc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SDSS-018892.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SDSS-019323.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/blue.lc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cfa4.stdsystem.lc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/red.lc" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/snsedextend/BIC.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007aa.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007aa_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007rt_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2007aa.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2007rt.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2008aj.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2008ip.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2010bq.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2001gd.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004ao.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004ao_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006ld.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006ld_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2004ao_UB.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2004gq_UV.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_rH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_rJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_rK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008aq_Ur.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_uV.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_UV.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_VH.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_VJ.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_VK.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/fits/lc_2005hg.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/H_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/H_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/J_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/J_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/K_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/K_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/UV_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeII/UV_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/H_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/H_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/J_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/J_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/K_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/K_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/UV_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIIn/UV_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/H_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/H_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/J_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/J_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/K_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/K_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/UV_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIb/UV_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/H_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/H_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/J_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/J_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/K_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/K_waic.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/UV_fits.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tex/FIG/typeIc/UV_waic.pdf" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2002bx.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2002bx.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006ca.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006ca.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006cd.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006cd.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006it.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006it.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2007av.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2007av.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bj.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bj.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bn.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bn.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008in.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008in.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2009ay.png" afterPath="$PROJECT_DIR$/hickens/typeII/fits/lc_2009ay.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/H_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/H_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/H_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/H_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageHColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageHColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageJColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageJColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageKColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageKColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/J_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/J_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/J_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/J_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/K_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/K_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/K_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/K_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UVAverageColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/UVAverageColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UV_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/UV_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UV_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/UV_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2002bx_UB.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2002bx_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006ca_UB.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006ca_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006cd_UV.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006cd_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BH.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BJ.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BK.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rH.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rJ.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rK.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bj_UB.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bj_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bn_UB.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bn_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BH.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BJ.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BK.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BH.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BJ.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BK.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rH.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rJ.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rK.pdf" afterPath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2005kd.png" afterPath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2005kd.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2009kn.png" afterPath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2009kn.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/H_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/H_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/H_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/H_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageHColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageHColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageJColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageJColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageKColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageKColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/J_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/J_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/J_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/J_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/K_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/K_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/K_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/K_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UVAverageColor.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/UVAverageColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_fits.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_waic.pdf" afterPath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2004gq.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2004gq.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005bf.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005bf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005hg.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005hg.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006F.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006F.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006T.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006T.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006fo.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006fo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006jc.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006jc.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007C.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007C.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007uy.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007uy.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008D.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008D.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008aq.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008aq.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009er.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009er.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009iz.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009iz.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009jf.png" afterPath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009jf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/H_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/H_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/H_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/H_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageHColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageHColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageJColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageJColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageKColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageKColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/J_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/J_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/J_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/J_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/K_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/K_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/K_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/K_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UVAverageColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/UVAverageColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_Ur.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_Ur.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_UB.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006F_UV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006F_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006T_UB.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006T_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_UV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_uV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_uV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2004aw.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2004aw.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005az.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005az.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005kl.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005kl.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005mf.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005mf.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2006aj.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2006aj.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007D.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007D.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007I.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007I.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007ce.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007ce.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007gr.png" afterPath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007gr.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/H_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/H_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/H_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/H_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageHColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageHColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageJColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageJColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageKColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageKColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/J_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/J_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/J_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/J_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/K_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/K_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/K_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/K_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UVAverageColor.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/UVAverageColor.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_fits.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_fits.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_waic.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_waic.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2004aw_UV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2004aw_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UB.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UB.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UB.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UV.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UV.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rH.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rH.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rJ.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rJ.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rK.pdf" afterPath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rK.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tex/snsed.pdf" afterPath="$PROJECT_DIR$/tex/snsed.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/allColors.py" afterPath="$PROJECT_DIR$/hickens/allColors.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/clip.py" afterPath="$PROJECT_DIR$/hickens/clip.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/color.ref" afterPath="$PROJECT_DIR$/hickens/color.ref" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/dic.py" afterPath="$PROJECT_DIR$/hickens/dic.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/init_fit.py" afterPath="$PROJECT_DIR$/hickens/init_fit.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/init_fit2.py" afterPath="$PROJECT_DIR$/hickens/init_fit2.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2002bx_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2002bx_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2005kd.dat" afterPath="$PROJECT_DIR$/hickens/lc_2005kd.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2005kd_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2005kd_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2006ca_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2006ca_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2006it_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2006it_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2008aj_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2008aj_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2008bj_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2008bj_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2008bn.dat" afterPath="$PROJECT_DIR$/hickens/lc_2008bn.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2008bn_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2008bn_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2008in_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2008in_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2009ay_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2009ay_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2009kn.dat" afterPath="$PROJECT_DIR$/hickens/lc_2009kn.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2009kn_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2009kn_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/lc_2010bq_clipped.dat" afterPath="$PROJECT_DIR$/hickens/lc_2010bq_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/peaks.dat" afterPath="$PROJECT_DIR$/hickens/peaks.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/sne.dat" afterPath="$PROJECT_DIR$/hickens/sne.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/timeOfPeak.dat" afterPath="$PROJECT_DIR$/hickens/timeOfPeak.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/type.ref" afterPath="$PROJECT_DIR$/hickens/type.ref" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/H.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/H.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/J.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/J.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/K.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/K.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/allIIColors.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2002bx_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2002bx_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006ca_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006ca_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006cd_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006cd_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006it_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006it_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2007av_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2007av_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bj_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bj_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bn_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bn_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008in_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008in_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2009ay_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2009ay_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2002bx_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2002bx_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006ca_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006ca_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006cd_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006cd_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006it_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006it_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2007av_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2007av_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bj_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bj_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bn_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bn_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008in_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008in_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2009ay_clipped.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2009ay_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uv.dat" afterPath="$PROJECT_DIR$/hickens/typeII/tables/uv.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/H.dat" afterPath="$PROJECT_DIR$/hickens/typeIIn/tables/H.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/J.dat" afterPath="$PROJECT_DIR$/hickens/typeIIn/tables/J.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/K.dat" afterPath="$PROJECT_DIR$/hickens/typeIIn/tables/K.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uv.dat" afterPath="$PROJECT_DIR$/hickens/typeIIn/tables/uv.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plot_custom_source.py" afterPath="$PROJECT_DIR$/plot_custom_source.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/definedBands.py" afterPath="$PROJECT_DIR$/snsedextend/definedBands.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/allColors.py" afterPath="$PROJECT_DIR$/modjaz/allColors.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/clip.py" afterPath="$PROJECT_DIR$/modjaz/clip.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/color.ref" afterPath="$PROJECT_DIR$/modjaz/color.ref" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/dic.py" afterPath="$PROJECT_DIR$/modjaz/dic.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/init_fit.py" afterPath="$PROJECT_DIR$/modjaz/init_fit.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/init_fit2.py" afterPath="$PROJECT_DIR$/modjaz/init_fit2.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2004aw_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2004aw_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2004gq_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2004gq_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2005bf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2005bf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2005hg_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2005hg_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2005kl_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2005kl_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2005mf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2005mf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2005nb_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2005nb_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2006T_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2006T_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2006fo_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2006fo_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2006jc_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2006jc_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2007C_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2007C_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2007I_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2007I_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2007gr_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2007gr_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2007uy_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2007uy_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2009iz_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2009iz_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/lc_2009jf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/lc_2009jf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/peaks.dat" afterPath="$PROJECT_DIR$/modjaz/peaks.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/sne.dat" afterPath="$PROJECT_DIR$/modjaz/sne.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/timeOfPeak.dat" afterPath="$PROJECT_DIR$/modjaz/timeOfPeak.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/H.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/H.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/J.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/J.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/K.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/K.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/allIbColors.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/allIbColors.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2004gq_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2004gq_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005bf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005bf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005hg_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005hg_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006F_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006F_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006T_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006T_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006fo_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006fo_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006jc_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006jc_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007C_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007C_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007uy_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007uy_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008D_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008D_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008aq_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008aq_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009er_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009er_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009iz_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009iz_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009jf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009jf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uv.dat" afterPath="$PROJECT_DIR$/modjaz/typeIb/tables/uv.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/H.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/H.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/J.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/J.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/K.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/K.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/allIcColors.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/allIcColors.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2004aw_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2004aw_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005az_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005az_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005kl_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005kl_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005mf_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005mf_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2006aj_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2006aj_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007D_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007D_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007I_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007I_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007ce_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007ce_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007gr_clipped.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007gr_clipped.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uv.dat" afterPath="$PROJECT_DIR$/modjaz/typeIc/tables/uv.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/__init__.py" afterPath="$PROJECT_DIR$/snsedextend/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/extrapolate.py" afterPath="$PROJECT_DIR$/snsedextend/extrapolate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tex/data/data.tex" afterPath="$PROJECT_DIR$/tex/data/data.tex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tex/snsed.log" afterPath="$PROJECT_DIR$/tex/snsed.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tex/snsed.tex" afterPath="$PROJECT_DIR$/tex/snsed.tex" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,29 +352,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1497559218280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1498069361554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="extrapolate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="717" column="9" lean-forward="false" selection-start-line="717" selection-start-column="9" selection-end-line="717" selection-end-column="9" />
-              <folding>
-                <element signature="e#61#131#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="217" column="67" lean-forward="false" selection-start-line="217" selection-start-column="67" selection-end-line="217" selection-end-column="67" />
+            <state relative-caret-position="199">
+              <caret line="235" column="0" lean-forward="false" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -53,17 +370,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="definedBands.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/snsedextend/definedBands.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="30" column="89" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="89" />
+            <state relative-caret-position="30">
+              <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1219">
+              <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="extrapolate.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="143">
+              <caret line="450" column="67" lean-forward="false" selection-start-line="450" selection-start-column="67" selection-end-line="450" selection-end-column="67" />
+              <folding>
+                <element signature="e#61#131#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -81,6 +429,7 @@
       <find>plt.</find>
       <find>_mag_to_</find>
       <find>bestre</find>
+      <find>extrap_hel</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -98,10 +447,11 @@
         <option value="$PROJECT_DIR$/snsedextend/snsedextend.py" />
         <option value="$PROJECT_DIR$/snsedextend/myBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/defaultBands.py" />
-        <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
         <option value="$PROJECT_DIR$/snsedextend/definedBands.py" />
-        <option value="$PROJECT_DIR$/snsedextend/extrapolate.py" />
+        <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
+        <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/snsedextend/extrapolate.py" />
       </list>
     </option>
   </component>
@@ -396,7 +746,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15555556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -503,38 +853,49 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/defaultBands.py" />
-    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/definedBands.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="25" lean-forward="true" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+        <state relative-caret-position="416">
+          <caret line="30" column="89" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="89" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="717" column="9" lean-forward="false" selection-start-line="717" selection-start-column="9" selection-end-line="717" selection-end-column="9" />
+        <state relative-caret-position="30">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
           <folding>
-            <element signature="e#61#131#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1219">
+          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="217" column="67" lean-forward="false" selection-start-line="217" selection-start-column="67" selection-end-line="217" selection-end-column="67" />
+        <state relative-caret-position="199">
+          <caret line="235" column="0" lean-forward="false" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/definedBands.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="30" column="89" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="89" />
-          <folding />
+        <state relative-caret-position="143">
+          <caret line="450" column="67" lean-forward="false" selection-start-line="450" selection-start-column="67" selection-end-line="450" selection-end-column="67" />
+          <folding>
+            <element signature="e#61#131#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

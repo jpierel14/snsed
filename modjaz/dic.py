@@ -3,6 +3,7 @@ from time import time
 
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -155,24 +156,34 @@ def run_models(df, upper_order=5):
 
 	return models, traces
 
+from matplotlib.offsetbox import AnchoredText
 
 def plot_posterior_cr(models, traces, rawdata, xlims,
-					  datamodelnm='linear', modelnms=None,bestModel=None,allDat=None):
+					  datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None):
 	'''
 	Convenience function:
 	Plot posterior predictions with credible regions shown as filled areas.
 	'''
 	ax={}
 	#f, ((ax[1],ax[2]),(ax[3],ax[4])) = plt.subplots(nrows=2,ncols=2,sharex=True,sharey=True, figsize=(16,12))
-	f, (ax[1],ax[2]) = plt.subplots(nrows=1,ncols=2,sharex=True,sharey=True, figsize=(16,12))
+	f, (ax[1],ax[2]) = plt.subplots(nrows=2,ncols=1,sharex=True,sharey=True, figsize=(16,12))
 	i=1
-	f.text(0.5, 0.05, 'Days After Peak', ha='center', va='center',size=20)
-	f.text(0.05, 0.5, 'Color (Magnitude)', ha='center', va='center', rotation='vertical',size=20)
-	f.suptitle('Posterior Predictive Fits -- Data: {} -- Best Model: Order {}'.format(
-							datamodelnm.upper(), bestModel[1]), fontsize=24)
+	f.text(0.5, 0.05, 'Days After Peak', ha='center', va='center',size=22)
+	f.text(0.05, 0.5, 'Color (Magnitude)', ha='center', va='center', rotation='vertical',size=22)
+	if datamodelnm.upper()=='UV':
+		f.suptitle('Posterior Predictive Fits -- Data: U-Optical, Type {} -- Best Model: Order {}'.format(
+								typ, bestModel[1]), fontsize=24)
+	else:
+		f.suptitle('Posterior Predictive Fits -- Data: Optical-{}, Type {} -- Best Model: Order {}'.format(
+								datamodelnm.upper(),typ, bestModel[1]), fontsize=24)
 	for modelnm in modelnms:
 		ax1d=ax[i]
-		ax1d.set_title('Model Order: {}'.format(modelnm[1]))
+		ax1d.tick_params(labelsize=20)
+		anchored_text = AnchoredText('BIC: '+str(np.round(bic['waic'][i-1],2)), loc=1)
+		ax1d.add_artist(anchored_text)
+
+		#ax1d.text(max(rawdata['x']),max(rawdata['y']),'BIC: '+str(np.round(bic['waic'][i-1],2)),ha='center',va='center',fontsize=15)
+		ax1d.set_title('Model: Polynomial of Order {}'.format(modelnm[1]),fontsize=22)
 		## Get traces and calc posterior prediction for npoints in x
 		npoints = 100
 		mdl = models[modelnm]
@@ -200,9 +211,9 @@ def plot_posterior_cr(models, traces, rawdata, xlims,
 		ax1d.fill_between(dfp['x'], dfp['250'], dfp['750'], alpha=0.5
 						  ,color=pal[4], label='CR 50%')
 		ax1d.plot(dfp['x'], dfp['500'], alpha=0.6, color=pal[5], label='Median')
-		_ = ax1d.legend(loc='lower right')
+		_ = ax1d.legend(loc='upper left',fontsize=15)
 		_ = ax1d.set_xlim(xlims)
-		_ = ax1d.errorbar(allDat['x'],allDat['y'],yerr=allDat['error'],fmt='.',color='red')
+		#_ = ax1d.errorbar(allDat['x'],allDat['y'],yerr=allDat['error'],fmt='.',color='red')
 		_ = ax1d.errorbar(rawdata['x'],rawdata['y'],yerr=rawdata['error'],fmt='.',color='blue')
 		_ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
 					   ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax1d)
@@ -217,18 +228,20 @@ def plot_posterior_cr(models, traces, rawdata, xlims,
           y0 - plot_margin,
           y1 + plot_margin))
 n = 12
-import sys,os
+import sys,os,inspect
 from astropy.io import ascii
 modelList=['k1','k2']#,'k3','k4']
-t='Ic'
+t='Ib'
 for ir in ['uv','J','H','K']:
 	table=ascii.read(os.path.join('type'+t,'tables',ir+'.dat'))
 	allData=ascii.read(os.path.join('type'+t,'tables',ir+'all.dat'))
-	temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag'])*(-1),'error':np.array(table['magerr'])})
+	temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
 	alltemp=pd.DataFrame({'x':np.array(allData['time']),'y':np.array(allData['mag'])*(-1),'error':np.array(allData['magerr'])})
 	temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
-	models_lin,traces_lin=run_models(temp,4)
-
+	models_lin,traces_lin=run_models(temp,2)
+	#print([name for name,thing in inspect.getmembers(models_lin['k2'].model)])
+	print(models_lin['k2']['Intercept'])
+	sys.exit()
 	dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
 	dfdic.index.name = 'model'
 
@@ -248,11 +261,11 @@ for ir in ['uv','J','H','K']:
 
 	best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
 	dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], var_name=ir.upper(), value_name='waic')
-
 	g = sns.factorplot(x='model', y='waic', col=ir.upper(), hue=ir.upper(), data=dfwaic, kind='bar', size=6)
 	plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_waic.pdf'),fmt='pdf')
 
-	plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp)
+	plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp,typ=t,bic=dfwaic)
+
 	plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_fits.pdf'),format='pdf')
 
 

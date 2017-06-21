@@ -117,12 +117,12 @@ def getErrors(x):
 
 t='Ic'
 uvcol={
-	'Ib':['U-B','U-V','u-V','U-r'],
-	'Ic':['U-V']
+	'Ib':['U-B','u-B','U-V','U-r'],
+	'Ic':['U-B','U-V']
 }
 ircol={
 	'Ib':['r-','V-'],
-	'Ic':['r-','V-']
+	'Ic':['r-']
 }
 UVcolorOrder=uvcol[t]
 IRcolorOrder=ircol[t]
@@ -175,7 +175,7 @@ for row in colors:
 
 
 uvdata=Table([uvtime,uvcolors,allUVColors,allUVerr],names=['time','color','mag','error'],masked=True)
-bin=np.array(np.trunc(uvdata['time']/4))
+bin=np.array(np.trunc(uvdata['time']/.001))
 uvgrouped=uvdata.group_by(bin)
 uvtime=uvgrouped['time'].groups.aggregate(np.mean)
 #uvmag=uvgrouped['mag'].groups.aggregate(uv_weighted_avg)
@@ -189,7 +189,7 @@ fig=plt.figure()
 ax=plt.gca()
 ax.errorbar(np.array(uvtime),np.array(uvmag),yerr=np.array(uvmagerr),fmt='x')
 ax.invert_yaxis()
-plt.title('UV Average Color, Type '+t+' (Bin Size=4 Days)',size=15)
+plt.title('UV Average Color, Type '+t,size=15)
 fig.text(0.5, 0.02, 'Time (Since Peak)', ha='center',size=20)
 fig.text(0.02, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical',size=20)
 plt.savefig(os.path.join("type"+t,'plots','UVAverageColor.pdf'),format='pdf')
@@ -197,7 +197,7 @@ plt.savefig(os.path.join("type"+t,'plots','UVAverageColor.pdf'),format='pdf')
 
 for ir in ['J','H','K']:
 	irdata=Table([irtime[ir],ircolors[ir],allIRColors[ir],allIRerr[ir]],names=['time','color','mag','error'],masked=True)
-	bin=np.array(np.trunc(irdata['time']/2))
+	bin=np.array(np.trunc(irdata['time']/.001))
 	irgrouped=irdata.group_by(bin)
 	time=irgrouped['time'].groups.aggregate(np.mean)
 	#mag=irgrouped['mag'].groups.aggregate(ir_weighted_avg)
@@ -211,7 +211,7 @@ for ir in ['J','H','K']:
 	ax=plt.gca()
 	ax.errorbar(np.array(time),np.array(mag),yerr=np.array(magerr),fmt='x')
 	ax.invert_yaxis()
-	plt.title('IR Average Color, Type '+t+' (Bin Size=2 Days, Band= '+ir+')',size=15)
+	plt.title('IR Average Color, Type '+t+', Band= '+ir,size=15)
 	fig.text(0.5, 0.02, 'Time (Since Peak)', ha='center',size=18)
 	fig.text(0.02, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical',size=18)
 	plt.savefig(os.path.join("type"+t,'plots','IRAverage'+ir+"Color.pdf"),format='pdf')
