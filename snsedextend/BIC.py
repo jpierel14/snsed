@@ -14,7 +14,6 @@ import pymc3 as pm
 import theano as thno
 import theano.tensor as T
 
-from ipywidgets import interactive, fixed
 
 # configure some basic options
 sns.set(style="darkgrid", palette="muted")
@@ -177,95 +176,72 @@ def plot_posterior_cr(models, traces, rawdata, xlims,
         f.suptitle('Posterior Predictive Fits -- Data: Optical-{}, Type {} -- Best Model: Order {}'.format(
             datamodelnm.upper(),typ, bestModel[1]), fontsize=24)
     for modelnm in modelnms:
-        ax1d=ax[i]
-        ax1d.tick_params(labelsize=20)
-        anchored_text = AnchoredText('BIC: '+str(np.round(bic['waic'][i-1],2)), loc=1)
-        ax1d.add_artist(anchored_text)
+        if modelnm==bestModel:
+            ## Get traces and calc posterior prediction for npoints in x
+            npoints = 100
+            mdl = models[modelnm]
+            trc = pm.trace_to_dataframe(traces[modelnm][-1000:])
+            trc = trc[[str(v) for v in mdl.cont_vars[:-1]]]
 
-        #ax1d.text(max(rawdata['x']),max(rawdata['y']),'BIC: '+str(np.round(bic['waic'][i-1],2)),ha='center',va='center',fontsize=15)
-        ax1d.set_title('Model: Polynomial of Order {}'.format(modelnm[1]),fontsize=22)
-        ## Get traces and calc posterior prediction for npoints in x
-        npoints = 100
-        mdl = models[modelnm]
-        trc = pm.trace_to_dataframe(traces[modelnm][-1000:])
-        trc = trc[[str(v) for v in mdl.cont_vars[:-1]]]
+            ordr = int(modelnm[-1:])
+            x = np.linspace(xlims[0], xlims[1], npoints).reshape((npoints,1))
+            pwrs = np.ones((npoints,ordr+1)) * np.arange(ordr+1)
+            X = x ** pwrs
+            cr = np.dot(X,trc.T)
 
-        ordr = int(modelnm[-1:])
-        x = np.linspace(xlims[0], xlims[1], npoints).reshape((npoints,1))
-        pwrs = np.ones((npoints,ordr+1)) * np.arange(ordr+1)
-        X = x ** pwrs
-        cr = np.dot(X,trc.T)
+            ## Calculate credible regions and plot over the datapoints
+            dfp = pd.DataFrame(np.percentile(cr,[2.5, 25, 50, 75, 97.5], axis=1).T
+                               ,columns=['025','250','500','750','975'])
+            dfp['x'] = x
+            return(dfp)
+def run():
+    n = 12
+    import sys,os,inspect
+    from astropy.io import ascii
+    modelList=['k1','k2']#,'k3','k4']
+    t='Ic'
+    res=dict([])
+    for ir in ['uv','J','H','K']:
+        table=ascii.read(os.path.join('modjaz','type'+t,'tables',ir+'.dat'))
+        allData=ascii.read(os.path.join('modjaz','type'+t,'tables',ir+'all.dat'))
+        temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
+        alltemp=pd.DataFrame({'x':np.array(allData['time']),'y':np.array(allData['mag'])*(-1),'error':np.array(allData['magerr'])})
+        temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
+        models_lin,traces_lin=run_models(temp,2)
+        dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
+        dfdic.index.name = 'model'
 
-        ## Calculate credible regions and plot over the datapoints
-        dfp = pd.DataFrame(np.percentile(cr,[2.5, 25, 50, 75, 97.5], axis=1).T
-                           ,columns=['025','250','500','750','975'])
-        dfp['x'] = x
+        for nm in dfdic.index:
+            dfdic.loc[nm, 'dic'] = pm.stats.dic(traces_lin[nm], models_lin[nm])
+            dfdic.loc[nm, 'waic'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
 
-        pal = sns.color_palette('Greens')
+        dfdic = pd.melt(dfdic.reset_index(), id_vars=['model'], var_name='poly', value_name='Information Criterion')
 
-        return(dfp['x'],dfp['500'])
-        #plt.subplots_adjust(top=1.5)
+        #g = sns.factorplot(x='model', y='Information Criterion', col='poly', hue='poly', data=dfdic, kind='bar', size=6)
+        #plt.show()
+        dfwaic = pd.DataFrame(index=modelList, columns=['lin'])
+        dfwaic.index.name = 'model'
 
-        ax1d.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
-                          ,color=pal[1], label='CR 95%')
-        ax1d.fill_between(dfp['x'], dfp['250'], dfp['750'], alpha=0.5
-                          ,color=pal[4], label='CR 50%')
-        ax1d.plot(dfp['x'], dfp['500'], alpha=0.6, color=pal[5], label='Median')
-        _ = ax1d.legend(loc='upper left',fontsize=15)
-        _ = ax1d.set_xlim(xlims)
-        #_ = ax1d.errorbar(allDat['x'],allDat['y'],yerr=allDat['error'],fmt='.',color='red')
-        _ = ax1d.errorbar(rawdata['x'],rawdata['y'],yerr=rawdata['error'],fmt='.',color='blue')
-        _ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
-                        ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax1d)
-        ax1d.set_xlabel('')
-        ax1d.set_ylabel('')
-        i+=1
-    #plt.tight_layout()
-    plot_margin=.25
-    x0, x1, y0, y1 = plt.axis()
-    plt.axis((x0 - plot_margin,
-              x1 + plot_margin,
-              y0 - plot_margin,
-              y1 + plot_margin))
-n = 12
-import sys,os,inspect
-from astropy.io import ascii
-modelList=['k1','k2']#,'k3','k4']
-t='Ib'
-for ir in ['uv','J','H','K']:
-    table=ascii.read(os.path.join('type'+t,'tables',ir+'.dat'))
-    allData=ascii.read(os.path.join('type'+t,'tables',ir+'all.dat'))
-    temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
-    alltemp=pd.DataFrame({'x':np.array(allData['time']),'y':np.array(allData['mag'])*(-1),'error':np.array(allData['magerr'])})
-    temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
-    models_lin,traces_lin=run_models(temp,2)
-    #print([name for name,thing in inspect.getmembers(models_lin['k2'].model)])
+        for nm in dfwaic.index:
+            dfwaic.loc[nm, 'lin'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
 
-    dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
-    dfdic.index.name = 'model'
+        best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
+        dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], var_name=ir.upper(), value_name='waic')
+        g = sns.factorplot(x='model', y='waic', col=ir.upper(), hue=ir.upper(), data=dfwaic, kind='bar', size=6)
+        #plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_waic.pdf'),fmt='pdf')
 
-    for nm in dfdic.index:
-        dfdic.loc[nm, 'dic'] = pm.stats.dic(traces_lin[nm], models_lin[nm])
-        dfdic.loc[nm, 'waic'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
+        res[ir]=plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp,typ=t,bic=dfwaic)
 
-    dfdic = pd.melt(dfdic.reset_index(), id_vars=['model'], var_name='poly', value_name='Information Criterion')
+    return(res)
 
-    #g = sns.factorplot(x='model', y='Information Criterion', col='poly', hue='poly', data=dfdic, kind='bar', size=6)
-    #plt.show()
-    dfwaic = pd.DataFrame(index=modelList, columns=['lin'])
-    dfwaic.index.name = 'model'
 
-    for nm in dfwaic.index:
-        dfwaic.loc[nm, 'lin'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
 
-    best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
-    dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], var_name=ir.upper(), value_name='waic')
-    g = sns.factorplot(x='model', y='waic', col=ir.upper(), hue=ir.upper(), data=dfwaic, kind='bar', size=6)
-    plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_waic.pdf'),fmt='pdf')
 
-    plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp,typ=t,bic=dfwaic)
 
-    plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_fits.pdf'),format='pdf')
+
+
+
+
 
 
 

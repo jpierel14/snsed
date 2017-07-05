@@ -1,3 +1,2 @@
-import sncosmo, definedBands
+import sncosmo, definedBands,BIC
 from extrapolate import *
-from BIC import *
