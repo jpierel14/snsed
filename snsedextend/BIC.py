@@ -199,11 +199,11 @@ def run():
     import sys,os,inspect
     from astropy.io import ascii
     modelList=['k1','k2']#,'k3','k4']
-    t='Ic'
+    t='II'
     res=dict([])
     for ir in ['uv','J','H','K']:
-        table=ascii.read(os.path.join('modjaz','type'+t,'tables',ir+'.dat'))
-        allData=ascii.read(os.path.join('modjaz','type'+t,'tables',ir+'all.dat'))
+        table=ascii.read(os.path.join('hicken','type'+t,'tables',ir+'.dat'))
+        allData=ascii.read(os.path.join('hicken','type'+t,'tables',ir+'all.dat'))
         temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
         alltemp=pd.DataFrame({'x':np.array(allData['time']),'y':np.array(allData['mag'])*(-1),'error':np.array(allData['magerr'])})
         temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)

@@ -190,6 +190,8 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
     area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
     i=1
     if area>bArea: #then we need flux=0, but slope of line steeper
+        y1=f[0]
+        y2=0
         last=0
         while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter):
             if area>bArea:
@@ -204,27 +206,28 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
             if area==last: #break out of loop once we can't get more accurate because of wavelength binning
                 break
             last=area
-        i=1
-        while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
-            if i==1:
-                y3=f[0]
-                y1=0
-                while area<bArea:
-                    y3*=2
-                    interpFunc=scint.interp1d(append(x2,w[0]),append(0,y3))
-                    area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
-                    y1=f[0]
-                y2=y3
-            if area>bArea:
-                y3=y2
-            else:
-                y1=y2
-            y2=(y3+y1)/2
-            interpFunc=scint.interp1d(append(x2,w[0]),append(0,y2))
-            area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
-            i+=1
-        y1=y2
-        y2=0
+        if abs((area-bArea)/(area+bArea))>accuracy and i<=niter:
+            i=1
+            while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
+                if i==1:
+                    y3=f[0]
+                    y1=0
+                    while area<bArea:
+                        y3*=2
+                        interpFunc=scint.interp1d(append(x2,w[0]),append(0,y3))
+                        area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+                        y1=f[0]
+                    y2=y3
+                if area>bArea:
+                    y3=y2
+                else:
+                    y1=y2
+                y2=(y3+y1)/2
+                interpFunc=scint.interp1d(append(x2,w[0]),append(0,y2))
+                area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+                i+=1
+            y1=y2
+            y2=0
     elif area<bArea:#then the flux at the right edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
@@ -294,8 +297,11 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
     interpFunc=scint.interp1d(append(x1,x2),append(f[-1],0))
     area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
     i=1
+
     if area>bArea: #then we need flux=0, but slope of line steeper
         last=0
+        y1=f[-1]
+        y2=0
         while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter):
             if area>bArea:
                 x3=x2
@@ -309,27 +315,27 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
             if area==last: #break out of loop once we can't get more accurate because of wavelength binning
                 break
             last=area
-
-        i=1
-        while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
-            if i==1:
-                y3=f[-1]
-                while area<bArea:
-                    y3*=2
-                    interpFunc=scint.interp1d(append(w[-1],x2),append(y3,0))
-                    area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
-                y1=f[-1]
-                y2=y3
-            if area>bArea:
-                y3=y2
-            else:
-                y1=y2
-            y2=(y3+y1)/2
-            interpFunc=scint.interp1d(append(w[-1],x2),append(y2,0))
-            area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
-            i+=1
-        y1=y2
-        y2=0
+        if abs(area-bArea)/(area+bArea)>accuracy and i<=niter:
+            i=1
+            while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
+                if i==1:
+                    y3=f[-1]
+                    while area<bArea:
+                        y3*=2
+                        interpFunc=scint.interp1d(append(w[-1],x2),append(y3,0))
+                        area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                    y1=f[-1]
+                    y2=y3
+                if area>bArea:
+                    y3=y2
+                else:
+                    y1=y2
+                y2=(y3+y1)/2
+                interpFunc=scint.interp1d(append(w[-1],x2),append(y2,0))
+                area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                i+=1
+            y1=y2
+            y2=0
     elif area<bArea:#then the flux at the right edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
@@ -442,7 +448,6 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
     bTrans=bands[blue].trans
     rWave=bands[red].wave
     rTrans=bands[red].trans
-
     bInterpFunc=scint.interp1d(bWave,bTrans)
     rInterpFunc=scint.interp1d(rWave,rTrans)
     cInterpFunc=scint.interp1d(tempTime,tempColor)
@@ -522,7 +527,7 @@ def _boundIRsed(sedfile):
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[j], fnew[j] ))
     fout.close()
 
-def extendNon1a(colorTable,bandDict=_filters,zpsys='AB',sedlist=None,showplots=None,verbose=True):
+def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True):
     """
     Function called in main which runs the extrapolation algorithm.
     :param sedlist: list of files to analyze (or none if all in current directory)
@@ -541,7 +546,15 @@ def extendNon1a(colorTable,bandDict=_filters,zpsys='AB',sedlist=None,showplots=N
     for band in bandDict:
         if not isinstance(bandDict[band],sncosmo.Bandpass):
             bandDict=_bandCheck(bandDict,band)
-    colors=[col for col in colorTable.colnames if '-' in col]
+    if not colors:
+        print("No extrapolation colors defined, assuming: U-B, r-H, r-J, r-K")
+        colors=['U-B','r-J','r-H','r-K']
+    else:
+        tempColors=[x for x in colors if 'U-' in x]+[x for x in colors if '-J' in x]+[x for x in colors if '-H' in x]+[x for x in colors if '-K' in x]
+        if len(tempColors)>4:
+            raise RuntimeError("Only can do 4 colors!")
+
+
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters.keys():
         if band not in bandDict.keys() and band in bands:
@@ -668,7 +681,7 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
                 if verbose:
                     print('No model provided, running series of models.')
                 #print(snType)
-                mod,types=np.loadtxt('hickens/models.ref',dtype='str',unpack=True)
+                mod,types=np.loadtxt('hicken/models.ref',dtype='str',unpack=True)
                 modDict={mod[i]:types[i] for i in range(len(mod))}
                 if snType!='1a':
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(snType)]==snType]
