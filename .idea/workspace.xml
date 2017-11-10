@@ -6,7 +6,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/plots/IRAverageJColor.pdf" afterPath="$PROJECT_DIR$/hicken/typeII/plots/IRAverageJColor.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/plots/IRAverageKColor.pdf" afterPath="$PROJECT_DIR$/hicken/typeII/plots/IRAverageKColor.pdf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/plots/UVAverageColor.pdf" afterPath="$PROJECT_DIR$/hicken/typeII/plots/UVAverageColor.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/allColors.py" afterPath="$PROJECT_DIR$/hicken/allColors.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/typeIb/tables/allIbColors.dat" afterPath="$PROJECT_DIR$/bianco/typeIb/tables/allIbColors.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/H.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/H.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/J.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/J.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/K.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/K.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
@@ -18,7 +22,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1510339413791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1510340280899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
@@ -27,8 +31,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="33" column="133" lean-forward="true" selection-start-line="33" selection-start-column="133" selection-end-line="33" selection-end-column="133" />
+            <state relative-caret-position="150">
+              <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -39,7 +43,7 @@
       <file leaf-file-name="extrapolate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11595">
+            <state relative-caret-position="385">
               <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
               <folding>
                 <element signature="e#61#143#0" expanded="true" />
@@ -148,7 +152,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -178,6 +181,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -420,7 +424,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36462584" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36462584" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -448,6 +452,44 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11595">
+          <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
+          <folding>
+            <element signature="e#61#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2925">
+          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -699,7 +741,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11595">
+        <state relative-caret-position="385">
           <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
           <folding>
             <element signature="e#61#143#0" expanded="true" />
@@ -709,8 +751,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="33" column="133" lean-forward="true" selection-start-line="33" selection-start-column="133" selection-end-line="33" selection-end-column="133" />
+        <state relative-caret-position="150">
+          <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
