@@ -2,505 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/#lc_2006bl.dat#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/#lc_2006ca.dat#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/allColors.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/clip.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/color.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/dic.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/dust.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/init_fit.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/init_fit2.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2002bx.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2002bx_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2005kd.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2005kd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006ca.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006ca_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006cd.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006cd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006it.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2006it_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007av.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007av_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2007rt.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008aj.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008bj.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008bj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008bn.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008bn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008in.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008in_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008ip.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2009ay.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2009ay_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2009kn.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2009kn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2010bq.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/models.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/peaks.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/redshift.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/sne.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/timeOfPeak.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/type.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2002bx.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006ca.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006cd.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2006it.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2007av.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008aj.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bj.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008bn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008in.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2008ip.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2009ay.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/lc_2010bq.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits/typeIIfits.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2002bx.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2006ca.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2007aa.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2007av.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2008bj.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2008bn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2008in.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_30/lc_2009ay.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2002bx.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2006ca.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2007aa.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2007av.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2008bj.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2008bn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2008in.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/fits_50/lc_2009ay.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/H_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/H_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageHColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageJColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/IRAverageKColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/J_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/J_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/K_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/K_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UVAverageColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UV_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/UV_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2002bx_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006ca_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006ca_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006cd_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006cd_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006it_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2006it_Ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007aa_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007aa_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007aa_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2007av_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008aj_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bj_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bj_Ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bn_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008bn_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008in_uV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008ip_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008ip_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2008ip_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2009ay_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/plots/lc_2010bq_uB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/H.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/Hall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/J.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/Jall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/K.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/Kall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/allIIColors.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2002bx_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006ca_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006cd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2006it_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2007aa_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2007av_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008bn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008in_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2009ay_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/corr_lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2002bx_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006ca_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006cd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2006it_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2007aa_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2007av_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008bn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008in_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2009ay_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uncorr_lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uv.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeII/tables/uvall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2005kd.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/lc_2009kn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/fits/typeIInFits.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/H_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/H_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageHColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageJColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/IRAverageKColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/J_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/J_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/K_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/K_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UVAverageColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/UV_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2005kd_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2005kd_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2007rt_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2008aj_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2008aj_Ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2008ip_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2008ip_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2008ip_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2009kn_uB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_BH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_BJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_BK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_uB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_uV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/plots/lc_2010bq_ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/H.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/Hall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/J.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/Jall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/K.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/Kall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/allIInColors.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2005kd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2007rt_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2009kn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/corr_lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2005kd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2007rt_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2009kn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uncorr_lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uv.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hickens/typeIIn/tables/uvall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/#timeOfPeak.dat#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/allColors.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/clip.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/color.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/dic.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/dust.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/init_fit.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/init_fit2.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004aw.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004aw_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004gk.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004gq.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004gq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2004gt.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005az.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005az_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005bf.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005bf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005hg.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005hg_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005kl.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005kl_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005mf.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005mf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005nb.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2005nb_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006F.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006F_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006T.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006T_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006aj.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006fo.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006fo_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006jc.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2006jc_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007C.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007C_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007D.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007I.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007I_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007ce.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007ce_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007gr.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007gr_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007uy.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2007uy_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2008D.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2008D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2008aq.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2008aq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009er.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009er_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009iz.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009iz_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009jf.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/lc_2009jf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/models.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/moveFiles.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/peaks.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/redshift.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/sne.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/timeOfPeak.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/type.ref" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2004ao.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2004gq.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005bf.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2005hg.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006F.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006T.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006fo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2006jc.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007C.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2007uy.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008D.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2008aq.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009er.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009iz.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/lc_2009jf.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/fits/typeIbFits.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/H_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/H_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageHColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageJColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/IRAverageKColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/J_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/J_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/K_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/K_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UVAverageColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/UV_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2004gq_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_Ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005bf_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2005hg_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006F_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006T_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006T_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006fo_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2006jc_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007C_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_VH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_VJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2007uy_VK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008D_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2008aq_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009er_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009iz_uB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_uB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/plots/lc_2009jf_uV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/H.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/Hall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/J.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/Jall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/K.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/Kall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/allIbColors.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2004gq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2005bf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2005hg_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2006F_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2006T_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2006fo_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2006jc_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2007C_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2007uy_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2008D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2008aq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2009er_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2009iz_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/corr_lc_2009jf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2004ao_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2004gq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005bf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2005hg_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006F_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006T_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006fo_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2006jc_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007C_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2007uy_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2008aq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009er_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009iz_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uncorr_lc_2009jf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uv.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIb/tables/uvall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2004aw.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005az.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005kl.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005mf.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2005nb.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2006aj.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007D.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007I.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007ce.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/lc_2007gr.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/fits/typeIcFits.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/H_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/H_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageHColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageJColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/IRAverageKColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/J_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/J_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/K_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/K_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UVAverageColor.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_fits.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/UV_waic.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2004aw_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005az_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005kl_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005mf_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005nb_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2005nb_Ur.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2006aj_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007D_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007I_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007ce_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UB.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_UV.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rH.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rJ.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/plots/lc_2007gr_rK.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/H.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/Hall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/J.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/Jall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/K.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/Kall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/allIcColors.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2004aw_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2005az_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2005kl_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2005mf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2005nb_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2006aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2007D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2007I_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2007ce_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/corr_lc_2007gr_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2004aw_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005az_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005kl_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005mf_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2005nb_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2006aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007D_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007I_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007ce_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uncorr_lc_2007gr_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uv.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/modjaz/typeIc/tables/uvall.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/plot_custom_source.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/snsedextend.iml" afterPath="$PROJECT_DIR$/.idea/snsedextend.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/BIC.py" afterPath="$PROJECT_DIR$/snsedextend/BIC.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/__init__.py" afterPath="$PROJECT_DIR$/snsedextend/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/extrapolate.py" afterPath="$PROJECT_DIR$/snsedextend/extrapolate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/allColors.py" afterPath="$PROJECT_DIR$/hicken/allColors.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -519,7 +21,7 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-275">
+            <state relative-caret-position="-343">
               <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
               <folding />
             </state>
@@ -529,7 +31,7 @@
       <file leaf-file-name="extrapolate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1155">
+            <state relative-caret-position="11595">
               <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
               <folding>
                 <element signature="e#61#143#0" expanded="true" />
@@ -551,7 +53,7 @@
       <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
+            <state relative-caret-position="2925">
               <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -621,7 +123,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="797" />
+    <option name="height" value="804" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -638,8 +140,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -903,14 +405,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="804" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15555556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3653846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3653846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -938,6 +440,42 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11595">
+          <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
+          <folding>
+            <element signature="e#61#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2925">
+          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
@@ -1093,7 +631,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
+        <state relative-caret-position="2925">
           <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
@@ -1103,7 +641,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1155">
+        <state relative-caret-position="11595">
           <caret line="773" column="9" lean-forward="false" selection-start-line="773" selection-start-column="9" selection-end-line="773" selection-end-column="9" />
           <folding>
             <element signature="e#61#143#0" expanded="true" />
@@ -1113,7 +651,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-275">
+        <state relative-caret-position="-343">
           <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
           <folding />
         </state>

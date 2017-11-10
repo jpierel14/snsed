@@ -3,7 +3,7 @@ from astropy.table import Table
 import matplotlib.pyplot as plt
 import numpy as np
 import sys,warnings,os
-
+import matplotlib.cm as cm
 warnings.simplefilter('ignore')
 
 def uv_weighted_avg(values):
@@ -129,7 +129,9 @@ ircol={
 UVcolorOrder=uvcol[t]
 IRcolorOrder=ircol[t]
 colors=ascii.read(os.path.join('type'+t,'tables','all'+t+'Colors.dat'))
-
+plotColors=cm.nipy_spectral(np.linspace(0,1,15))
+sn=np.unique(colors['SN'])
+sne={sn[i]:plotColors[i] for i in range(len(sn))}
 allUVColors=[]
 allIRColors={
 	'J':[],
@@ -154,6 +156,12 @@ irtime={
 	'H':[],
 	'K':[]
 }
+uvnames=[]
+irnames={
+	'J':[],
+	'H':[],
+	'K':[]
+}
 for row in colors:
 	for col in UVcolorOrder:
 		if row[col]:
@@ -161,6 +169,7 @@ for row in colors:
 			allUVerr.append(row[col[0]+col[-1]+'_err'])
 			uvcolors.append(col)
 			uvtime.append(row['time'])
+			uvnames.append(row['SN'])
 			break
 	for ir in ['J','H','K']:
 		for col in IRcolorOrder:
@@ -169,9 +178,10 @@ for row in colors:
 				allIRerr[ir].append(row[col[0]+ir+'_err'])
 				ircolors[ir].append(col+ir)
 				irtime[ir].append(row['time'])
+				irnames[ir].append(row['SN'])
 				break
 
-uvdata=Table([uvtime,uvcolors,allUVColors,allUVerr],names=['time','color','mag','error'],masked=True)
+uvdata=Table([uvtime,uvcolors,allUVColors,allUVerr,uvnames],names=['time','color','mag','error','SN'],masked=True)
 bin=np.array(np.trunc(uvdata['time']/.001))
 uvgrouped=uvdata.group_by(bin)
 uvtime=uvgrouped['time'].groups.aggregate(np.mean)
@@ -179,12 +189,27 @@ uvtime=uvgrouped['time'].groups.aggregate(np.mean)
 #uvmagerr=uvgrouped['mag'].groups.aggregate(getUVErrors)
 uvmag=uvgrouped['mag'].groups.aggregate(uvweightedMean)
 uvmagerr=uvgrouped['error'].groups.aggregate(getErrors)
+uvnames=uvgrouped['SN']
 
 temp=Table([np.array(uvtime),np.array(uvmag),np.array(uvmagerr)],names=('time','mag','magerr'))
 ascii.write(temp,os.path.join('type'+t,'tables','uv.dat'))
 fig=plt.figure()
 ax=plt.gca()
-ax.errorbar(np.array(uvtime),np.array(uvmag),yerr=np.array(uvmagerr),fmt='x')
+
+plotColors=np.array([sne[uvnames[i]] for i in range(len(uvnames))])
+
+plots=[]
+axes=[]
+labels=[]
+for i in range(len(uvnames)):
+	if uvnames[i] not in labels:
+		labels.append(uvnames[i])
+		plots.append(ax.errorbar(np.array(uvtime)[i],np.array(uvmag)[i],yerr=np.array(uvmagerr)[i],fmt='x',color=plotColors[i],label=str(np.array(uvnames[i]))))
+	else:
+		ax.errorbar(np.array(uvtime)[i],np.array(uvmag)[i],yerr=np.array(uvmagerr)[i],fmt='x',color=plotColors[i],label=str(np.array(uvnames[i])))
+
+
+#ax.errorbar(np.array(uvtime),np.array(uvmag),yerr=np.array(uvmagerr),fmt='x')
 ax.invert_yaxis()
 plt.title('UV Average Color, Type '+t+' (Bin Size=2 Days)',size=15)
 fig.text(0.5, 0.02, 'Time (Since Peak)', ha='center',size=20)
