@@ -199,7 +199,6 @@ ax=plt.gca()
 plotColors=np.array([sne[uvnames[i]] for i in range(len(uvnames))])
 
 plots=[]
-axes=[]
 labels=[]
 for i in range(len(uvnames)):
 	if uvnames[i] not in labels:
@@ -211,6 +210,7 @@ for i in range(len(uvnames)):
 
 #ax.errorbar(np.array(uvtime),np.array(uvmag),yerr=np.array(uvmagerr),fmt='x')
 ax.invert_yaxis()
+ax.legend(plots,labels,fontsize=8,numpoints=1,loc=3)
 plt.title('UV Average Color, Type '+t+' (Bin Size=2 Days)',size=15)
 fig.text(0.5, 0.02, 'Time (Since Peak)', ha='center',size=20)
 fig.text(0.02, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical',size=20)
@@ -218,7 +218,7 @@ plt.savefig(os.path.join("type"+t,'plots','UVAverageColor.pdf'),format='pdf')
 #plt.show()
 
 for ir in ['J','H','K']:
-	irdata=Table([irtime[ir],ircolors[ir],allIRColors[ir],allIRerr[ir]],names=['time','color','mag','error'],masked=True)
+	irdata=Table([irtime[ir],ircolors[ir],allIRColors[ir],allIRerr[ir],irnames[ir]],names=['time','color','mag','error','SN'],masked=True)
 	bin=np.array(np.trunc(irdata['time']/.001))
 	irgrouped=irdata.group_by(bin)
 	time=irgrouped['time'].groups.aggregate(np.mean)
@@ -226,13 +226,23 @@ for ir in ['J','H','K']:
 	#magerr=irgrouped['mag'].groups.aggregate(getIRErrors)
 	mag=irgrouped['mag'].groups.aggregate(irweightedMean)
 	magerr=irgrouped['error'].groups.aggregate(getErrors)
-	
+	irSNe=irgrouped['SN']
 	temp=Table([np.array(time),np.array(mag),np.array(magerr)],names=('time','mag','magerr'))
 	ascii.write(temp,os.path.join('type'+t,'tables',ir+'.dat'))
+	plotColors=np.array([sne[irnames[ir][i]] for i in range(len(irnames[ir]))])
+
 	fig=plt.figure()
 	ax=plt.gca()
-	ax.errorbar(np.array(time),np.array(mag),yerr=np.array(magerr),fmt='x')
+	plots=[]
+	labels=[]
+	for i in range(len(irSNe)):
+		if irSNe[i] not in labels:
+			labels.append(irSNe[i])
+			plots.append(ax.errorbar(np.array(time)[i],np.array(mag)[i],yerr=np.array(magerr)[i],fmt='x',color=plotColors[i],label=str(np.array(irSNe[i]))))
+		else:
+			ax.errorbar(np.array(time)[i],np.array(mag)[i],yerr=np.array(magerr)[i],fmt='x',color=plotColors[i],label=str(np.array(irSNe[i])))
 	ax.invert_yaxis()
+	ax.legend(plots,labels,fontsize=8,numpoints=1,loc=3)
 	plt.title('IR Average Color, Type '+t+' (Bin Size=4 Days, Band= '+ir+')',size=15)
 	fig.text(0.5, 0.02, 'Time (Since Peak)', ha='center',size=18)
 	fig.text(0.02, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical',size=18)

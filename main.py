@@ -53,16 +53,16 @@ for i in range(len(filelist)):
             plt.close()
         '''
         if typeColors:
+            typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
+
             typeColors=vstack([typeColors,colorTable])
         else:
+            typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
             typeColors=colorTable
 
-print(typeColors)
-seds={
-    'Ic':['SDSS-013195.SED','SDSS-014475.SED','SDSS-015475.SED','SDSS-017548.SED'],
-    'Ib':['SDSS-000020.SED','SDSS-002744.SED','SDSS-014492.SED','SDSS-019323.SED'],
-    'II':['SDSS-003818.SED']
-}
+
+            #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
+typeColors['SN']=typeSNe
 #snsedextend.extendNon1a(typeColors,sedlist=seds[type[0]],verbose=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 typeColors.sort('time')
