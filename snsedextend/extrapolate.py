@@ -565,6 +565,7 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
         sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
         sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
     for sedfile in sedlist:
+        #newsedfile=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII',os.path.basename(sedfile))
         newsedfile=os.path.basename(sedfile)
         if verbose:
             print("EXTRAPOLATING %s"%newsedfile)

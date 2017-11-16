@@ -84,6 +84,7 @@ plt.ylabel("Flux",fontsize=18)
 ax.set_title('Type II SED Extrapolation, Days from Peak=%i'%days,fontsize=18)
 i=1
 for filename in files:
+    print(filename)
     phase1, wave1, flux1 = sncosmo.read_griddata_ascii(filename)
 
     # In our __init__ method we defined above, the two fluxes need to be on
