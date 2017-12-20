@@ -2,72 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/CSP-2004fe.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/CSP-2004gq.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-1993J.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-1998de.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-1999by.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2000cn.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2000dk.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2005bl.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2008ax.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2011dh.SED" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SEDs/typeIb/LOWZ-2011fu.SED" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/typeII.pdf" afterPath="$PROJECT_DIR$/SEDs/typeII/typeII.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/typeIb.pdf" afterPath="$PROJECT_DIR$/SEDs/typeIb/typeIb.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/typeIc.pdf" afterPath="$PROJECT_DIR$/SEDs/typeIc/typeIc.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-000018.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-000018.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-001472.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-001472.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-003818.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-003818.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-014599.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/S11_SDSS-014599.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-000018.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-000018.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-003818.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-003818.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018713.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018713.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018734.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018734.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018793.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018793.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018834.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018834.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018892.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018892.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-020038.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-020038.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/plot_custom_source.py" afterPath="$PROJECT_DIR$/SEDs/typeII/plot_custom_source.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/CSP-2004gv.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/CSP-2004gv.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/CSP-2006ep.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/CSP-2006ep.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/CSP-2007Y.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/CSP-2007Y.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-002000.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-002000.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-002744.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-002744.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-013195.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-013195.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-014492.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/S11_SDSS-014492.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/SDSS-000020.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/SDSS-000020.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/SDSS-002744.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/SDSS-002744.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/SDSS-014492.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/SDSS-014492.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIb/SDSS-019323.SED" afterPath="$PROJECT_DIR$/SEDs/typeIb/SDSS-019323.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/CSP-2004fe.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/CSP-2004fe.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/CSP-2004gq.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/CSP-2004gq.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SDSS-004012.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SDSS-004012.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SDSS-013195.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SDSS-013195.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SDSS-014475.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SDSS-014475.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SDSS-015475.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SDSS-015475.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SDSS-017548.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SDSS-017548.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeIc/SNLS-04D4jv.SED" afterPath="$PROJECT_DIR$/SEDs/typeIc/SNLS-04D4jv.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/typeIb/tables/allIbColors.dat" afterPath="$PROJECT_DIR$/bianco/typeIb/tables/allIbColors.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/typeIc/tables/allIcColors.dat" afterPath="$PROJECT_DIR$/bianco/typeIc/tables/allIcColors.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/extrapolate.py" afterPath="$PROJECT_DIR$/snsedextend/extrapolate.py" />
     </list>
@@ -82,50 +16,28 @@
     <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1510791198691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="snsedextend" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file leaf-file-name="extrapolate.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="541" column="26" lean-forward="false" selection-start-line="541" selection-start-column="26" selection-end-line="541" selection-end-column="26" />
+            <state relative-caret-position="608">
+              <caret line="585" column="47" lean-forward="true" selection-start-line="585" selection-start-column="47" selection-end-line="585" selection-end-column="47" />
               <folding>
                 <element signature="e#61#143#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2925">
-              <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -159,6 +71,10 @@
       <find>extrap_hel</find>
       <find>_standardize</find>
       <find>AB</find>
+      <find>mag_to_flux</find>
+      <find>bandDict</find>
+      <find>_mag_to_flux</find>
+      <find>_flux_to_mag</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -179,8 +95,8 @@
         <option value="$PROJECT_DIR$/snsedextend/definedBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
         <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
-        <option value="$PROJECT_DIR$/snsedextend/extrapolate.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/snsedextend/extrapolate.py" />
       </list>
     </option>
   </component>
@@ -192,9 +108,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1440" />
-    <option name="y" value="-157" />
+    <option name="y" value="-180" />
     <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -211,7 +127,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -240,13 +155,15 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myIpythonEnabled" value="false" />
@@ -475,19 +392,29 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="-157" width="1920" height="1057" extended-state="6" />
+    <frame x="1440" y="-180" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15520833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36437246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36437246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.116145834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -496,9 +423,29 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36437246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.116145834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -507,10 +454,62 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/snsedextend/extrapolate.py</url>
+          <line>866</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/snsedextend/extrapolate.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="9" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2925">
+          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8115">
+          <caret line="541" column="26" lean-forward="false" selection-start-line="541" selection-start-column="26" selection-end-line="541" selection-end-column="26" />
+          <folding>
+            <element signature="e#61#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -838,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+        <state relative-caret-position="-396">
+          <caret line="9" column="11" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -848,8 +847,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="541" column="26" lean-forward="false" selection-start-line="541" selection-start-column="26" selection-end-line="541" selection-end-column="26" />
+        <state relative-caret-position="608">
+          <caret line="585" column="47" lean-forward="true" selection-start-line="585" selection-start-column="47" selection-end-line="585" selection-end-column="47" />
           <folding>
             <element signature="e#61#143#0" expanded="true" />
           </folding>

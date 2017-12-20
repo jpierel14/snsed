@@ -7,8 +7,8 @@ from astropy.table import vstack
 from astropy.io import ascii
 import sncosmo
 sndataroot = os.environ['SNDATA_ROOT']
-dir='bianco'
-type=['Ic']
+dir='hicken'
+type=['II']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*clipped.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']

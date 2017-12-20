@@ -673,9 +673,9 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
         if _get_default_prop_name('zp') not in red.colnames:
             red[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,red[_get_default_prop_name('band')][i]) for i in range(len(red))]
         if _get_default_prop_name('flux') not in blue.colnames:
-            blue=_mag_to_flux(blue)
+            blue=_mag_to_flux(blue,bandDict,zpsys)
         if _get_default_prop_name('flux') not in red.colnames:
-            red=_mag_to_flux(red)
+            red=_mag_to_flux(red,bandDict,zpsys)
 
         if not t0:
             if not model:
@@ -858,19 +858,18 @@ def _snFit(args):
 mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'snana' in x[0] or 'salt2' in x[0]]
     mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}"""
 
-def _mag_to_flux(table):
-
-    table[_get_default_prop_name('flux')] = np.asarray(
-        map(lambda x, y: 10 ** (-.4 * (x -y)), table[_get_default_prop_name('mag')],
-            table[_get_default_prop_name('zp')]))
+def _mag_to_flux(table,bandDict,zpsys):
+    ms=sncosmo.get_magsystem(zpsys)
+    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y),table[_get_default_prop_name('mag')],bandDict[table[_get_default_prop_name('band')]]))
     table[_get_default_prop_name('fluxerr')] = np.asarray(
         map(lambda x, y: x * y / (2.5 * np.log10(np.e)), table[_get_default_prop_name('magerr')],
             table[_get_default_prop_name('flux')]))
     return table
 
-def _flux_to_mag(table):
-    table[_get_default_prop_name('mag')] = np.asarray(map(lambda x, y: -2.5 * np.log10(x) + y, table[_get_default_prop_name('flux')],
-                                                          table[_get_default_prop_name('zp')]))
+def _flux_to_mag(table,bandDict,zpsys):
+    ms=sncosmo.get_magsystem(zpsys)
+    table[_get_default_prop_name('mag')] = np.asarray(map(lambda x, y: ms.band_flux_to_mag(x,y), table[_get_default_prop_name('flux')],
+                                                          bandDict[table[_get_default_prop_name('band')]]))
     table[_get_default_prop_name('magerr')] = np.asarray(map(lambda x, y: 2.5 * np.log10(np.e) * y / x, table[_get_default_prop_name('flux')],
                                                              table[_get_default_prop_name('fluxerr')]))
     return table
