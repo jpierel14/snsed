@@ -455,11 +455,12 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
     colorData=cInterpFunc(tempTime)
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
-    def _extrap_helper(wave1,interpFunc1,wave2,interpFunc2):
+    def _extrap_helper(wave1,interpFunc1,wave2,interpFunc2,known):
         idx,val=_find_nearest(w,int(math.ceil(wave1[0]/wavestep))*wavestep)
         idx2,val2=_find_nearest(w,int(math.floor(wave1[-1]/wavestep))*wavestep)
         interp=interpFunc1(arange(val,val2+1,wavestep))
-        area=simps(f[idx:idx2+1]*interp,w[idx:idx2+1])#area in the band we have for color calculation
+        #area=simps(f[idx:idx2+1]*interp,w[idx:idx2+1])#area in the band we have for color calculation
+        area=sncosmo.bandmag(bands[known])
         val=int(math.ceil(wave2[0]/wavestep))*wavestep
         val2=int(math.floor(wave2[-1]/wavestep))*wavestep
         wave=arange(val,val2+1,wavestep)
@@ -472,11 +473,11 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
 
         wavestep = w[1] - w[0]
         if bands[blue].wave_eff<=_UVrightBound:
-            bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc)
+            bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red)
             wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i)
             UV=True
         elif bands[red].wave_eff>=_IRleftBound:
-            rWave,rTrans,bArea=_extrap_helper(bWave,bInterpFunc,rWave,rInterpFunc)
+            rWave,rTrans,bArea=_extrap_helper(bWave,bInterpFunc,rWave,rInterpFunc,blue)
             wnew,fnew=_extrapolate_ir(red,bArea,colorData[i],rTrans,rWave,f,w,niter,log,i)
             IR=True
         else:
@@ -585,15 +586,15 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
             except:
                 tempTime=array(temp['uv']['x'])
                 tempColor=array(temp['uv']['500'])
-            blueZP=_getZP(bandDict[color[0]],zpsys)
-            redZP=_getZP(bandDict[color[-1]],zpsys)
+            #blueZP=_getZP(bandDict[color[0]],zpsys)
+            #redZP=_getZP(bandDict[color[-1]],zpsys)
             tempMask=colorTable[color].mask
-            colorTable[color]=10**(-.4*(colorTable[color]-(blueZP-redZP)))
-            tempColor=10**(-.4*(tempColor-(blueZP-redZP)))
+            #colorTable[color]=10**(-.4*(colorTable[color]-(blueZP-redZP)))
+            #tempColor=10**(-.4*(tempColor-(blueZP-redZP)))
             colorTable[color].mask=tempMask
             if once:
                 sedfile=newsedfile
-            tempTable=colorTable[colorTable[color].mask==False]
+            tempTable=colorTable[~colorTable[color].mask]
             UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,tempTime,tempColor, bandDict,niter=50)
             if UV:
                 boundUV=True
