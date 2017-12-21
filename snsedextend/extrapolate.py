@@ -307,6 +307,7 @@ def _getPartialBandMag(model,phase,wave,band,zpsys,wavestep):
     #idx,val=_find_nearest(wave,int(math.floor(band.wave[0]/wavestep))*wavestep)
     waves=arange(band.wave[0],wave[-1]+1,wavestep)
     transInterp=interpFunc(waves)
+    #git test
     sncosmo.registry.register(sncosmo.Bandpass(waves,transInterp,name='tempBand'),force=True)
 
     return(model.bandmag('tempBand',zpsys,phase)) #magnitude in the overlap of the band
