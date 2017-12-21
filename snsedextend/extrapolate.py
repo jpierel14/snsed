@@ -357,27 +357,24 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
                 else:
                     xTrans=xTrans[bandIdx:]
                     xWave=xWave[bandIdx:]
-                tempIdx,tempVal=_find_nearest(w,xWave[0])
+                '''
+                tempIdx2,tempVal2=_find_nearest(w,xWave[0])
                 if xWave[0]-w[-1]>wavestep: #then need to extrapolate between end of SED and left edge of band
                     Nstep = len( arange( val, xWave[0],  wavestep ) )
                     wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nstep) ] )
                     fextRed = array( [ max(0,f[idx]) for wave in wextRed ] )#just a flat slope from the end of the SED to the edge of the band
-                    w2 = append(w[:tempIdx+1], wextRed)
-                    f2 = append(f[:tempIdx+1], fextRed)
-    if idx < idx2: #then we have some info to the right of the band (unlikely)
-        w1=w[idx2+1:]
-        f1=f[idx2+1:]
-    else:
-        w1=[]
-        f1=[]
+                    w2 = append(w[:tempIdx2+1], wextRed)
+                    f2 = append(f[:tempIdx2+1], fextRed)
+                '''
+
     w=w2
     f=f2
+
     ms=sncosmo.get_magsystem(zpsys)
-    if bandsDone:
-        try:
-            overlapArea=np.sum(f[tempIdx:]*temp*temp1*gradient(temp))
-        except:
-            overlapArea=0
+    try:
+        overlapArea=np.sum(f[tempIdx:]*temp*temp1*gradient(temp))
+    except:
+        overlapArea=0
     else:
         overlapArea=0
     bArea= ms.band_mag_to_flux(vArea-color,bandDict[band])*sncosmo.constants.HC_ERG_AA-overlapArea #area in the band we are extrapolating into (mag to flux), everything should be in ergs at this point
@@ -389,7 +386,7 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     #area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
     area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
-    #print(d[0],color)
+    print(d[0],color)
     if area>bArea: #then we need flux=0, but slope of line steeper
         last=0
         y1=f[-1]
@@ -466,9 +463,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     Nstep = len( arange( w[-1], xWave[-1],  wavestep ) )
     wextRed =  sorted( [ w[-1] + (j+1)*wavestep for j in range(Nstep) ] )
     fextRed = array( [ max( 0, a * wave + b ) if wave <= xWave[-1] else max(0,a*xWave[-1]+b) for wave in wextRed ] )
-    w = append(w, append(wextRed,w1))
-    f = append(f, append(fextRed,f1))
-
+    w = append(w, wextRed)
+    f = append(f, fextRed)
     return(w,f)
 
 '''

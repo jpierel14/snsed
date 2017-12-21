@@ -165,7 +165,7 @@ def main():
     files=glob.glob('*.SED')
     #filename='SDSS-000020.SED'
     #filename='../Nugent+Scolnic_IIL.SED'
-    wave = np.linspace(2000.0, 20000.0, 500)
+    wave = np.linspace(2500.0, 20000.0, 500)
     days=0
     w=1.0
     fig = plt.figure()
@@ -209,7 +209,7 @@ def main():
         
         #ax.plot(wave, source.flux(0., wave), label='w={:3.1f}'.format(w))
 
-    plt.savefig("typeII.pdf",format='pdf')
+    plt.savefig("typeII2.pdf",format='pdf')
     #plt.show()
     sys.exit()
     ##########################################################################
@@ -274,3 +274,4 @@ def main():
     # the light curve looks more like the Ia template than the IIp template.
     # This is generally what we expected since the example data here was
     # generated from a Ia template (although not the Nugent template!).
+if __name__ == "__main__": main()

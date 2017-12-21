@@ -54,7 +54,7 @@ def testSED(sedFile,amplitude=1.0,phase=0,minwave=2000.0,maxwave=20000.0,waveste
 	#rBand=model.bandmag('sdss::r','vega',phase)
 	#print(model.bandflux('bessellv',phase,_getZP('bessellv','vega'),'vega'))
 	#print(model.bandmag('paritel::ks','vega',phase))
-	print(model.color('bessellux','bessellb','vega',phase))
+	print(model.color('sdss::r','paritel::h','vega',phase))
 	sys.exit()
 	#print(sncosmo.constants.HC_ERG_AA)
 	#print(model.color('bessellv','sdss::r','vega',0))
@@ -79,8 +79,8 @@ def testSED(sedFile,amplitude=1.0,phase=0,minwave=2000.0,maxwave=20000.0,waveste
 
 def main():
 	#filename='SDSS-018700.SED'
-	filename='SDSS-000018.SED'
-	testSED(filename,phase=0.96319999999999995,minwave=2500,maxwave=19600.0,showfig=True,outFilename=os.path.join('test_output',filename[:-4]+'.pdf'))
+	filename='S11_SDSS-000018.SED'
+	testSED(filename,phase=0.96319999999999995,minwave=2500,maxwave=25000.0,showfig=True,outFilename=os.path.join('test_output',filename[:-4]+'.pdf'))
 
 
 if __name__ == "__main__":
