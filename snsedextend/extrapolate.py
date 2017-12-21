@@ -204,6 +204,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
     w=w2
     f=f2
     ms=sncosmo.get_magsystem(zpsys)
+    print(rArea)
     bArea= ms.band_mag_to_flux(rArea+color,bandDict[band])*sncosmo.constants.HC_ERG_AA #area in the band we are extrapolating into (mag to flux)
     #bArea=rArea*color
     x1=w[0]
@@ -212,7 +213,51 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
     #area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
     area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
+    extra=False
+    print(color,bArea,area)
     if area>bArea: #then we need flux=0, but slope of line steeper
+        i=-1
+        while area>bArea:
+            i+=1
+            x2=xWave[i]
+            interpFunc=scint.interp1d(append(x2,w[0]),append(0,f[0]))
+            idx=list(xWave).index(x2)
+            #print(len(xTrans[0:idx+1]),len(arange(w[-1],x2+wavestep/10,wavestep)))
+            area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
+        i=1
+        x3=x2-wavestep
+        idx2=list(xWave).index(x2)
+        idx3=idx2-1
+        while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
+            if i==1:
+                y3=f[0]/2
+                while area<bArea:
+                    y3*=2
+                    interpFunc1=scint.interp1d(append(x2,w[0]),append(y3,f[0]))
+                    interpFunc2=scint.interp1d(append(x3,x2),append(0,y3))
+                    #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                    area1=np.sum(interpFunc1(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
+                    #print(len(arange(x2,x3+wavestep/10,wavestep)))
+                    area2=np.sum(interpFunc2(arange(x3,x2+wavestep/10,wavestep))*xTrans[idx3:idx2+1]*arange(x3,x2+wavestep/10,wavestep)*gradient(arange(x3,x2+wavestep/10,wavestep)))
+                    area=area1+area2
+                y1=0
+                y2=y3
+            if area>bArea:
+                y3=y2
+            else:
+                y1=y2
+            y2=(y3+y1)/2
+            interpFunc1=scint.interp1d(append(x2,w[0]),append(y2,f[0]))
+            interpFunc2=scint.interp1d(append(x3,x2),append(0,y2))
+            #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+            area1=np.sum(interpFunc1(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
+            #print(len(arange(x2,x3+wavestep/10,wavestep)))
+            area2=np.sum(interpFunc2(arange(x3,x2+wavestep/10,wavestep))*xTrans[idx3:idx2+1]*arange(x3,x2+wavestep/10,wavestep)*gradient(arange(x3,x2+wavestep/10,wavestep)))
+            area=area1+area2
+            i+=1
+        y1=f[0]
+        extra=True
+        '''
         y1=f[0]
         y2=0
         last=0
@@ -254,7 +299,8 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
                 i+=1
             y1=y2
             y2=0
-    elif area<bArea:#then the flux at the right edge of the band must be greater than 0
+    '''
+    elif area<bArea:#then the flux at the left edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
         y2=y3
@@ -286,9 +332,34 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
     if abs(area-bArea)>.001*bArea:
         log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for index %i \n'%(band,vArea/area,color,index))
     (a,b,rval,pval,stderr)=stats.linregress(append(x2,w[0]),append(y2,y1))
-    Nstep = len( arange( xWave[0],w[0],  wavestep ) )
-    wextRed =  sorted( [ xWave[0] + (j)*wavestep for j in range(Nstep) ] )
-    fextRed = array( [ max( 0, a * wave + b ) if wave >= xWave[0] else max(0,a*xWave[0]+b) for wave in wextRed ] )
+    if extra:
+
+        Nstep3 = len( arange( x2,w[0],  wavestep ) )
+        wextRed3 =  sorted( [ x2 + (j+1)*wavestep for j in range(Nstep3) ])
+        fextRed3 = array( [ max( 0, a * wave + b ) for wave in wextRed3 ] )
+        if x3>xWave[0]:
+            Nstep1=len(arange(  xWave[0],x3,  wavestep ) )
+            wextRed1 =  sorted( [ xWave[0] + (j+1)*wavestep for j in range(Nstep1) ])
+            fextRed1 = array( [ 0 for wave in wextRed1 ] )
+        else:
+            wextRed3=[]
+            fextRed3=[]
+
+        (a,b,rval,pval,stderr)=stats.linregress(append(x3,x2),append(0,y2))
+        Nstep2=len(arange( x3, x2,  wavestep ) )
+        wextRed2 =  sorted( [ x3 + (j+1)*wavestep for j in range(Nstep2) ])
+        fextRed2 = array( [ max( 0, a * wave + b ) for wave in wextRed2 ] )
+
+
+
+        wextRed=np.append(wextRed1,np.append(wextRed2,wextRed3))
+        fextRed=np.append(fextRed1,np.append(fextRed2,fextRed3))
+    else:
+        Nstep = len( arange( xWave[0],w[0],  wavestep ) )
+        wextRed =  sorted( [ xWave[0] + (j)*wavestep for j in range(Nstep) ] )
+        fextRed = array( [ max( 0, a * wave + b ) if wave >= xWave[0] else max(0,a*xWave[0]+b) for wave in wextRed ] )
+
+
     w = append(w1, append(wextRed,w))
     f = append(f1, append(fextRed,f))
 
@@ -296,6 +367,12 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
 
 def _createSED(filename,rescale=False):
     phase,wave,flux=sncosmo.read_griddata_ascii(filename)
+    #phase,wave,flux=_getsed(filename)
+
+    #print(p.shape,w.shape,f.shape)
+    #print(wave[-500:]-arange(wave[-500],wave[-1]+1,10))
+    #print(phase.shape,wave.shape,flux.shape)
+    #print(wave[-250:-230])
     if rescale:
         for i in range( len(phase) ) :
             flux[i]=flux[i]/sncosmo.constants.HC_ERG_AA
@@ -319,7 +396,7 @@ def _checkBandOverlap(band1,band2):
         return True
     return False
 
-def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,bandDict,zpsys,model,bandsDone,accuracy=1e-9):
+def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,bandDict,zpsys,model,bandsDone,accuracy=1e-12):
     """
     Algorithm for extrapolation of SED into the IR
     """
@@ -327,8 +404,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     idx,val=_find_nearest(w,xWave[0]) #closest wavelength in the sed to the start of the band
     idx2,val2=_find_nearest(w,xWave[-1]) #closest wavelength in the sed to the end of the band
     overlapMag=0
-    temp1=xTrans[xWave<w[-1]]
-    temp=xWave[xWave<w[-1]]
+    temp1=xTrans[xWave<=w[-1]]
+    temp=xWave[xWave<=w[-1]]
     if xWave[0]-val>wavestep: #then need to extrapolate between end of SED and left edge of band
         Nstep = len( arange( val, xWave[0],  wavestep ) )
         wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nstep) ] )
@@ -369,14 +446,13 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
 
     w=w2
     f=f2
-
     ms=sncosmo.get_magsystem(zpsys)
+
     try:
         overlapArea=np.sum(f[tempIdx:]*temp*temp1*gradient(temp))
     except:
         overlapArea=0
-    else:
-        overlapArea=0
+
     bArea= ms.band_mag_to_flux(vArea-color,bandDict[band])*sncosmo.constants.HC_ERG_AA-overlapArea #area in the band we are extrapolating into (mag to flux), everything should be in ergs at this point
     #bArea=vArea/color
     x2=xWave[-1]
@@ -386,26 +462,78 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     #area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
     area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
-    print(d[0],color)
+    #print(d[0],color)
+    extra=False
+    #print(bArea,area)
     if area>bArea: #then we need flux=0, but slope of line steeper
-        last=0
+        '''
         y1=f[-1]
         y2=0
+        x1=w[-1]
+        x2=2*bArea/y1
+        '''
+        #last=0
+        i=0
+        while area>bArea:
+            i-=1
+            x2=xWave[i]
+            interpFunc=scint.interp1d(append(w[-1],x2),append(f[-1],0))
+            idx=list(xWave).index(x2)
+            #print(len(xTrans[0:idx+1]),len(arange(w[-1],x2+wavestep/10,wavestep)))
+            area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
+        i=1
+        x3=x2+wavestep
+        idx2=list(xWave).index(x2)
+        idx3=idx2+1
+        while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
+            if i==1:
+                y3=f[-1]/2
+                while area<bArea:
+                    y3*=2
+                    interpFunc1=scint.interp1d(append(w[-1],x2),append(f[-1],y3))
+                    interpFunc2=scint.interp1d(append(x2,x3),append(y3,0))
+                    #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                    area1=np.sum(interpFunc1(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[:idx2+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
+                    #print(len(arange(x2,x3+wavestep/10,wavestep)))
+                    area2=np.sum(interpFunc2(arange(x2,x3+wavestep/10,wavestep))*xTrans[idx2:idx3+1]*arange(x2,x3+wavestep/10,wavestep)*gradient(arange(x2,x3+wavestep/10,wavestep)))
+                    area=area1+area2
+                y1=0
+                y2=y3
+            if area>bArea:
+                y3=y2
+            else:
+                y1=y2
+            y2=(y3+y1)/2
+            interpFunc1=scint.interp1d(append(w[-1],x2),append(f[-1],y2))
+            interpFunc2=scint.interp1d(append(x2,x3),append(y3,0))
+            #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+            area1=np.sum(interpFunc1(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx2+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
+            area2=np.sum(interpFunc2(arange(x2,x3+wavestep/10,wavestep))*xTrans[idx2:idx3+1]*arange(x2,x3+wavestep/10,wavestep)*gradient(arange(x2,x3+wavestep/10,wavestep)))
+            area=area1+area2
+            i+=1
+        y1=f[-1]
+        extra=True
+        '''
         while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter):
             if area>bArea:
-                x3=x2
+                3=x2
             else:
                 x1=x2
             x2=(x3+x1)/2
-            idx,x2=_find_nearest(xWave,x2)
-            interpFunc=scint.interp1d(append(w[-1],x2),append(f[-1],0))
+            #idx,x2=_find_nearest(xWave,x2)
+            interpFunc1=scint.interp1d(append(w[-1],x2),append(f[-1],0))
+            interpFunc2=scint.interp1d(xWave,xTrans)
             #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
             area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
             i+=1
-            if area==last: #break out of loop once we can't get more accurate because of wavelength binning
-                break
-            last=area
+
+        w3=[int(math.ceil(x2/wavestep))*wavestep]
+            #if area==last: #break out of loop once we can't get more accurate because of wavelength binning
+            #    break
+            #last=area
+        
         if abs(area-bArea)/(area+bArea)>accuracy and i<=niter:
+            print('or here?')
             i=1
             while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
                 if i==1:
@@ -428,6 +556,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
                 i+=1
             y1=y2
             y2=0
+            print(i)
+        '''
     elif area<bArea:#then the flux at the right edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
@@ -457,12 +587,35 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     else:
         y1=f[-1]
         y2=0
+    #print(ms.band_flux_to_mag((area+overlapArea)/sncosmo.constants.HC_ERG_AA,bandDict[band]))
     if abs(area-bArea)>.001*bArea:
-        log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for index %i \n'%(band,vArea/area,color,index))
+        log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for index %i \n'%(band,vArea-ms.band_flux_to_mag((area+overlapArea)/sncosmo.constants.HC_ERG_AA,bandDict[band]),color,index))
     (a,b,rval,pval,stderr)=stats.linregress(append(w[-1],x2),append(y1,y2))
-    Nstep = len( arange( w[-1], xWave[-1],  wavestep ) )
-    wextRed =  sorted( [ w[-1] + (j+1)*wavestep for j in range(Nstep) ] )
-    fextRed = array( [ max( 0, a * wave + b ) if wave <= xWave[-1] else max(0,a*xWave[-1]+b) for wave in wextRed ] )
+
+
+    if extra:
+        Nstep1 = len( arange( w[-1], x2,  wavestep ) )
+        wextRed1 =  sorted( [ w[-1] + (j+1)*wavestep for j in range(Nstep1) ])
+        fextRed1 = array( [ max( 0, a * wave + b ) for wave in wextRed1 ] )
+        (a,b,rval,pval,stderr)=stats.linregress(append(x2,x3),append(y2,0))
+        Nstep2=len(arange( x2, x3,  wavestep ) )
+        wextRed2 =  sorted( [ x2 + (j+1)*wavestep for j in range(Nstep2) ])
+        fextRed2 = array( [ max( 0, a * wave + b ) for wave in wextRed2 ] )
+        if x3<xWave[-1]:
+            Nstep3=len(arange( x3, xWave[-1],  wavestep ) )
+            wextRed3 =  sorted( [ x3 + (j+1)*wavestep for j in range(Nstep3) ])
+            fextRed3 = array( [ 0 for wave in wextRed3 ] )
+        else:
+            wextRed3=[]
+            fextRed3=[]
+        wextRed=np.append(wextRed1,np.append(wextRed2,wextRed3))
+        fextRed=np.append(fextRed1,np.append(fextRed2,fextRed3))
+    else:
+        Nstep = len( arange( w[-1], xWave[-1],  wavestep ) )
+        wextRed =  sorted( [ w[-1] + (j+1)*wavestep for j in range(Nstep) ] )
+
+        fextRed = array( [ max( 0, a * wave + b ) if wave <= xWave[-1] else max(0,a*xWave[-1]+b) for wave in wextRed ] )
+
     w = append(w, wextRed)
     f = append(f, fextRed)
     return(w,f)
@@ -563,10 +716,7 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     tempTime=[x[0] for x in dlist]
     colorData=cInterpFunc(tempTime)
 
-    if bandsDone:
-        sed=_createSED(sedfile,rescale=False)
-    else:
-        sed=_createSED(sedfile,rescale=False) #now the original sed is in photons/s/cm^2
+    sed=_createSED(sedfile,rescale=False) #now the original sed is in photons/s/cm^2
     model=sncosmo.Model(sed)
 
     fout = open( newsedfile, 'w' )
@@ -594,6 +744,7 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
 
         wavestep = w[1] - w[0]
         if bands[blue].wave_eff<=_UVrightBound:
+            print(d[0])
             bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red,d[0])
             wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i,bands,zpsys)
             UV=True

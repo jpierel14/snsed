@@ -65,12 +65,21 @@ for i in range(len(filelist)):
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 typeColors['SN']=typeSNe
 """
+from astropy.table import MaskedColumn
 typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#vColors=ascii.read(os.path.join('SEDs','typeII','vColors.dat'))
+#temp=MaskedColumn([np.nan for i in range(len(typeColors))],name='V-r',mask=[True for i in range(len(typeColors))])
+#temp2=MaskedColumn([np.nan for i in range(len(typeColors))],name='Vr_err',mask=[True for i in range(len(typeColors))])
+#typeColors['V-r']=temp
+#typeColors['Vr_err']=temp2
+#for i in range(len(vColors)):
+#    typeColors.add_row(np.append(vColors['time'][i],np.append([np.nan for j in range(len(typeColors.colnames)-3)],np.append(vColors['V-r'][i],vColors['Vr_err'][i]))),mask=np.append([False],np.append([True for k in range(len(typeColors.colnames)-3)],[False,False])))
+#typeColors.sort('time')
 
 seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in type and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-snsedextend.extendNon1a(typeColors,colors=['r-J','r-H','r-K'],sedlist=['S11_SDSS-000018.SED'],zpsys='Vega',verbose=True)
+snsedextend.extendNon1a(typeColors,colors=['U-B'],sedlist=['SDSS-018834.SED'],zpsys='Vega',verbose=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')
