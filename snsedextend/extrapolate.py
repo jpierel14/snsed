@@ -11,6 +11,7 @@ from scipy.integrate import simps
 from astropy.table import Table,Column,MaskedColumn
 from multiprocessing import Pool
 from collections import OrderedDict as odict
+from scipy.interpolate import RectBivariateSpline
 
 __all__=['extendNon1a','bandRegister','curveToColor']
 
@@ -61,6 +62,25 @@ _UVleftBound=1200
 _IRleftBound=9000
 _IRrightBound=55000
 
+
+
+class snSource(sncosmo.Source):
+
+    _param_names = ['amplitude']
+    param_names_latex = ['A']   # used in plotting display
+
+    def __init__(self, phase, wave, flux1, name=None, version=None):
+        self.name = name
+        self.version = version
+        self._phase = phase
+        self._wave = wave
+
+        self._model_flux1 = RectBivariateSpline(phase, wave, flux1, kx=3, ky=3)
+        self._parameters = np.array([1.0])  # initial parameters
+
+    def _flux(self, phase, wave):
+        amplitude = self._parameters
+        return amplitude  * self._model_flux1(phase, wave)
 
 def _standardize(table):
     for col in table.colnames:
@@ -158,7 +178,7 @@ def plotsed( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,**kwarg):
             plot( wlist[i][idx1:idx2], flist[i][idx1:idx2], label=str(thisday), **kwarg )
             show()
 
-def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1e-9):
+def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,zpsys,accuracy=1e-9):
     """
     Algorithm for extrapolation of SED into the UV
     """
@@ -183,17 +203,21 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
         f1=[]
     w=w2
     f=f2
-    bArea=rArea*color
+    ms=sncosmo.get_magsystem(zpsys)
+    bArea= ms.band_mag_to_flux(rArea+color,bandDict[band])*sncosmo.constants.HC_ERG_AA #area in the band we are extrapolating into (mag to flux)
+    #bArea=rArea*color
     x1=w[0]
     x2=xWave[0]
     interpFunc=scint.interp1d(append(x2,x1),append(0,f[0]))
-    area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
+    #area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
+    area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
     if area>bArea: #then we need flux=0, but slope of line steeper
         y1=f[0]
         y2=0
         last=0
         while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter):
+
             if area>bArea:
                 x3=x2
             else:
@@ -201,7 +225,8 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
             x2=(x3+x1)/2
             idx,x2=_find_nearest(xWave,x2)
             interpFunc=scint.interp1d(append(x2,w[0]),append(0,f[0]))
-            area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+            #area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+            area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
             i+=1
             if area==last: #break out of loop once we can't get more accurate because of wavelength binning
                 break
@@ -215,7 +240,8 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     while area<bArea:
                         y3*=2
                         interpFunc=scint.interp1d(append(x2,w[0]),append(0,y3))
-                        area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+                        #area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+                        area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
                         y1=f[0]
                     y2=y3
                 if area>bArea:
@@ -224,7 +250,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     y1=y2
                 y2=(y3+y1)/2
                 interpFunc=scint.interp1d(append(x2,w[0]),append(0,y2))
-                area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
+                area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
                 i+=1
             y1=y2
             y2=0
@@ -242,14 +268,16 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     while area < bArea:#this will increase the upper bound until the area is greater than the necessary area
                         y3*=2
                         interpFunc=scint.interp1d(append(x2,w[0]),append(y3,f[0]))
-                        area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+                        #area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+                        area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
                     tried=True
                 else:
                     y1=y2
             y2=(y3+y1)/2
 
             interpFunc=scint.interp1d(append(x2,w[0]),append(y2,f[0]))
-            area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+            #area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+            area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
             i+=1
         y1=f[0]
     else:
@@ -266,24 +294,76 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
 
     return(w,f)
 
-def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1e-9):
+def _createSED(filename,rescale=False):
+    phase,wave,flux=sncosmo.read_griddata_ascii(filename)
+    if rescale:
+        for i in range( len(phase) ) :
+            flux[i]=flux[i]/sncosmo.constants.HC_ERG_AA
+        #flux=flux/(sncosmo.constants.HC_ERG_AA/wave)
+    return(snSource(phase,wave,flux,name='extrapolated'))
+
+def _getPartialBandMag(model,phase,wave,band,zpsys,wavestep):
+    interpFunc=scint.interp1d(band.wave,band.trans)
+    #idx,val=_find_nearest(wave,int(math.floor(band.wave[0]/wavestep))*wavestep)
+    waves=arange(band.wave[0],wave[-1]+1,wavestep)
+    transInterp=interpFunc(waves)
+    sncosmo.registry.register(sncosmo.Bandpass(waves,transInterp,name='tempBand'),force=True)
+
+    return(model.bandmag('tempBand',zpsys,phase)) #magnitude in the overlap of the band
+
+#def _getPartialBandFlux(model)
+
+def _checkBandOverlap(band1,band2):
+    if (band1.wave[0]<band2.wave[0] and band1.wave[-1]>band2.wave[0]) or (band2.wave[0]<band1.wave[0] and band2.wave[-1]>band1.wave[0]):
+        return True
+    return False
+
+def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,bandDict,zpsys,model,bandsDone,accuracy=1e-9):
     """
     Algorithm for extrapolation of SED into the IR
     """
     wavestep=w[1]-w[0]
-    idx,val=_find_nearest(w,xWave[0])
-    idx2,val2=_find_nearest(w,xWave[-1])
+    idx,val=_find_nearest(w,xWave[0]) #closest wavelength in the sed to the start of the band
+    idx2,val2=_find_nearest(w,xWave[-1]) #closest wavelength in the sed to the end of the band
+    overlapMag=0
+    temp1=xTrans[xWave<w[-1]]
+    temp=xWave[xWave<w[-1]]
     if xWave[0]-val>wavestep: #then need to extrapolate between end of SED and left edge of band
         Nstep = len( arange( val, xWave[0],  wavestep ) )
         wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nstep) ] )
         fextRed = array( [ max(0,f[idx]) for wave in wextRed ] )#just a flat slope from the end of the SED to the edge of the band
         w2 = append(w[:idx+1], wextRed)
         f2 = append(f[:idx+1], fextRed)
-
-    else: #if the SED extends to the band, then cut it off at the band for new extrapolation
-        w2=w[:idx+1]
-        f2=f[:idx+1]
-    if idx < idx2:
+    else: #if the SED extends to the band:
+        if not any([_checkBandOverlap(bandDict[x],bandDict[band]) for x in bandsDone]): #  then cut it off at the band for new extrapolation
+            w2=w[:idx+1]
+            f2=f[:idx+1]
+        else:#calculate the area for the overlap between bands, then subtract that from what is necessary and begin extrapolation at the right edge of the last extrapolation
+            w2=w
+            f2=f
+            bandIdx,bandVal=_find_nearest(xWave,w[-1])#int(math.ceil(wave1[0]/wavestep))*wavestep
+            tempIdx,tempVal=_find_nearest(w,xWave[0])
+            if xWave[0]<w[-1]:
+                '''
+                if np.max(f[tempIdx:])>0:
+                    #overlapMag=_getPartialBandMag(model,d[0],w,bandDict[band],zpsys,wavestep)
+                else:
+                    overlapMag=0
+                '''
+                if bandVal<w[-1]:
+                    xTrans=xTrans[bandIdx+1:]
+                    xWave=xWave[bandIdx+1:]
+                else:
+                    xTrans=xTrans[bandIdx:]
+                    xWave=xWave[bandIdx:]
+                tempIdx,tempVal=_find_nearest(w,xWave[0])
+                if xWave[0]-w[-1]>wavestep: #then need to extrapolate between end of SED and left edge of band
+                    Nstep = len( arange( val, xWave[0],  wavestep ) )
+                    wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nstep) ] )
+                    fextRed = array( [ max(0,f[idx]) for wave in wextRed ] )#just a flat slope from the end of the SED to the edge of the band
+                    w2 = append(w[:tempIdx+1], wextRed)
+                    f2 = append(f[:tempIdx+1], fextRed)
+    if idx < idx2: #then we have some info to the right of the band (unlikely)
         w1=w[idx2+1:]
         f1=f[idx2+1:]
     else:
@@ -291,13 +371,24 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
         f1=[]
     w=w2
     f=f2
-    bArea=vArea/color
+    ms=sncosmo.get_magsystem(zpsys)
+    if bandsDone:
+        try:
+            overlapArea=np.sum(f[tempIdx:]*temp*temp1*gradient(temp))
+        except:
+            overlapArea=0
+    else:
+        overlapArea=0
+    bArea= ms.band_mag_to_flux(vArea-color,bandDict[band])*sncosmo.constants.HC_ERG_AA-overlapArea #area in the band we are extrapolating into (mag to flux), everything should be in ergs at this point
+    #bArea=vArea/color
     x2=xWave[-1]
     x1=w[-1]
     interpFunc=scint.interp1d(append(x1,x2),append(f[-1],0))
-    area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
+    #interpFunc2=scint.interp1d(bandDict[band].wave,bandDict[band].dwave)
+    #area=simps(xTrans*interpFunc(xWave),dx=wavestep) #this is the area if the slope is such that the flux is 0 at the right edge of the band
+    area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
-
+    #print(d[0],color)
     if area>bArea: #then we need flux=0, but slope of line steeper
         last=0
         y1=f[-1]
@@ -310,7 +401,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
             x2=(x3+x1)/2
             idx,x2=_find_nearest(xWave,x2)
             interpFunc=scint.interp1d(append(w[-1],x2),append(f[-1],0))
-            area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+            #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+            area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
             i+=1
             if area==last: #break out of loop once we can't get more accurate because of wavelength binning
                 break
@@ -323,7 +415,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     while area<bArea:
                         y3*=2
                         interpFunc=scint.interp1d(append(w[-1],x2),append(y3,0))
-                        area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                        #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                        area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
                     y1=f[-1]
                     y2=y3
                 if area>bArea:
@@ -332,7 +425,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     y1=y2
                 y2=(y3+y1)/2
                 interpFunc=scint.interp1d(append(w[-1],x2),append(y2,0))
-                area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
+                area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
                 i+=1
             y1=y2
             y2=0
@@ -350,14 +444,16 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,f,w,niter,log,index,accuracy=1
                     while area < bArea:#this will increase the upper bound until the area is greater than the necessary area
                         y3*=2
                         interpFunc=scint.interp1d(append(w[-1],x2),append(f[-1],y3))
-                        area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+                        #area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+                        area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
                     tried=True
                 else:
                     y1=y2
             y2=(y3+y1)/2
 
             interpFunc=scint.interp1d(append(w[-1],x2),append(f[-1],y2))
-            area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+            #area=simps(xTrans*interpFunc(xWave),dx=wavestep)
+            area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
             i+=1
         y1=f[-1]
     else:
@@ -411,18 +507,19 @@ def _getBestModel(table,ir):
     snsedextend.plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,typ=type,bic=dfwaic)
 '''
 
-def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=50):
+def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,bandsDone,niter=50):
     """ Interpolate the given transmission function to the wavestep of the SED, then
     get the area in the V band for color calculation and run the extrapolation algorithm.
     :param sedfile: SED file being extrapolated
     :param newsedfile: filename of output SED file
     :param fVH 
     """
-    dlist,wlist,flist = _getsed( sedfile )
+    dlist,wlist,flist = _getsed( sedfile ) #first time this is read in, should be in ergs/s/cm^2/AA
+    '''
     tempTime=[]
     tempColor=[]
     extrap=True
-
+    
     if dlist[0][0]<table[_get_default_prop_name('time')][0]:
         tempTime=append(math.floor(dlist[0][0]),time)
         tempColor=append(table[color][0],modColor)
@@ -440,6 +537,21 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
     if not extrap:
         tempTime=time
         tempColor=modColor
+    '''
+    i=0
+
+    while dlist[i][0]<time[0]:
+        i+=1
+    dlist=dlist[i:]
+    wlist=wlist[i:]
+    flist=flist[i:]
+    i=-1
+    while dlist[i][0]>time[-1]:
+        i-=1
+    if i!=-1:
+        dlist=dlist[:i+1]
+        wlist=wlist[:i+1]
+        flist=flist[:i+1]
 
 
     blue=color[0]
@@ -450,17 +562,27 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
     rTrans=bands[red].trans
     bInterpFunc=scint.interp1d(bWave,bTrans)
     rInterpFunc=scint.interp1d(rWave,rTrans)
-    cInterpFunc=scint.interp1d(tempTime,tempColor)
+    cInterpFunc=scint.interp1d(time,modColor)
     tempTime=[x[0] for x in dlist]
     colorData=cInterpFunc(tempTime)
+
+    if bandsDone:
+        sed=_createSED(sedfile,rescale=False)
+    else:
+        sed=_createSED(sedfile,rescale=False) #now the original sed is in photons/s/cm^2
+    model=sncosmo.Model(sed)
+
     fout = open( newsedfile, 'w' )
     log= open('./error.log','w')
-    def _extrap_helper(wave1,interpFunc1,wave2,interpFunc2,known):
-        idx,val=_find_nearest(w,int(math.ceil(wave1[0]/wavestep))*wavestep)
-        idx2,val2=_find_nearest(w,int(math.floor(wave1[-1]/wavestep))*wavestep)
-        interp=interpFunc1(arange(val,val2+1,wavestep))
+
+    def _extrap_helper(wave1,interpFunc1,wave2,interpFunc2,known,currentPhase):
+        #idx,val=_find_nearest(w,int(math.ceil(wave1[0]/wavestep))*wavestep)
+        #idx2,val2=_find_nearest(w,int(math.floor(wave1[-1]/wavestep))*wavestep)
+        #interp=interpFunc1(arange(val,val2+1,wavestep))
         #area=simps(f[idx:idx2+1]*interp,w[idx:idx2+1])#area in the band we have for color calculation
-        area=sncosmo.bandmag(bands[known])
+        area=model.bandmag(bands[known],zpsys,currentPhase)
+
+        #area=bandMag(sedfile,currentPhase,bands[known],zpsys)#magnitude in the band we have for color calculation
         val=int(math.ceil(wave2[0]/wavestep))*wavestep
         val2=int(math.floor(wave2[-1]/wavestep))*wavestep
         wave=arange(val,val2+1,wavestep)
@@ -468,17 +590,19 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,niter=5
         return(wave,trans,area)
     UV=False
     IR=False
-    for i in range( len(dlist) ) : 
+    for i in range( len(dlist) ) :
         d,w,f = dlist[i],wlist[i],flist[i]
+        #if not bandsDone:
+            #f=f/sncosmo.constants.HC_ERG_AA #flux is now in photons/s/cm^2
 
         wavestep = w[1] - w[0]
         if bands[blue].wave_eff<=_UVrightBound:
-            bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red)
-            wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i)
+            bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red,d[0])
+            wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i,bands,zpsys)
             UV=True
         elif bands[red].wave_eff>=_IRleftBound:
-            rWave,rTrans,bArea=_extrap_helper(bWave,bInterpFunc,rWave,rInterpFunc,blue)
-            wnew,fnew=_extrapolate_ir(red,bArea,colorData[i],rTrans,rWave,f,w,niter,log,i)
+            rWave,rTrans,bArea=_extrap_helper(bWave,bInterpFunc,rWave,rInterpFunc,blue,d[0])
+            wnew,fnew=_extrapolate_ir(red,bArea,colorData[i],rTrans,rWave,d,f,w,niter,log,i,IR,bands,zpsys,model,bandsDone)
             IR=True
         else:
             raise RuntimeError("You supplied a color that does not support extrapolation to the IR or UV!")
@@ -528,6 +652,15 @@ def _boundIRsed(sedfile):
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[j], fnew[j] ))
     fout.close()
 
+
+
+def bandMag(filename,currentPhase,band,zpsys,rescale=False):
+    sed=_createSED(filename,rescale=rescale)
+    model=sncosmo.Model(sed)
+    return(model.bandmag(band,zpsys,currentPhase))
+
+
+
 def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True):
     """
     Function called in main which runs the extrapolation algorithm.
@@ -537,8 +670,16 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
     :param fVK: input V-K
     :param showplots: None if you don't want plotting, otherwise it's 'all' if you want to plot all days or a single day (i.e. 3)
     """
+    import pickle
     colorTable=_standardize(colorTable)
-    temp=snsedextend.BIC.run()
+    print('Running Bayesian Information Criterion...')
+    #temp=snsedextend.BIC.run()
+    #with open('tempBIC.txt','wb') as handle:
+    #    pickle.dump(temp,handle)
+    ###### for debugging#####
+    with open('tempBIC.txt','rb') as handle:
+        temp=pickle.loads(handle.read())
+
 
     #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
     if not isinstance(colorTable,Table):
@@ -566,13 +707,14 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
         sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
         sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
     for sedfile in sedlist:
-        #newsedfile=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII',os.path.basename(sedfile))
-        newsedfile=os.path.basename(sedfile)
+        newsedfile=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII',os.path.basename(sedfile))
+        #newsedfile=os.path.basename(sedfile)
         if verbose:
             print("EXTRAPOLATING %s"%newsedfile)
         once=False
         boundUV=False
         boundIR=False
+        bandsDone=[]
         for color in colors:
             if verbose:
                 print('     Running %s extrapolation.'%color)
@@ -595,13 +737,17 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
-            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,tempTime,tempColor, bandDict,niter=50)
+            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,tempTime,tempColor, bandDict,zpsys,bandsDone,niter=50)
             if UV:
                 boundUV=True
+                bandsDone.append(color[0])
             if IR:
                 boundIR=True
+                bandsDone.append(color[-1])
             once=True
-        once=False
+
+        #once=False
+
         if showplots:
             plotsed(newsedfile,day=showplots)
         if boundUV:
@@ -861,7 +1007,7 @@ mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'snana' in x[0] or
 
 def _mag_to_flux(table,bandDict,zpsys):
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y),table[_get_default_prop_name('mag')],bandDict[table[_get_default_prop_name('band')]]))
+    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,table[_get_default_prop_name('mag')],bandDict[table[_get_default_prop_name('band')]]))
     table[_get_default_prop_name('fluxerr')] = np.asarray(
         map(lambda x, y: x * y / (2.5 * np.log10(np.e)), table[_get_default_prop_name('magerr')],
             table[_get_default_prop_name('flux')]))
@@ -869,7 +1015,7 @@ def _mag_to_flux(table,bandDict,zpsys):
 
 def _flux_to_mag(table,bandDict,zpsys):
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('mag')] = np.asarray(map(lambda x, y: ms.band_flux_to_mag(x,y), table[_get_default_prop_name('flux')],
+    table[_get_default_prop_name('mag')] = np.asarray(map(lambda x, y: ms.band_flux_to_mag(x/sncosmo.constants.HC_ERG_AA,y), table[_get_default_prop_name('flux')],
                                                           bandDict[table[_get_default_prop_name('band')]]))
     table[_get_default_prop_name('magerr')] = np.asarray(map(lambda x, y: 2.5 * np.log10(np.e) * y / x, table[_get_default_prop_name('flux')],
                                                              table[_get_default_prop_name('fluxerr')]))

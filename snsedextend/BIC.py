@@ -6,20 +6,33 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import sys,os,inspect,warnings
+from astropy.io import ascii
 from scipy.optimize import fmin_powell
 from scipy import integrate
+from contextlib import contextmanager
 
 import pymc3 as pm
-import theano as thno
-import theano.tensor as T
 
+#import theano as thno
+#import theano.tensor as T
+warnings.filterwarnings('ignore')
 
 # configure some basic options
 sns.set(style="darkgrid", palette="muted")
 pd.set_option('display.notebook_repr_html', True)
 plt.rcParams['figure.figsize'] = 12, 8
 rndst = np.random.RandomState(0)
+
+@contextmanager
+def suppress_stdout():
+    with open(os.devnull, "w") as devnull:
+        old_stdout = sys.stdout
+        sys.stdout = devnull
+        try:
+            yield
+        finally:
+            sys.stdout = old_stdout
 
 def generate_data(n=20, p=0, a=1, b=1, c=0, latent_sigma_y=20):
     '''
@@ -131,6 +144,9 @@ def create_poly_modelspec(k=1):
                                      for j in range(2,k+1)])).strip()
 
 
+
+
+
 def run_models(df, upper_order=5):
     '''
     Convenience function:
@@ -144,14 +160,13 @@ def run_models(df, upper_order=5):
 
         nm = 'k{}'.format(k)
         fml = create_poly_modelspec(k)
+        with suppress_stdout():
+            with pm.Model() as models[nm]:
 
-        with pm.Model() as models[nm]:
+                pm.glm.glm(fml, df, family=pm.glm.families.Normal())
 
-            print('\nRunning: {}'.format(nm))
-            pm.glm.glm(fml, df, family=pm.glm.families.Normal())
-
-            # For speed, we're using Metropolis here
-            traces[nm] = pm.sample(5000, pm.Metropolis())[1000::5]
+                # For speed, we're using Metropolis here
+                traces[nm] = pm.sample(5000, pm.Metropolis())[1000::5]
 
     return models, traces
 
@@ -196,8 +211,7 @@ def plot_posterior_cr(models, traces, rawdata, xlims,
             return(dfp)
 def run():
     n = 12
-    import sys,os,inspect
-    from astropy.io import ascii
+
     modelList=['k1','k2']#,'k3','k4']
     t='II'
     res=dict([])

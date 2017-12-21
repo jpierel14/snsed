@@ -8,7 +8,7 @@ from astropy.io import ascii
 import sncosmo
 sndataroot = os.environ['SNDATA_ROOT']
 dir='hicken'
-type=['II']
+type=['II','IIP']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*clipped.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
@@ -30,6 +30,7 @@ for k in colors:
         colors[k]=colors[k].split(',')
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
+"""
 for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
@@ -63,12 +64,14 @@ for i in range(len(filelist)):
 
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 typeColors['SN']=typeSNe
-seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
+"""
+typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
 
+seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in type and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-snsedextend.extendNon1a(typeColors,sedlist=sedlist,zpsys='Vega',verbose=True)
+snsedextend.extendNon1a(typeColors,colors=['r-J','r-H','r-K'],sedlist=sedlist,zpsys='Vega',verbose=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
-typeColors.sort('time')
+#typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')
-ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
