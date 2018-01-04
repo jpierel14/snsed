@@ -204,7 +204,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
     w=w2
     f=f2
     ms=sncosmo.get_magsystem(zpsys)
-    print(rArea)
+    #print(rArea)
     bArea= ms.band_mag_to_flux(rArea+color,bandDict[band])*sncosmo.constants.HC_ERG_AA #area in the band we are extrapolating into (mag to flux)
     #bArea=rArea*color
     x1=w[0]
@@ -214,7 +214,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
     area=np.sum(interpFunc(xWave)*xTrans*xWave*gradient(xWave))
     i=1
     extra=False
-    print(color,bArea,area)
+    #print(color,bArea,area)
     if area>bArea: #then we need flux=0, but slope of line steeper
         i=-1
         while area>bArea:
@@ -342,8 +342,8 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
             wextRed1 =  sorted( [ xWave[0] + (j+1)*wavestep for j in range(Nstep1) ])
             fextRed1 = array( [ 0 for wave in wextRed1 ] )
         else:
-            wextRed3=[]
-            fextRed3=[]
+            wextRed1=[]
+            fextRed1=[]
 
         (a,b,rval,pval,stderr)=stats.linregress(append(x3,x2),append(0,y2))
         Nstep2=len(arange( x3, x2,  wavestep ) )
@@ -744,7 +744,6 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
 
         wavestep = w[1] - w[0]
         if bands[blue].wave_eff<=_UVrightBound:
-            print(d[0])
             bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red,d[0])
             wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i,bands,zpsys)
             UV=True

@@ -207,16 +207,17 @@ def plot_posterior_cr(models, traces, rawdata, xlims,
 		#plt.subplots_adjust(top=1.5)
 
 		ax1d.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
-						  ,color=pal[1], label='CR 95%')
+						  ,color='lightcoral', label='CR 95%')
 		ax1d.fill_between(dfp['x'], dfp['250'], dfp['750'], alpha=0.5
-						  ,color=pal[4], label='CR 50%')
-		ax1d.plot(dfp['x'], dfp['500'], alpha=0.6, color=pal[5], label='Median')
+						  ,color='maroon', label='CR 50%')
+		ax1d.plot(dfp['x'], dfp['500'], alpha=0.6, color='k', label='Median')
 		_ = ax1d.legend(loc='upper left',fontsize=15)
 		_ = ax1d.set_xlim(xlims)
 		#_ = ax1d.errorbar(allDat['x'],allDat['y'],yerr=allDat['error'],fmt='.',color='red')
-		_ = ax1d.errorbar(rawdata['x'],rawdata['y'],yerr=rawdata['error'],fmt='.',color='blue')
+		_ = ax1d.errorbar(rawdata['x'],rawdata['y'],yerr=rawdata['error'],fmt='.',color='k')
 		_ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
-					   ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax1d)
+					   ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'color':'k','edgecolor':'k'}, ax=ax1d)
+		sns.set_style('white')
 		ax1d.set_xlabel('')
 		ax1d.set_ylabel('')
 		i+=1

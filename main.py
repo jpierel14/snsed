@@ -79,7 +79,7 @@ typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Co
 seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in type and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-snsedextend.extendNon1a(typeColors,colors=['U-B'],sedlist=['SDSS-018834.SED'],zpsys='Vega',verbose=True)
+snsedextend.extendNon1a(typeColors,colors=['U-B','r-J','r-H','r-K'],sedlist=sedlist,zpsys='Vega',verbose=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')

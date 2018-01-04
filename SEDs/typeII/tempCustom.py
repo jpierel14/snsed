@@ -27,7 +27,7 @@ from __future__ import print_function
 
 import numpy as np
 from scipy.interpolate import RectBivariateSpline
-import sncosmo,sys
+import sncosmo,sys,os
 import matplotlib.pyplot as plt
 from sncosmo.builtins import DATADIR
 from matplotlib import pyplot as plt
@@ -121,26 +121,66 @@ def createSncosmoSED(filename):
     '''
     phase1,wave1,flux1=sncosmo.read_griddata_ascii(filename)
     
-    source = ComboSource(phase1, wave1, flux1, name='extrapolated')
+    source = ComboSource(phase1, wave1, flux1, name=filename[:-4])
 
     return(source)
-import os
 
-def plotSncosmoSED(sed,phase=0.0,minwave=2000.0,maxwave=20000.0,wavestep=500,amplitude=1.0,showfig=True,savefig=False,outFilename="mySED.pdf",fontsize=18):
+def plotSncosmoSED(sed,phase=0.0,minwave=1500.0,maxwave=20000.0,wavestep=500,amplitude=1.0,showfig=True,savefig=False,outFilename="mySED.pdf",fontsize=18):
+    
+    from matplotlib.collections import LineCollection
+    from matplotlib.colors import ListedColormap, BoundaryNorm
+    wave=np.linspace(minwave,maxwave,wavestep)
+    '''
+    cmap = ListedColormap(['k', 'b', 'k','gold','darkorange','r','k'])
+    norm = BoundaryNorm([0, sncosmo.get_bandpass('bessellux').wave[0], sncosmo.get_bandpass('bessellux').wave[-1],
+        sncosmo.get_bandpass('paritel::j').wave[0], sncosmo.get_bandpass('paritel::j').wave[-1],
+        sncosmo.get_bandpass('paritel::h').wave[-1],sncosmo.get_bandpass('paritel::ks').wave[-1],maxwave], cmap.N)
+
+    # Create a set of line segments so that we can color them individually
+    # This creates the points as a N x 1 x 2 array so that we can stack points
+    # together easily to get the segments. The segments array for line collection
+    # needs to be numlines x points per line x 2 (x and y)
+    points = np.array([wave, sed.flux(float(phase),wave)]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
+
+    # Create the line collection object, setting the colormapping parameters.
+    # Have to set the actual values used for colormapping separately.
+    lc = LineCollection(segments, cmap=cmap, norm=norm)
+    lc.set_array(wave)
+    lc.set_linewidth(3)
+    '''
     fig = plt.figure()
     ax=fig.gca()
-    wave=np.linspace(minwave,maxwave,wavestep)
+    #ax.add_collection(lc)
     sed.set(amplitude=amplitude)
-    ax.plot(wave, sed.flux(float(phase), wave))
+    
+    ax.plot(wave, sed.flux(float(phase), wave),'k',linewidth=3)
+    
+    ax.fill_between(wave,sed.flux(float(phase), wave),
+        where=[x>sncosmo.get_bandpass('bessellux').wave[0] and x < sncosmo.get_bandpass('bessellux').wave[-1] for x in wave],
+        color='b', alpha=.3,edgecolor='k')
+    ax.fill_between(wave,sed.flux(float(phase), wave),
+        where=[x>sncosmo.get_bandpass('paritel::j').wave[0] and x < sncosmo.get_bandpass('paritel::j').wave[-1] for x in wave],
+        color='gold', alpha=.3,edgecolor='k')
+    ax.fill_between(wave,sed.flux(float(phase), wave),
+        where=[x>sncosmo.get_bandpass('paritel::j').wave[-1] and x < sncosmo.get_bandpass('paritel::h').wave[-1] for x in wave],
+        color='coral', alpha=.3)
+    ax.fill_between(wave,sed.flux(float(phase), wave),
+        where=[x>sncosmo.get_bandpass('paritel::h').wave[-1] and x < sncosmo.get_bandpass('paritel::ks').wave[-1] for x in wave],
+        color='r', alpha=.3,edgecolor='k')
+    
+    ax.plot(np.append([0],wave),np.zeros(len(wave)+1),'--',color='black')
     #idx,val=_find_nearest(w,int(math.ceil(sncosmo.get_bandpass('paritel::j').wave[0]/wavestep))*wavestep)
     #idx2,val2=_find_nearest(w,int(math.ceil(sncosmo.get_bandpass('paritel::j').wave[-1]/wavestep))*wavestep)
     #ax.fill(w[idx:idx2+1],f[idx:idx2+1])
-    ax.set_title('Type II SED Extrapolation, Days from Peak=%i'%phase,fontsize=18)
+    if phase != 0:
+        ax.set_title('Type II SED Extrapolation, %i Days from Peak'%phase,fontsize=18)
+    else:
+        ax.set_title('Type II SED Extrapolation, at Peak',fontsize=18)
     plt.xlabel("Wavelength (Angstrom)",fontsize=fontsize)
     plt.ylabel("Flux",fontsize=fontsize)
-
     if savefig:
-        plt.savefig("typeII.pdf",format='pdf')
+        plt.savefig(os.path.basename(sed.name+".pdf"),format='pdf')
     if showfig:
         plt.show()
     return(fig)
@@ -165,7 +205,7 @@ def main():
     files=glob.glob('*.SED')
     #filename='SDSS-000020.SED'
     #filename='../Nugent+Scolnic_IIL.SED'
-    wave = np.linspace(2500.0, 20000.0, 500)
+    wave = np.linspace(1500.0, 9000.0, 500)
     days=0
     w=1.0
     fig = plt.figure()

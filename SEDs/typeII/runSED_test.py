@@ -1,7 +1,7 @@
 from __future__ import print_function
 #from allColors import *
 from tempCustom import createSncosmoSED,plotSncosmoSED
-import os,sncosmo,sys
+import os,sncosmo,sys,glob
 import matplotlib.pyplot as plt
 from astropy.io import ascii
 import numpy as np
@@ -27,7 +27,7 @@ for f in ['j','h','ks']:
     sncosmo.registry.register(sncosmo.Bandpass(wave,trans,name='paritel::'+f),force=True)
 def testSED(sedFile,amplitude=1.0,phase=0,minwave=2000.0,maxwave=20000.0,wavestep=500,showfig=True,outFilename="mySED.pdf",savefig=False,fontsize=18):
 	sed=createSncosmoSED(sedFile) #should come back as photons not ergs
-	fig=plotSncosmoSED(sed,phase=phase,minwave=minwave,maxwave=maxwave,showfig=showfig,outFilename=outFilename)
+	fig=plotSncosmoSED(sed,phase=phase,minwave=minwave,maxwave=maxwave,showfig=showfig,savefig=savefig,outFilename=outFilename)
 	ax=fig.gca()
 
 	model=sncosmo.Model(sed)
@@ -58,6 +58,7 @@ def testSED(sedFile,amplitude=1.0,phase=0,minwave=2000.0,maxwave=20000.0,waveste
 	#print(model.color('sdss::r','paritel::j','vega',phase))
 	#print(model.color('sdss::r','paritel::h','vega',phase))
 	#print(model.color('sdss::r','paritel::ks','vega',phase))
+	return
 	print(model.bandmag('bessellux','vega',phase))
 	print(model.bandmag('bessellb','vega',phase))
 	print(model.color('bessellux','bessellb','vega',phase))
@@ -85,8 +86,11 @@ def testSED(sedFile,amplitude=1.0,phase=0,minwave=2000.0,maxwave=20000.0,waveste
 
 def main():
 	#filename='SDSS-018700.SED'
-	filename='SDSS-018834.SED'
-	testSED(filename,phase=-4.3622,minwave=2200,maxwave=10000.0,showfig=True,outFilename=os.path.join('test_output',filename[:-4]+'.pdf'))
+	#filename='S11_SDSS-000018.SED'
+	files=glob.glob('S11*.SED')
+	for filename in files:
+		print(filename)
+		testSED(filename,phase=0,minwave=1500,maxwave=25000.0,showfig=False,savefig=True,outFilename=os.path.join('test_output',filename[:-4]+'.pdf'))
 
 
 if __name__ == "__main__":
