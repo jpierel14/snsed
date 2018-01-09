@@ -264,9 +264,9 @@ for ir in ['uv','J','H','K']:
 	plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_waic.pdf'),fmt='pdf')
 
 	if t=='II':
-		plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp,typ=t+'+IIP',bic=dfwaic)
+		plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=None,typ=t+'+IIP',bic=dfwaic)
 	else:
-		plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=alltemp,typ=t,bic=dfwaic)
+		plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,allDat=None,typ=t,bic=dfwaic)
 
 	plt.savefig(os.path.join('type'+t,'plots',ir.upper()+'_fits.pdf'),format='pdf')
 

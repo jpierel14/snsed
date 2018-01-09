@@ -228,6 +228,7 @@ for ir in ['J','H','K']:
 	magerr=irgrouped['error'].groups.aggregate(getErrors)
 	irSNe=irgrouped['SN']
 	temp=Table([np.array(time),np.array(mag),np.array(magerr)],names=('time','mag','magerr'))
+	
 	ascii.write(temp,os.path.join('type'+t,'tables',ir+'.dat'))
 	plotColors=np.array([sne[irnames[ir][i]] for i in range(len(irnames[ir]))])
 

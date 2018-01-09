@@ -820,12 +820,12 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
     import pickle
     colorTable=_standardize(colorTable)
     print('Running Bayesian Information Criterion...')
-    #temp=snsedextend.BIC.run()
+    temp=snsedextend.BIC.run()
     #with open('tempBIC.txt','wb') as handle:
     #    pickle.dump(temp,handle)
     ###### for debugging#####
-    with open('tempBIC.txt','rb') as handle:
-        temp=pickle.loads(handle.read())
+    #with open('tempBIC.txt','rb') as handle:
+    #    temp=pickle.loads(handle.read())
 
 
     #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
@@ -875,6 +875,8 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
             except:
                 tempTime=array(temp['uv']['x'])
                 tempColor=array(temp['uv']['500'])
+
+            getExtremes(tempTime,tempColor,colorTable,color)
             #blueZP=_getZP(bandDict[color[0]],zpsys)
             #redZP=_getZP(bandDict[color[-1]],zpsys)
             tempMask=colorTable[color].mask
@@ -904,6 +906,28 @@ def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None
         if verbose:
             print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
+
+def getExtremes(time,curve,original,color):
+    def getErrors(x):
+        err=0
+        N = len(np.nonzero(x)[0])
+        for i in range(len(x)):
+            err=err+(1/(x[i])**2)
+        if N>1:
+            samplecorrection = np.float((N-1))/np.float(N)
+        else:
+            samplecorrection=1
+        return((1/(err)**.5)/np.sqrt(samplecorrection))
+
+    error=getErrors(np.array(original[color[0]+color[-1]+'_err'])[np.array(original[color[0]+color[-1]+'_err'])!=0])
+
+    blue=curve-9*error
+    red=curve+9*error
+    plt.plot(time,curve,color='k')
+    plt.plot(time,blue,color='b')
+    plt.plot(time,red,color='r')
+    plt.show()
+    sys.exit()
 
 def bandRegister(wave,trans,band,bandName):
     sncosmo.registry.register(sncosmo.Bandpass(wave,trans,name=bandName))
@@ -1154,7 +1178,8 @@ mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'snana' in x[0] or
 
 def _mag_to_flux(table,bandDict,zpsys):
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,table[_get_default_prop_name('mag')],bandDict[table[_get_default_prop_name('band')]]))
+    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,np.asarray(table[_get_default_prop_name('mag')]),
+                                                         table[_get_default_prop_name('band')]))
     table[_get_default_prop_name('fluxerr')] = np.asarray(
         map(lambda x, y: x * y / (2.5 * np.log10(np.e)), table[_get_default_prop_name('magerr')],
             table[_get_default_prop_name('flux')]))
