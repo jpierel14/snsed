@@ -1028,7 +1028,6 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
 
                 mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}
 
-
                 if len(blue)>len(red) or bandFit==color[0]:
                     args[0]=blue
 
@@ -1038,15 +1037,15 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
                     fit=color[0]
                 elif len(blue)<len(red) or bandFit==color[-1]:
                     args[0]=red
-                    '''
-                    for mod in mods:
-                        temp=_snFit(append(mod,args))
-                        print(temp)
-                    sys.exit()
-                    '''
+                    #fits=[]
+                    #for mod in mods:
+                    #    fits.append(_snFit(append(mod,args)))
+                    #    print(fits[-1])
+
+
                     fits=parallel.foreach(mods,_snFit,args)
-                    print(fits)
-                    sys.exit()
+                    #print(fits)
+                    #sys.exit()
                     fitted=red
                     notFitted=blue
                     fit=color[-1]
@@ -1186,11 +1185,15 @@ def _snFit(args):
     if constants:
         constants = {x:constants[x] for x in constants.keys() if x in model.param_names}
         model.set(**constants)
-    print(constants)
-    res,fit=sncosmo.fit_lc(sncosmo.load_example_data(),model,params)
-    return(parallel.parReturn([res,fit]))
-    res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
 
+    try:
+        res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
+        if res.chisq>500:
+            return(parallel.parReturn((None,None)))
+    except:
+        return(parallel.parReturn((None,None)))
+    #print(constants)
+    #return(parallel.parReturn(['test1','test2']))
     return(parallel.parReturn((res,fit)))
 
 """

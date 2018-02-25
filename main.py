@@ -36,7 +36,7 @@ for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
-        if filelist[i] not in ['lc_2008bj_clipped.dat','lc_2008bn_clipped.dat']:#,'lc_2008in_clipped.dat']:
+        if filelist[i] not in ['lc_2008bj_clipped.dat','lc_2008bn_clipped.dat','lc_2008aj_clipped.dat','lc_2010bq_clipped.dat']:#,'lc_2008in_clipped.dat']:
             continue
         else:
             print(colors[filelist[i][:-12]],typ[filelist[i][:-12]])
