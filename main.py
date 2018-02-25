@@ -36,14 +36,11 @@ for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
-        if filelist[i] not in ['lc_2008bj_clipped.dat','lc_2008bn_clipped.dat','lc_2008aj_clipped.dat','lc_2010bq_clipped.dat']:#,'lc_2008in_clipped.dat']:
-            continue
-        else:
-            print(colors[filelist[i][:-12]],typ[filelist[i][:-12]])
-            colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
-                                                bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
-                                                constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
-                                                dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
+
+        colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
+                                            bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
+                                            constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
+                                            dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
         #else:
         #    continue
         '''

@@ -8,75 +8,158 @@ from numpy import *
 from pylab import * 
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn
-from collections import OrderedDict as odict
 
 import pyPar as parallel
+from .utils import *
+from .helpers import *
 
 
-__all__=['curveToColor']
-
-#Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable,otherwise will use the builtin version)
-try:
-    sndataroot = os.environ['SNDATA_ROOT']
-except:
-    os.environ['SNDATA_ROOT']=os.path.join(os.path.dirname(snsedextend),'SNDATA_ROOT')
-    sndataroot=os.environ['SNDATA_ROOT']
-
-#default transmission files, user can define their own 
-_filters={
-    'U':'bessellux',
-    'B':'bessellb',
-    'V':'bessellv',
-    'R':'bessellr',
-    'I':'besselli',
-    'J':'paritel::j',
-    'H':'paritel::h',
-    'K':'paritel::ks',
-    'Ks':'paritel::ks',
-    'u':'sdss::u',
-    'g':'sdss::g',
-    'r':'sdss::r',
-    'i':'sdss::i',
-    'Z':'sdss::z'
-}
-
-_opticalBands=['B','V','R','g','r']
-
-_props=odict([
-    ('time',{'mjd', 'mjdobs', 'jd', 'time', 'date', 'mjd_obs','mhjd','jds','mjds'}),
-    ('band',{'filter', 'band', 'flt', 'bandpass'}),
-    ('flux',{'flux', 'f','fluxes'}),
-    ('fluxerr',{'flux_error', 'fluxerr', 'fluxerror', 'fe', 'flux_err','fluxerrs'}),
-    ('zp',{'zero_point','zp', 'zpt', 'zeropoint'}),
-    ('zpsys',{'zpsys', 'magsys', 'zpmagsys'}),
-    ('mag',{'mag','magnitude','mags'}),
-    ('magerr',{'magerr','magerror','magnitudeerror','magnitudeerr','magerrs','dmag'})
-])
-
-_fittingParams=odict([
-    ('curve',None),
-    ('method','minuit'),
-    ('params',None),
-    ('bounds',None),
-    ('ignore',None),
-    ('constants',None),
-    ('dust',None),
-    ('effect_names',None),
-    ('effect_frames',None)
-])
-
-#dictionary of zero-points (calculated later based on transmission files)
-_zp={}
-
-_needs_bounds={'z'}
+__all__=['mag_to_flux','flux_to_mag','curveToColor']
 
 
-_UVrightBound=4000
-_UVleftBound=1200
-_IRleftBound=9000
-_IRrightBound=55000
 
 
+
+
+def _getErrorFromModel(args,zpsys,band):
+    """
+    (Private)
+    Helper function to obtain a magnitude error estimate from an sncosmo model
+    """
+    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
+    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]+curve[_get_default_prop_name('fluxerr')]
+    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+    ugrid,umag=_snmodel_to_mag(fit,curve,zpsys,band)
+    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]-2*curve[_get_default_prop_name('fluxerr')]
+    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+    lgrid,lmag=_snmodel_to_mag(fit,curve,zpsys,band)
+    return (ugrid,umag,lgrid,lmag)
+
+
+def _getBandMaxTime(model,table,bands,band,zp,zpsys):
+    """
+    (Private)
+     Helper function to obtain the time of maximum flux from an sncosmo model
+    """
+    tgrid,mflux=_snmodel_to_flux(model,table,zp,zpsys,bands[band])
+    return(tgrid[where(mflux==max(mflux))])
+
+def _snFit(args):
+    """
+    (Private)
+    Function that does the fitting for the curveToColor method. It only uses the simple sncosmo fit_lc method, so it
+    is assuming that the parameters you're feeding it are reasonably close to correct already and that the data is
+    clipped to somethign reasonable. This function is used by the parallelization function as well.
+    """
+    warnings.simplefilter('ignore')
+    sn_func={'minuit': sncosmo.fit_lc, 'mcmc': sncosmo.mcmc_lc, 'nest': sncosmo.nest_lc}
+    dust_dict={'SFD98Map':sncosmo.SFD98Map,'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
+    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
+    if dust:
+        dust=dust_dict[dust]()
+    else:
+        dust=[]
+    bounds=bounds if bounds else {}
+    ignore=ignore if ignore else []
+    effects=[dust for i in range(len(effect_names))] if effect_names else []
+    effect_names=effect_names if effect_names else []
+    effect_frames=effect_frames if effect_frames else []
+    if not isinstance(effect_names,(list,tuple)):
+        effects=[effect_names]
+    if not isinstance(effect_frames,(list,tuple)):
+        effects=[effect_frames]
+    model=sncosmo.Model(source=model,effects=effects,effect_names=effect_names,effect_frames=effect_frames)
+    params=params if params else [x for x in model.param_names]
+    no_bound = {x for x in params if x in _needs_bounds and x not in bounds.keys() and x not in constants.keys()}
+    if no_bound:
+        params=list(set(params)-no_bound)
+    params= [x for x in params if x not in ignore and x not in constants.keys()]
+    if constants:
+        constants = {x:constants[x] for x in constants.keys() if x in model.param_names}
+        model.set(**constants)
+
+    res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
+    return(parallel.parReturn((res,fit)))#parallel.parReturn makes sure that whatever is being returned is pickleable
+
+def _snmodel_to_mag(model,table,zpsys,band):
+    """
+    (Private)
+     Helper function that takes an sncosmo model in flux-space and a lightcurve astropy.Table object, returns a time
+     grid and magnitude vector.
+    """
+    warnings.simplefilter("ignore")
+    tmin = []
+    tmax = []
+    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
+    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
+    tmin.append(model.mintime())
+    tmax.append(model.maxtime())
+    tmin = min(tmin)
+    tmax = max(tmax)
+    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
+    mMag = model.bandmag(band, zpsys,tgrid)
+    return(tgrid,mMag)
+
+def _snmodel_to_flux(model,table,zp,zpsys,band):
+    """
+    (Private)
+     Helper function that takes an sncosmo model in flux-space and a lightcurve astropy.Table object, returns a time
+     grid and flux vector.
+    """
+    warnings.simplefilter("ignore")
+    tmin = []
+    tmax = []
+    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
+    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
+    tmin.append(model.mintime())
+    tmax.append(model.maxtime())
+    tmin = min(tmin)
+    tmax = max(tmax)
+    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
+    mflux = model.bandflux(band, tgrid, zp=zp, zpsys=zpsys)
+    return(tgrid,mflux)
+
+
+def _getReddeningCoeff(band):
+    """
+    (Private)
+     Helper function that contains the reddening coefficients from O'donnell 1994
+    """
+    wave=[10000/2.86,10000/2.78,10000/2.44,10000/2.27,10000/2.13,10000/1.43,10000/1.11,10000/.8,10000/.63,10000/.46,10000/.29]
+    a=[.913,0.958,.98,1.0,.974,0.855,0.661,0.421,0.225,0.148,0.043]
+    b=[2.14,1.898,1.284,1,.803,-.309,-.555,-.458,-.243,-.099,.159]
+    aInterpFunc=scint.interp1d(wave,a)
+    bInterpFunc=scint.interp1d(wave,b)
+    return(aInterpFunc(band.wave_eff),bInterpFunc(band.wave_eff))
+
+
+
+def _unredden(color,bands,ebv,r_v):
+    """
+    (Private)
+    Helper function that will get a magnitude correction from reddening coefficients.
+    """
+    A_v=r_v*ebv
+    blue=bands[color[0]]
+    red=bands[color[-1]]
+    if not isinstance(blue,sncosmo.Bandpass):
+        blue=sncosmo.get_bandpass(blue)
+    if not isinstance(red,sncosmo.Bandpass):
+        red=sncosmo.get_bandpass(red)
+    if color[0]=='V':
+        a,b=_getReddeningCoeff(red)
+        A_blue=A_v
+        A_red=(a+b/r_v)*A_v
+    elif color[-1]=='V':
+        a,b=_getReddeningCoeff(blue)
+        A_blue=(a+b/r_v)*A_v
+        A_red=A_v
+    else:
+        a_blue,b_blue=_getReddeningCoeff(blue)
+        a_red,b_red=_getReddeningCoeff(red)
+        A_blue=(a_blue+b_blue/r_v)*A_v
+        A_red=(a_red+b_red/r_v)*A_v
+    return(A_blue-A_red)
 
 def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
     """
@@ -271,82 +354,7 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
     colorTable.sort(_get_default_prop_name('time'))
     return(colorTable)
 
-def _getErrorFromModel(args,zpsys,band):
-    """
-    (Private)
-    Helper function to obtain a magnitude error estimate from an sncosmo model
-    """
-    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
-    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]+curve[_get_default_prop_name('fluxerr')]
-    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
-    ugrid,umag=_snmodel_to_mag(fit,curve,zpsys,band)
-    curve[_get_default_prop_name('flux')]=curve[_get_default_prop_name('flux')]-2*curve[_get_default_prop_name('fluxerr')]
-    res,fit=_snFit((model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
-    lgrid,lmag=_snmodel_to_mag(fit,curve,zpsys,band)
-    return (ugrid,umag,lgrid,lmag)
 
-
-def _getBandMaxTime(model,table,bands,band,zp,zpsys):
-    """
-    (Private)
-     Helper function to obtain the time of maximum flux from an sncosmo model
-    """
-    tgrid,mflux=_snmodel_to_flux(model,table,zp,zpsys,bands[band])
-    return(tgrid[where(mflux==max(mflux))])
-
-def _bandCheck(bandDict,band):
-    """
-    (Private)
-     Helper function to check a band dictionary to make sure it contains all sncosmo.Bandpass objects. If it cannot find
-     the band in the sncosmo registry, it will attempt to find a file with the name of that band.
-    """
-    try:
-        bandDict[band]=sncosmo.get_bandpass(bandDict[band])
-    except:
-        try:
-            wave,trans=np.loadtxt(_findFile(bandDict[band]),unpack=True)
-            bandDict[band]=bandRegister(wave,trans,band,os.path.basename(bandDict[band]))
-        except:
-            raise RuntimeError('Band "%s" listed in bandDict but not in sncosmo registry and file not found.'%band)
-    return(bandDict)
-
-
-def _snFit(args):
-    """
-    (Private)
-    Function that does the fitting for the curveToColor method. It only uses the simple sncosmo fit_lc method, so it 
-    is assuming that the parameters you're feeding it are reasonably close to correct already and that the data is
-    clipped to somethign reasonable. This function is used by the parallelization function as well.
-    """
-    warnings.simplefilter('ignore')
-    sn_func={'minuit': sncosmo.fit_lc, 'mcmc': sncosmo.mcmc_lc, 'nest': sncosmo.nest_lc}
-    dust_dict={'SFD98Map':sncosmo.SFD98Map,'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
-    model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
-    if dust:
-        dust=dust_dict[dust]()
-    else:
-        dust=[]
-    bounds=bounds if bounds else {}
-    ignore=ignore if ignore else []
-    effects=[dust for i in range(len(effect_names))] if effect_names else []
-    effect_names=effect_names if effect_names else []
-    effect_frames=effect_frames if effect_frames else []
-    if not isinstance(effect_names,(list,tuple)):
-        effects=[effect_names]
-    if not isinstance(effect_frames,(list,tuple)):
-        effects=[effect_frames]
-    model=sncosmo.Model(source=model,effects=effects,effect_names=effect_names,effect_frames=effect_frames)
-    params=params if params else [x for x in model.param_names]
-    no_bound = {x for x in params if x in _needs_bounds and x not in bounds.keys() and x not in constants.keys()}
-    if no_bound:
-        params=list(set(params)-no_bound)
-    params= [x for x in params if x not in ignore and x not in constants.keys()]
-    if constants:
-        constants = {x:constants[x] for x in constants.keys() if x in model.param_names}
-        model.set(**constants)
-
-    res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
-    return(parallel.parReturn((res,fit)))#parallel.parReturn makes sure that whatever is being returned is pickleable
 
 
 def mag_to_flux(table,bandDict,zpsys='AB'):
@@ -398,82 +406,3 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
                                                              table[_get_default_prop_name('fluxerr')]))
     return(table)
 
-def _snmodel_to_mag(model,table,zpsys,band):
-    """
-    (Private)
-     Helper function that takes an sncosmo model in flux-space and a lightcurve astropy.Table object, returns a time
-     grid and magnitude vector.
-    """
-    warnings.simplefilter("ignore")
-    tmin = []
-    tmax = []
-    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
-    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
-    tmin.append(model.mintime())
-    tmax.append(model.maxtime())
-    tmin = min(tmin)
-    tmax = max(tmax)
-    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
-    mMag = model.bandmag(band, zpsys,tgrid)
-    return(tgrid,mMag)
-
-def _snmodel_to_flux(model,table,zp,zpsys,band):
-    """
-    (Private)
-     Helper function that takes an sncosmo model in flux-space and a lightcurve astropy.Table object, returns a time
-     grid and flux vector.
-    """
-    warnings.simplefilter("ignore")
-    tmin = []
-    tmax = []
-    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
-    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
-    tmin.append(model.mintime())
-    tmax.append(model.maxtime())
-    tmin = min(tmin)
-    tmax = max(tmax)
-    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
-    mflux = model.bandflux(band, tgrid, zp=zp, zpsys=zpsys)
-    return(tgrid,mflux)
-
-
-def _getReddeningCoeff(band):
-    """
-    (Private)
-     Helper function that contains the reddening coefficients from O'donnell 1994
-    """
-    wave=[10000/2.86,10000/2.78,10000/2.44,10000/2.27,10000/2.13,10000/1.43,10000/1.11,10000/.8,10000/.63,10000/.46,10000/.29]
-    a=[.913,0.958,.98,1.0,.974,0.855,0.661,0.421,0.225,0.148,0.043]
-    b=[2.14,1.898,1.284,1,.803,-.309,-.555,-.458,-.243,-.099,.159]
-    aInterpFunc=scint.interp1d(wave,a)
-    bInterpFunc=scint.interp1d(wave,b)
-    return(aInterpFunc(band.wave_eff),bInterpFunc(band.wave_eff))
-
-
-
-def _unredden(color,bands,ebv,r_v):
-    """
-    (Private)
-    Helper function that will get a magnitude correction from reddening coefficients.
-    """
-    A_v=r_v*ebv
-    blue=bands[color[0]]
-    red=bands[color[-1]]
-    if not isinstance(blue,sncosmo.Bandpass):
-        blue=sncosmo.get_bandpass(blue)
-    if not isinstance(red,sncosmo.Bandpass):
-        red=sncosmo.get_bandpass(red)
-    if color[0]=='V':
-        a,b=_getReddeningCoeff(red)
-        A_blue=A_v
-        A_red=(a+b/r_v)*A_v
-    elif color[-1]=='V':
-        a,b=_getReddeningCoeff(blue)
-        A_blue=(a+b/r_v)*A_v
-        A_red=A_v
-    else:
-        a_blue,b_blue=_getReddeningCoeff(blue)
-        a_red,b_red=_getReddeningCoeff(red)
-        A_blue=(a_blue+b_blue/r_v)*A_v
-        A_red=(a_red+b_red/r_v)*A_v
-    return(A_blue-A_red)

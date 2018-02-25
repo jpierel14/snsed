@@ -51,12 +51,7 @@ def parReturn(toReturn):
         final=[]
         for i in range(len(toReturn)):
             if _pickleable(toReturn[i]):
-                if isinstance(toReturn[i],(tuple,list,np.array)):
-                    if toReturn[i][0]:
-                        final.append(toReturn[i])
-                else:
-                    if toReturn[i]:
-                        final.append(toReturn[i])
+                final.append(toReturn[i])
             else:
                 warnings.warn(RuntimeWarning,"Had to remove the %i (th) object from return array, as it was not pickleable."%i)
     else:
