@@ -1,2 +1,5 @@
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning)
+#warnings.filterwarnings('ignore',category=ShimWarning)
 import sncosmo, definedBands,BIC
 from extrapolate import *

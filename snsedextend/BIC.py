@@ -1,15 +1,11 @@
 from collections import OrderedDict
-from time import time
 
 import numpy as np
 import pandas as pd
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
-import sys,os,inspect,warnings
+import sys,os,warnings
 from astropy.io import ascii
-from scipy.optimize import fmin_powell
-from scipy import integrate
 from contextlib import contextmanager
 
 import pymc3 as pm
@@ -19,10 +15,10 @@ import pymc3 as pm
 warnings.filterwarnings('ignore')
 
 # configure some basic options
-sns.set(style="darkgrid", palette="muted")
-pd.set_option('display.notebook_repr_html', True)
-plt.rcParams['figure.figsize'] = 12, 8
-rndst = np.random.RandomState(0)
+#sns.set(style="darkgrid", palette="muted")
+#pd.set_option('display.notebook_repr_html', True)
+#plt.rcParams['figure.figsize'] = 12, 8
+#rndst = np.random.RandomState(0)
 
 @contextmanager
 def suppress_stdout():
@@ -33,7 +29,7 @@ def suppress_stdout():
             yield
         finally:
             sys.stdout = old_stdout
-
+"""
 def generate_data(n=20, p=0, a=1, b=1, c=0, latent_sigma_y=20):
     '''
     Create a toy dataset based on a very simple model that we might
@@ -171,7 +167,7 @@ def run_models(df, upper_order=5):
     return models, traces
 
 from matplotlib.offsetbox import AnchoredText
-
+"""
 def plot_posterior_cr(models, traces, rawdata, xlims,
                       datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None):
     '''

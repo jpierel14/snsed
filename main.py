@@ -31,14 +31,21 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
+
 for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
-        colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
-                                            bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
-                                            constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
-                                            dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
+        if filelist[i] not in ['lc_2008bj_clipped.dat','lc_2008bn_clipped.dat']:#,'lc_2008in_clipped.dat']:
+            continue
+        else:
+            print(colors[filelist[i][:-12]],typ[filelist[i][:-12]])
+            colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
+                                                bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
+                                                constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
+                                                dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
+        #else:
+        #    continue
         '''
         for color in colors[filelist[i][:-12]]:
             fig=plt.figure()
@@ -52,7 +59,7 @@ for i in range(len(filelist)):
             fig.text(0.01, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical')
             plt.savefig(os.path.join(dir,"type"+type[0],"plots",filelist[i][:-12]+"_"+color[0]+color[-1]+".pdf"),format='pdf')
             plt.close()
-        '''
+        
         if typeColors:
             typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
 
@@ -60,9 +67,10 @@ for i in range(len(filelist)):
         else:
             typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
             typeColors=colorTable
-
+        '''
 
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
+sys.exit()
 typeColors['SN']=typeSNe
 
 from astropy.table import MaskedColumn

@@ -2,16 +2,18 @@
 #S.rodney & J.R. Pierel
 # 2017.03.31
 
-import os,sys,getopt,warnings,math,glob,shutil,sncosmo,multiprocessing,snsedextend
+
+import os,sys,warnings,glob,sncosmo,snsedextend
 from numpy import *
 from pylab import * 
 from scipy import interpolate as scint
 from scipy import stats
-from scipy.integrate import simps
 from astropy.table import Table,Column,MaskedColumn
-from multiprocessing import Pool
 from collections import OrderedDict as odict
 from scipy.interpolate import RectBivariateSpline
+from copy import deepcopy
+import pyPar as parallel
+
 
 __all__=['extendNon1a','bandRegister','curveToColor']
 
@@ -40,6 +42,8 @@ _filters={
     'Z':'sdss::z'
 }
 
+_opticalBands=['B','V','R','g','r']
+
 _props=odict([
     ('time',{'mjd', 'mjdobs', 'jd', 'time', 'date', 'mjd_obs','mhjd','jds','mjds'}),
     ('band',{'filter', 'band', 'flt', 'bandpass'}),
@@ -49,6 +53,18 @@ _props=odict([
     ('zpsys',{'zpsys', 'magsys', 'zpmagsys'}),
     ('mag',{'mag','magnitude','mags'}),
     ('magerr',{'magerr','magerror','magnitudeerror','magnitudeerr','magerrs','dmag'})
+])
+
+_fittingParams=odict([
+    ('curve',None),
+    ('method','minuit'),
+    ('params',None),
+    ('bounds',None),
+    ('ignore',None),
+    ('constants',None),
+    ('dust',None),
+    ('effect_names',None),
+    ('effect_frames',None)
 ])
 
 #dictionary of zero-points (calculated later based on transmission files)
@@ -936,9 +952,7 @@ def bandRegister(wave,trans,band,bandName):
 
 
 
-def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsys='AB',method='minuit',
-                 model=None, params=None, bounds=None, ignore=None, constants=None,dust=None,effect_names=None,effect_frames=None,singleBand=False,verbose=True):
-    #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
+def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):#method='minuit',params=None, bounds=None, ignore=None, constants=None,dust=None,effect_names=None,effect_frames=None,singleBand=False,verbose=True):
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
         if band not in bandDict.keys() and band in bands:
@@ -946,29 +960,33 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
     if not isinstance(colors,(tuple,list)):
         colors=[colors]
     zpMag=sncosmo.get_magsystem(zpsys)
-    temp=sncosmo.read_lc(filename)
 
     curve=_standardize(sncosmo.read_lc(filename))
     if _get_default_prop_name('zpsys') not in curve.colnames:
         curve[_get_default_prop_name('zpsys')]=zpsys
     colorTable=Table(masked=True)
     colorTable.add_column(Column(data=[],name=_get_default_prop_name('time')))
-    color_bands=['B','V','R','g','r']
+
     for band in bandDict:
         if not isinstance(bandDict[band],sncosmo.Bandpass):
             bandDict=_bandCheck(bandDict,band)
     t0=None
     if verbose:
         print('Getting best fit for: '+','.join(colors))
-    for color in colors:
-        if bandDict[color[0]].wave_eff<_UVrightBound:
+
+    args=[]
+    for p in _fittingParams:
+        args.append(kwargs.get(p,_fittingParams[p]))
+
+    for color in colors: #start looping through desired colors
+        if bandDict[color[0]].wave_eff<_UVrightBound: #then extrapolating into the UV from optical
             if not bandFit:
                 bandFit=color[-1]
             if singleBand:
                 color_bands=[color[-1]]
-            blue=curve[curve[_get_default_prop_name('band')]==color[0]]
-            red=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]]
-        else:
+            blue=curve[curve[_get_default_prop_name('band')]==color[0]] #curve on the blue side of current color
+            red=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]] #curve on the red side of current color
+        else: #must be extrapolating into the IR
             if not bandFit:
                 bandFit=color[0]
             if singleBand:
@@ -977,7 +995,7 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
             red=curve[curve[_get_default_prop_name('band')]==color[-1]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for coor %s but missing necessary band(s)')
+                print('Asked for color %s but missing necessary band(s)')
             continue
 
         btemp=[bandDict[blue[_get_default_prop_name('band')][i]].name for i in range(len(blue))]
@@ -986,6 +1004,7 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
         blue[_get_default_prop_name('band')]=btemp
         red.remove_column(_get_default_prop_name('band'))
         red[_get_default_prop_name('band')]=rtemp
+        #now make sure we have zero-points and fluxes for everything
         if _get_default_prop_name('zp') not in blue.colnames:
             blue[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,blue[_get_default_prop_name('band')][i]) for i in range(len(blue))]
         if _get_default_prop_name('zp') not in red.colnames:
@@ -995,37 +1014,39 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
         if _get_default_prop_name('flux') not in red.colnames:
             red=_mag_to_flux(red,bandDict,zpsys)
 
-        if not t0:
+        if not t0: #this just ensures we only run the fitting once
             if not model:
                 if verbose:
                     print('No model provided, running series of models.')
-                #print(snType)
-                mod,types=np.loadtxt('hicken/models.ref',dtype='str',unpack=True)
+
+                mod,types=np.loadtxt(os.path.join('snsedextend','data','sncosmo','models.ref'),dtype='str',unpack=True)
                 modDict={mod[i]:types[i] for i in range(len(mod))}
-                if snType!='1a':
+                if snType!='Ia':
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(snType)]==snType]
-                elif snType=='1a':
+                elif snType=='Ia':
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'salt2' in x[0]]
 
-                '''
-                mods={mod[i]:types[i] for i in range(len(mod))}
-                mods=[x for x in mods.keys() if mods[x]=='IIn']
-                '''
                 mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}
-                p = Pool(processes=multiprocessing.cpu_count())
-                fits=[]
+
 
                 if len(blue)>len(red) or bandFit==color[0]:
-                    for x in p.imap_unordered(_snFitWrap,[(x,blue,method,params,bounds,ignore,constants,dust,effect_names,effect_frames) for x in mods]):
-                        fits.append(x)
-                    p.close()
+                    args[0]=blue
+
+                    fits=parallel.foreach(mods,_snFit,args)
                     fitted=blue
                     notFitted=red
                     fit=color[0]
                 elif len(blue)<len(red) or bandFit==color[-1]:
-                    for x in p.imap_unordered(_snFitWrap,[(x,red,method,params,bounds,ignore,constants,dust,effect_names,effect_frames) for x in mods]):
-                        fits.append(x)
-                    p.close()
+                    args[0]=red
+                    '''
+                    for mod in mods:
+                        temp=_snFit(append(mod,args))
+                        print(temp)
+                    sys.exit()
+                    '''
+                    fits=parallel.foreach(mods,_snFit,args)
+                    print(fits)
+                    sys.exit()
                     fitted=red
                     notFitted=blue
                     fit=color[-1]
@@ -1042,14 +1063,16 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
                 if verbose:
                     print('Best fit model is "%s", with a Chi-squared of %f'%(bestFit._source.name,bestChisq))
             elif len(blue)>len(red) or bandFit==color[0]:
-                bestRes,bestFit=_snFit((model,blue,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+                args[0]=blue
+                bestRes,bestFit=_snFit(append(model,args))
                 fitted=blue
                 notFitted=red
                 fit=color[0]
                 if verbose:
                     print('The model you chose (%s) completed with a Chi-squared of %f'%(model,bestRes.chisq))
             elif len(blue)<len(red) or bandFit==color[-1]:
-                bestRes,bestFit=_snFit((model,red,method,params,bounds,ignore,constants,dust,effect_names,effect_frames))
+                args[0]=red
+                bestRes,bestFit=_snFit(append(model,args))
                 fitted=red
                 notFitted=blue
                 fit=color[-1]
@@ -1058,7 +1081,6 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
 
-            #t0=bestRes.parameters[bestRes.param_names.index('t0')]
             t0=_getBandMaxTime(bestFit,fitted,bandDict,'B',zpMag.band_flux_to_mag(1,bandDict['B']),zpsys)
             if len(t0)==1:
                 t0=t0[0]
@@ -1077,8 +1099,9 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
         tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
         #corrFlux=_ccm_unred()zpMag.band_flux_to_mag(1,bandDict[fit]),
-        ugrid,UMagErr,lgrid,LMagErr=_getErrorFromModel((bestFit._source.name,fitted,method,params,bounds,ignore,constants,dust,effect_names,effect_frames),zpsys,bandDict[fit])
-        tempTable=Table([tGrid-t0,bestMag,bestMag*.1],names=(_get_default_prop_name('time'),_get_default_prop_name('mag'),_get_default_prop_name('magerr')))
+
+        ugrid,UMagErr,lgrid,LMagErr=_getErrorFromModel(append([bestFit._source.name,fitted],args[1:]),zpsys,bandDict[fit])
+        tempTable=Table([tGrid-t0,bestMag,bestMag*.1],names=(_get_default_prop_name('time'),_get_default_prop_name('mag'),_get_default_prop_name('magerr')))#****RIGHT NOW THE ERROR IS JUST SET TO 10%*****
         interpFunc=scint.interp1d(array(tempTable[_get_default_prop_name('time')]),array(tempTable[_get_default_prop_name('mag')]))
         minterp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
         interpFunc=scint.interp1d(ugrid-t0,UMagErr)
@@ -1091,21 +1114,13 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,zpsy
             colorTable.add_row(append(notFitted[_get_default_prop_name('time')][i]-t0,[1 for j in range(len(colorTable.colnames)-1)]),mask=[True if j>0 else False for j in range(len(colorTable.colnames))])
         if fit==color[0]:
             colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],minterp-array(notFitted[_get_default_prop_name('mag')])),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
-            #print(bestRes.parameters[bestRes.param_names.index('t0')])
-            #sncosmo.plot_lc(blue,model=bestFit,errors=bestRes.errors)
         else:
             colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],array(notFitted[_get_default_prop_name('mag')])-minterp),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
-            #print(bestRes.parameters[bestRes.param_names.index('t0')])
-            #sncosmo.plot_lc(red,model=bestFit,errors=bestRes.errors)
         colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
-    #plt.savefig(filename[:-3]+'pdf',format='pdf')
-        #sncosmo.write_lc(colorTable,os.path.join('modjaz','type'+snType[:2],'tables','uncorr_'+os.path.basename(filename)))
         for name in bestFit.effect_names:
             magCorr=_unredden(color,bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
             colorTable[color]-=magCorr
-        #sncosmo.write_lc(colorTable,os.path.join('modjaz','type'+snType[:2],'tables','corr_'+os.path.basename(filename)))
     colorTable.sort(_get_default_prop_name('time'))
-    #plt.show()
 
     return(colorTable)
 
@@ -1143,10 +1158,12 @@ def _snFitWrap(args):
         return(None)
 
 def _snFit(args):
+
     warnings.simplefilter('ignore')
     sn_func={'minuit': sncosmo.fit_lc, 'mcmc': sncosmo.mcmc_lc, 'nest': sncosmo.nest_lc}
     dust_dict={'SFD98Map':sncosmo.SFD98Map,'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
     model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
+    modName=deepcopy(model)
     if dust:
         dust=dust_dict[dust]()
     else:
@@ -1169,8 +1186,12 @@ def _snFit(args):
     if constants:
         constants = {x:constants[x] for x in constants.keys() if x in model.param_names}
         model.set(**constants)
+    print(constants)
+    res,fit=sncosmo.fit_lc(sncosmo.load_example_data(),model,params)
+    return(parallel.parReturn([res,fit]))
     res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
-    return((res,fit))
+
+    return(parallel.parReturn((res,fit)))
 
 """
 mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'snana' in x[0] or 'salt2' in x[0]]
