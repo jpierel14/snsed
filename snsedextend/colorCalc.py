@@ -3,7 +3,7 @@
 # 2017.03.31
 
 
-import os,sys,sncosmo,snsedextend
+import os,sys,sncosmo,snsedextend,warnings
 from numpy import *
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn
@@ -90,13 +90,13 @@ def _snmodel_to_mag(model,table,zpsys,band):
     warnings.simplefilter("ignore")
     tmin = []
     tmax = []
-    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
-    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
+    tmin.append(min(table[_get_default_prop_name('time')]) - 10)
+    tmax.append(max(table[_get_default_prop_name('time')]) + 10)
     tmin.append(model.mintime())
     tmax.append(model.maxtime())
     tmin = min(tmin)
     tmax = max(tmax)
-    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
+    tgrid = linspace(tmin, tmax, int(tmax - tmin) + 1)
     mMag = model.bandmag(band, zpsys,tgrid)
     return(tgrid,mMag)
 
@@ -109,13 +109,13 @@ def _snmodel_to_flux(model,table,zp,zpsys,band):
     warnings.simplefilter("ignore")
     tmin = []
     tmax = []
-    tmin.append(np.min(table[_get_default_prop_name('time')]) - 10)
-    tmax.append(np.max(table[_get_default_prop_name('time')]) + 10)
+    tmin.append(min(table[_get_default_prop_name('time')]) - 10)
+    tmax.append(max(table[_get_default_prop_name('time')]) + 10)
     tmin.append(model.mintime())
     tmax.append(model.maxtime())
     tmin = min(tmin)
     tmax = max(tmax)
-    tgrid = np.linspace(tmin, tmax, int(tmax - tmin) + 1)
+    tgrid = linspace(tmin, tmax, int(tmax - tmin) + 1)
     mflux = model.bandflux(band, tgrid, zp=zp, zpsys=zpsys)
     return(tgrid,mflux)
 
@@ -260,7 +260,7 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
                 if verbose:
                     print('No model provided, running series of models.')
 
-                mod,types=np.loadtxt(os.path.join('snsedextend','data','sncosmo','models.ref'),dtype='str',unpack=True)
+                mod,types=loadtxt(os.path.join('snsedextend','data','sncosmo','models.ref'),dtype='str',unpack=True)
                 modDict={mod[i]:types[i] for i in range(len(mod))}
                 if snType!='Ia':
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(snType)]==snType]
@@ -375,10 +375,10 @@ def mag_to_flux(table,bandDict,zpsys='AB'):
     astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
     """
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('flux')]=np.asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,np.asarray(table[_get_default_prop_name('mag')]),
+    table[_get_default_prop_name('flux')]=asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,asarray(table[_get_default_prop_name('mag')]),
                                                          table[_get_default_prop_name('band')]))
-    table[_get_default_prop_name('fluxerr')] = np.asarray(
-        map(lambda x, y: x * y / (2.5 * np.log10(np.e)), table[_get_default_prop_name('magerr')],
+    table[_get_default_prop_name('fluxerr')] = asarray(
+        map(lambda x, y: x * y / (2.5 * log10(e)), table[_get_default_prop_name('magerr')],
             table[_get_default_prop_name('flux')]))
     return(table)
 
@@ -400,9 +400,9 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     astropy.Table object with mag and mag error added
     """
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('mag')] = np.asarray(map(lambda x, y: ms.band_flux_to_mag(x/sncosmo.constants.HC_ERG_AA,y), table[_get_default_prop_name('flux')],
+    table[_get_default_prop_name('mag')] = asarray(map(lambda x, y: ms.band_flux_to_mag(x/sncosmo.constants.HC_ERG_AA,y), table[_get_default_prop_name('flux')],
                                                           bandDict[table[_get_default_prop_name('band')]]))
-    table[_get_default_prop_name('magerr')] = np.asarray(map(lambda x, y: 2.5 * np.log10(np.e) * y / x, table[_get_default_prop_name('flux')],
+    table[_get_default_prop_name('magerr')] = asarray(map(lambda x, y: 2.5 * log10(e) * y / x, table[_get_default_prop_name('flux')],
                                                              table[_get_default_prop_name('fluxerr')]))
     return(table)
 

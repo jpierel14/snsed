@@ -7,8 +7,8 @@ from astropy.table import vstack
 from astropy.io import ascii
 import sncosmo
 sndataroot = os.environ['SNDATA_ROOT']
-dir='hicken'
-type=['II','IIP']
+dir='bianco'
+type=['Ic']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*clipped.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
@@ -31,7 +31,7 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
-'''
+
 for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
@@ -70,7 +70,9 @@ for i in range(len(filelist)):
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 typeColors['SN']=typeSNe
 ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
-'''
+for row in typeColors:
+    print(row)
+sys.exit()
 from astropy.table import MaskedColumn
 typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
 typeColors.remove_columns(['B-J','B-H','B-K','u-B'])

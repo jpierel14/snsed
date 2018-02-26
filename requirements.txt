@@ -1,4 +1,4 @@
-numpy
-scipy
+-U numpy
+-U scipy
 astropy
 sncosmo
