@@ -406,3 +406,5 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
                                                              table[_get_default_prop_name('fluxerr')]))
     return(table)
 
+def colorTableCombine(tableList):
+    
