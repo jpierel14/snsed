@@ -13,7 +13,7 @@ from .utils import *
 from .helpers import *
 
 
-__all__=['mag_to_flux','flux_to_mag','curveToColor']
+__all__=['mag_to_flux','flux_to_mag','curveToColor','colorTableCombine']
 
 
 
@@ -161,14 +161,14 @@ def _unredden(color,bands,ebv,r_v):
         A_red=(a_red+b_red/r_v)*A_v
     return(A_blue-A_red)
 
-def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
+def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
     """
     Function takes a lightcurve file and creates a color table for it.
 
     Parameters
     ----------
-    :param filename: Name of lightcurve file you want to read
-        :type: str
+    :param lc: Name of lightcurve file you want to read, or astropy Table containing data
+        :type: str or astropy.Table
     :param colors: Colors you want to calculate for the given SN (i.e U-B, r'-J)
         :type: str or list of strings
     :param bandFit: If there is a specific band you would like to fit instead of default
@@ -202,7 +202,13 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
         colors=[colors]
     zpMag=sncosmo.get_magsystem(zpsys)
 
-    curve=_standardize(sncosmo.read_lc(filename))
+    if isinstance(lc,str):
+        curve=_standardize(sncosmo.read_lc(lc))
+    else:
+        try:
+            curve=_standardize(lc)
+        except:
+            raise RuntimeError,"Can't understand your lightcurve."
     if _get_default_prop_name('zpsys') not in curve.colnames:
         curve[_get_default_prop_name('zpsys')]=zpsys
     colorTable=Table(masked=True)
@@ -410,7 +416,28 @@ def colorTableCombine(tableList):
     result=None
     for table in tableList:
         if result:
-            result=vstack(result,table)
+            result=vstack([result,table])
         else:
             result=table
-    sortedResult=[x.sort(_get_default_prop_name('time')) for x in tableList]
+    import math
+    remove=[]
+    i=0
+    while i<len(result)-1:
+        i+=1
+        start=i-1
+        while i<=len(result)-1 and math.fabs(result[_get_default_prop_name('time')][i]-result[_get_default_prop_name('time')][start])<.1:
+            remove.append(i)
+            for col in [x for x in result.colnames if x != _get_default_prop_name('time')]:
+                if result[i][col] and not result[start][col]:
+                    result[start][col]=result[i][col]
+                elif result[i][col] and result[start][col]:
+                    result[start][col]=average(result[start][col],result[i][col])
+            i+=1
+
+    result.remove_rows(remove)
+    result.sort(_get_default_prop_name('time'))
+
+    from astropy.io import ascii
+    ascii.write(result,os.path.join('hicken','typeII','tables','allIIColors.dat'))
+    sys.exit()
+    return(result)

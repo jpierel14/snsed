@@ -32,12 +32,15 @@ for k in colors:
         colors[k]=[colors[k]]
 
 
+colorTables=[]
+typeSNe=None
 for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
-
-        colorTable=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
+        #print(colors[filelist[i][:-12]],typ[filelist[i][:-12]],'vega',{'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},{'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},'CCM89Dust',
+        #      ['rest','obs'],['host','mw'])
+        temp=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
                                             bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
                                             constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
                                             dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
@@ -57,7 +60,7 @@ for i in range(len(filelist)):
             fig.text(0.01, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical')
             plt.savefig(os.path.join(dir,"type"+type[0],"plots",filelist[i][:-12]+"_"+color[0]+color[-1]+".pdf"),format='pdf')
             plt.close()
-        """
+        
         if typeColors:
             typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
 
@@ -66,17 +69,29 @@ for i in range(len(filelist)):
             typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
             typeColors=colorTable
         
-
+        if typeSNe:
+            typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
+        """
+        typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(temp))]
+        temp['SN']=typeSNe
+        temp.remove_columns([x for x in temp.colnames if x in ['B-J','B-H','B-K','u-B']])
+        if len(temp.colnames)>1:
+            colorTables.append(temp)
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
-typeColors['SN']=typeSNe
-typeColors.sort('time')
-ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#['SN']=typeSNe
+
+#typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#typeColors=ascii.read(os.path.join('hicken','typeII','tables','allIIColors.dat'))
+
+typeColors=snsedextend.colorTableCombine(colorTables)
+#typeColors.sort('time')
+#ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
 for row in typeColors:
     print(row)
 sys.exit()
 from astropy.table import MaskedColumn
-typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
-typeColors.remove_columns(['B-J','B-H','B-K','u-B'])
+
+
 #print(typeColors['r-H'])
 #vColors=ascii.read(os.path.join('SEDs','typeII','vColors.dat'))
 #temp=MaskedColumn([np.nan for i in range(len(typeColors))],name='V-r',mask=[True for i in range(len(typeColors))])
@@ -112,7 +127,7 @@ with open('tempBIC.txt','rb') as handle:
 seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in type and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-snsedextend.extendCC(typeColors,curveDict,outFileLoc=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII'),sedlist=sedlist,zpsys='Vega',verbose=True,showplots=True)
+seds=nsedextend.extendCC(typeColors,curveDict,outFileLoc=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII'),sedlist=sedlist,zpsys='Vega',verbose=True,showplots=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')
