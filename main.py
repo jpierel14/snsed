@@ -73,7 +73,7 @@ for i in range(len(filelist)):
             typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
         """
         typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(temp))]
-        temp['SN']=typeSNe
+        #temp['SN']=typeSNe
         temp.remove_columns([x for x in temp.colnames if x in ['B-J','B-H','B-K','u-B']])
         if len(temp.colnames)>1:
             colorTables.append(temp)
