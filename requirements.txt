@@ -2,9 +2,6 @@ sncosmo
 astropy
 numpy
 scipy
-os
-sys
 collections
 warnings
-multiprocessing
 cpickle
