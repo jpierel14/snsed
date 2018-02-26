@@ -1,4 +1,4 @@
--U numpy
--U scipy
+--force-install numpy
+--force-install scipy
 astropy
 sncosmo
