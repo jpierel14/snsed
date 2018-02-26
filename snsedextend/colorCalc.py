@@ -6,7 +6,7 @@
 import os,sys,sncosmo,snsedextend,warnings
 from numpy import *
 from scipy import interpolate as scint
-from astropy.table import Table,Column,MaskedColumn
+from astropy.table import Table,Column,MaskedColumn,vstack
 
 import pyPar as parallel
 from .utils import *
@@ -407,4 +407,8 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     return(table)
 
 def colorTableCombine(tableList):
-    
+    sortedList=[x.sort(_get_default_prop_name('time')) for x in tableList]
+    result=None
+    for table in sortedList:
+        if result:
+            result=vstak()
