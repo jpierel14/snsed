@@ -5,8 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/snsedextend-0.0.0-py2.7.egg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/snsedextend-0.0.1-py2.7.egg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/error.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/filters/h.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/filters/j.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/filters/ks.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/main.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/PKG-INFO" afterPath="$PROJECT_DIR$/snsedextend.egg-info/PKG-INFO" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/requires.txt" afterPath="$PROJECT_DIR$/snsedextend.egg-info/requires.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/top_level.txt" afterPath="$PROJECT_DIR$/snsedextend.egg-info/top_level.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/BIC.py" afterPath="$PROJECT_DIR$/snsedextend/BIC.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/__init__.py" afterPath="$PROJECT_DIR$/snsedextend/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/definedBands.py" afterPath="$PROJECT_DIR$/snsedextend/definedBands.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,26 +48,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="75" column="9" lean-forward="false" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="433" column="64" lean-forward="false" selection-start-line="433" selection-start-column="61" selection-end-line="433" selection-end-column="64" />
-              <folding>
-                <element signature="e#62#104#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="165">
+              <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,7 +73,7 @@
       <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-138">
+            <state relative-caret-position="10845">
               <caret line="723" column="23" lean-forward="false" selection-start-line="723" selection-start-column="23" selection-end-line="723" selection-end-column="23" />
               <folding>
                 <element signature="e#61#99#0" expanded="true" />
@@ -82,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-851">
-              <caret line="56" column="79" lean-forward="false" selection-start-line="56" selection-start-column="76" selection-end-line="56" selection-end-column="79" />
+            <state relative-caret-position="300">
+              <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -120,7 +120,7 @@
         <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
+              <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -205,11 +205,11 @@
         <option value="$PROJECT_DIR$/snsedextend/colors.py" />
         <option value="$PROJECT_DIR$/snsedextend/helpers.py" />
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
-        <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
         <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/snsedextend/example.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+        <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
       </list>
     </option>
   </component>
@@ -494,7 +494,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36301368" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36301368" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -569,9 +569,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -598,9 +596,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -627,9 +623,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -656,9 +650,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -685,9 +677,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -715,9 +705,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2730">
           <caret line="186" column="12" lean-forward="false" selection-start-line="186" selection-start-column="12" selection-end-line="186" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -726,9 +714,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3345">
           <caret line="227" column="33" lean-forward="false" selection-start-line="227" selection-start-column="33" selection-end-line="227" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -737,9 +723,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2910">
           <caret line="198" column="44" lean-forward="false" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -783,16 +767,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
           <caret line="1021" column="13" lean-forward="false" selection-start-line="1021" selection-start-column="13" selection-end-line="1021" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-851">
-          <caret line="56" column="79" lean-forward="false" selection-start-line="56" selection-start-column="76" selection-end-line="56" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -817,7 +792,7 @@
     <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
+          <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -842,9 +817,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="75" column="9" lean-forward="false" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
+        <state relative-caret-position="10845">
           <caret line="723" column="23" lean-forward="false" selection-start-line="723" selection-start-column="23" selection-end-line="723" selection-end-column="23" />
           <folding>
             <element signature="e#61#99#0" expanded="true" />
@@ -852,22 +843,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="75" column="9" lean-forward="false" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
+        <state relative-caret-position="300">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="433" column="64" lean-forward="false" selection-start-line="433" selection-start-column="61" selection-end-line="433" selection-end-column="64" />
-          <folding>
-            <element signature="e#62#104#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
