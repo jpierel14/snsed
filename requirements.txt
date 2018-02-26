@@ -1,4 +1,4 @@
-sncosmo
-astropy
 numpy
 scipy
+astropy
+sncosmo

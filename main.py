@@ -82,8 +82,9 @@ typeColors.remove_columns(['B-J','B-H','B-K','u-B'])
 #typeColors['Vr_err']=temp2
 #for i in range(len(vColors)):
 #    typeColors.add_row(np.append(vColors['time'][i],np.append([np.nan for j in range(len(typeColors.colnames)-3)],np.append(vColors['V-r'][i],vColors['Vr_err'][i]))),mask=np.append([False],np.append([True for k in range(len(typeColors.colnames)-3)],[False,False])))
-#typeColors.sort('time')
-#ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+typeColors.sort('time')
+ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+sys.exit()
 #sys.exit()
 '''
 curveDict=dict([])
