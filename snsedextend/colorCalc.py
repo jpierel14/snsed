@@ -5,7 +5,6 @@
 
 import os,sys,sncosmo,snsedextend
 from numpy import *
-from pylab import * 
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn
 
