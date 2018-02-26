@@ -6,19 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-000018.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-000018.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-003818.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-003818.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/error.log" afterPath="$PROJECT_DIR$/error.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/BIC.py" afterPath="$PROJECT_DIR$/snsedextend/BIC.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/__init__.py" afterPath="$PROJECT_DIR$/snsedextend/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/snsedextend/colorCalc.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1519608617753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1519655532821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
@@ -46,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="103" column="1" lean-forward="false" selection-start-line="103" selection-start-column="1" selection-end-line="103" selection-end-column="1" />
+            <state relative-caret-position="1560">
+              <caret line="104" column="25" lean-forward="true" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -61,8 +50,8 @@
       <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="396" column="26" lean-forward="true" selection-start-line="396" selection-start-column="26" selection-end-line="396" selection-end-column="26" />
+            <state relative-caret-position="127">
+              <caret line="179" column="28" lean-forward="true" selection-start-line="178" selection-start-column="4" selection-end-line="179" selection-end-column="28" />
               <folding>
                 <element signature="e#62#95#0" expanded="true" />
               </folding>
@@ -70,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="721" column="17" lean-forward="false" selection-start-line="721" selection-start-column="17" selection-end-line="721" selection-end-column="17" />
+            <state relative-caret-position="231">
+              <caret line="173" column="59" lean-forward="true" selection-start-line="173" selection-start-column="59" selection-end-line="173" selection-end-column="59" />
               <folding>
                 <element signature="e#61#99#0" expanded="true" />
               </folding>
@@ -108,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -149,17 +138,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>extrap_hel</find>
-      <find>_standardize</find>
-      <find>AB</find>
-      <find>mag_to_flux</find>
-      <find>bandDict</find>
-      <find>sns</find>
       <find>warnings</find>
       <find>war</find>
       <find>with</find>
-      <find>_createSED</find>
-      <find>bandMag</find>
       <find>rescale</find>
       <find>newsedf</find>
       <find>HC_E</find>
@@ -179,11 +160,20 @@
       <find>_getFilter</find>
       <find>_snmodel_to</find>
       <find>1</find>
+      <find>bandMag</find>
+      <find>getExtremes</find>
+      <find>_createSED</find>
+      <find>create</find>
+      <find>constants</find>
+      <find>createSN</find>
+      <find>plotsed</find>
+      <find>np.</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
       <replace>minterp</replace>
       <replace>flux_to_mag</replace>
+      <replace>createSNSED</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -205,9 +195,9 @@
         <option value="$PROJECT_DIR$/snsedextend/helpers.py" />
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
         <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
-        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
       </list>
     </option>
   </component>
@@ -899,7 +889,7 @@
     <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
@@ -922,6 +912,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1560">
+          <caret line="104" column="25" lean-forward="true" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-851">
@@ -934,8 +934,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="396" column="26" lean-forward="true" selection-start-line="396" selection-start-column="26" selection-end-line="396" selection-end-column="26" />
+        <state relative-caret-position="127">
+          <caret line="179" column="28" lean-forward="true" selection-start-line="178" selection-start-column="4" selection-end-line="179" selection-end-column="28" />
           <folding>
             <element signature="e#62#95#0" expanded="true" />
           </folding>
@@ -944,20 +944,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="721" column="17" lean-forward="false" selection-start-line="721" selection-start-column="17" selection-end-line="721" selection-end-column="17" />
+        <state relative-caret-position="231">
+          <caret line="173" column="59" lean-forward="true" selection-start-line="173" selection-start-column="59" selection-end-line="173" selection-end-column="59" />
           <folding>
             <element signature="e#61#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="103" column="1" lean-forward="false" selection-start-line="103" selection-start-column="1" selection-end-line="103" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
