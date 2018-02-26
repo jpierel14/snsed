@@ -407,8 +407,10 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     return(table)
 
 def colorTableCombine(tableList):
-    sortedList=[x.sort(_get_default_prop_name('time')) for x in tableList]
     result=None
-    for table in sortedList:
+    for table in tableList:
         if result:
-            result=vstak()
+            result=vstack(result,table)
+        else:
+            result=table
+    sortedResult=[x.sort(_get_default_prop_name('time')) for x in tableList]
