@@ -1,4 +1,2 @@
---force-reinstall numpy
---force-reinstall scipy
-astropy
-sncosmo
+numpy
+scipy
