@@ -1,0 +1,7 @@
+README.md
+setup.py
+snsedextend.egg-info/PKG-INFO
+snsedextend.egg-info/SOURCES.txt
+snsedextend.egg-info/dependency_links.txt
+snsedextend.egg-info/requires.txt
+snsedextend.egg-info/top_level.txt
