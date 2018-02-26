@@ -12,8 +12,9 @@ from scipy.interpolate import RectBivariateSpline
 
 from .utils import *
 from .helpers import *
+from .BIC import BICrun
 
-__all__=['extendNon1a','bandRegister','curveToColor']
+__all__=['extendCC','extendIa','fitColorCurve']
 
 #Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable,otherwise will use the builtin version)
 try:
@@ -21,8 +22,6 @@ try:
 except:
     os.environ['SNDATA_ROOT']=os.path.join(os.path.dirname(snsedextend),'SNDATA_ROOT')
     sndataroot=os.environ['SNDATA_ROOT']
-
-
 
 class snSource(sncosmo.Source):
 
@@ -43,8 +42,6 @@ class snSource(sncosmo.Source):
         return amplitude  * self._model_flux1(phase, wave)
 
 
-
-
 def _getsed(sedfile) : 
     """
     Helper function that reads an SED file into a useable format.
@@ -61,11 +58,6 @@ def _getsed(sedfile) :
 
     return( dlist, wlist, flist )
 
-def _get_default_prop_name(prop):
-    for key,value in _props.items():
-        if {prop.lower()} & value:
-            return key
-    return prop
 
 def _getZP(band,zpsys):
     """
@@ -205,49 +197,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
             i+=1
         y1=f[0]
         extra=True
-        '''
-        y1=f[0]
-        y2=0
-        last=0
-        while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter):
 
-            if area>bArea:
-                x3=x2
-            else:
-                x1=x2
-            x2=(x3+x1)/2
-            idx,x2=_find_nearest(xWave,x2)
-            interpFunc=scint.interp1d(append(x2,w[0]),append(0,f[0]))
-            #area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
-            area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
-            i+=1
-            if area==last: #break out of loop once we can't get more accurate because of wavelength binning
-                break
-            last=area
-        if abs((area-bArea)/(area+bArea))>accuracy and i<=niter:
-            i=1
-            while(abs((area-bArea)/(area+bArea))>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
-                if i==1:
-                    y3=f[0]
-                    y1=0
-                    while area<bArea:
-                        y3*=2
-                        interpFunc=scint.interp1d(append(x2,w[0]),append(0,y3))
-                        #area=simps(xTrans[idx:]*interpFunc(arange(x2,w[0]+wavestep/10,wavestep)),dx=wavestep)
-                        area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
-                        y1=f[0]
-                    y2=y3
-                if area>bArea:
-                    y3=y2
-                else:
-                    y1=y2
-                y2=(y3+y1)/2
-                interpFunc=scint.interp1d(append(x2,w[0]),append(0,y2))
-                area=np.sum(interpFunc(arange(x2,w[0]+wavestep/10,wavestep))*xTrans[idx:]*arange(x2,w[0]+wavestep/10,wavestep)*gradient(arange(x2,w[0]+wavestep/10,wavestep)))
-                i+=1
-            y1=y2
-            y2=0
-    '''
     elif area<bArea:#then the flux at the left edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
@@ -315,29 +265,19 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
 
 def _createSED(filename,rescale=False):
     phase,wave,flux=sncosmo.read_griddata_ascii(filename)
-    #phase,wave,flux=_getsed(filename)
-
-    #print(p.shape,w.shape,f.shape)
-    #print(wave[-500:]-arange(wave[-500],wave[-1]+1,10))
-    #print(phase.shape,wave.shape,flux.shape)
-    #print(wave[-250:-230])
     if rescale:
         for i in range( len(phase) ) :
             flux[i]=flux[i]/sncosmo.constants.HC_ERG_AA
-        #flux=flux/(sncosmo.constants.HC_ERG_AA/wave)
     return(snSource(phase,wave,flux,name='extrapolated'))
 
 def _getPartialBandMag(model,phase,wave,band,zpsys,wavestep):
     interpFunc=scint.interp1d(band.wave,band.trans)
-    #idx,val=_find_nearest(wave,int(math.floor(band.wave[0]/wavestep))*wavestep)
     waves=arange(band.wave[0],wave[-1]+1,wavestep)
     transInterp=interpFunc(waves)
-    #git test
     sncosmo.registry.register(sncosmo.Bandpass(waves,transInterp,name='tempBand'),force=True)
 
     return(model.bandmag('tempBand',zpsys,phase)) #magnitude in the overlap of the band
 
-#def _getPartialBandFlux(model)
 
 def _checkBandOverlap(band1,band2):
     if (band1.wave[0]<band2.wave[0] and band1.wave[-1]>band2.wave[0]) or (band2.wave[0]<band1.wave[0] and band2.wave[-1]>band1.wave[0]):
@@ -370,27 +310,13 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
             bandIdx,bandVal=_find_nearest(xWave,w[-1])#int(math.ceil(wave1[0]/wavestep))*wavestep
             tempIdx,tempVal=_find_nearest(w,xWave[0])
             if xWave[0]<w[-1]:
-                '''
-                if np.max(f[tempIdx:])>0:
-                    #overlapMag=_getPartialBandMag(model,d[0],w,bandDict[band],zpsys,wavestep)
-                else:
-                    overlapMag=0
-                '''
                 if bandVal<w[-1]:
                     xTrans=xTrans[bandIdx+1:]
                     xWave=xWave[bandIdx+1:]
                 else:
                     xTrans=xTrans[bandIdx:]
                     xWave=xWave[bandIdx:]
-                '''
-                tempIdx2,tempVal2=_find_nearest(w,xWave[0])
-                if xWave[0]-w[-1]>wavestep: #then need to extrapolate between end of SED and left edge of band
-                    Nstep = len( arange( val, xWave[0],  wavestep ) )
-                    wextRed =  sorted( [ val + (j+1)*wavestep for j in range(Nstep) ] )
-                    fextRed = array( [ max(0,f[idx]) for wave in wextRed ] )#just a flat slope from the end of the SED to the edge of the band
-                    w2 = append(w[:tempIdx2+1], wextRed)
-                    f2 = append(f[:tempIdx2+1], fextRed)
-                '''
+
 
     w=w2
     f=f2
@@ -414,12 +340,7 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     extra=False
     #print(bArea,area)
     if area>bArea: #then we need flux=0, but slope of line steeper
-        '''
-        y1=f[-1]
-        y2=0
-        x1=w[-1]
-        x2=2*bArea/y1
-        '''
+
         #last=0
         i=0
         while area>bArea:
@@ -461,51 +382,7 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
             i+=1
         y1=f[-1]
         extra=True
-        '''
-        while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter):
-            if area>bArea:
-                3=x2
-            else:
-                x1=x2
-            x2=(x3+x1)/2
-            #idx,x2=_find_nearest(xWave,x2)
-            interpFunc1=scint.interp1d(append(w[-1],x2),append(f[-1],0))
-            interpFunc2=scint.interp1d(xWave,xTrans)
-            #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
-            area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
-            i+=1
 
-        w3=[int(math.ceil(x2/wavestep))*wavestep]
-            #if area==last: #break out of loop once we can't get more accurate because of wavelength binning
-            #    break
-            #last=area
-        
-        if abs(area-bArea)/(area+bArea)>accuracy and i<=niter:
-            print('or here?')
-            i=1
-            while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter): #this loop runs if necessary accuracy wasn't reached because of wavelength binning, it changes the starting flux slightly
-                if i==1:
-                    y3=f[-1]
-                    while area<bArea:
-                        y3*=2
-                        interpFunc=scint.interp1d(append(w[-1],x2),append(y3,0))
-                        #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
-                        area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
-                    y1=f[-1]
-                    y2=y3
-                if area>bArea:
-                    y3=y2
-                else:
-                    y1=y2
-                y2=(y3+y1)/2
-                interpFunc=scint.interp1d(append(w[-1],x2),append(y2,0))
-                #area=simps(xTrans[0:idx+1]*interpFunc(arange(w[-1],x2+wavestep/10,wavestep)),dx=wavestep)
-                area=np.sum(interpFunc(arange(w[-1],x2+wavestep/10,wavestep))*xTrans[0:idx+1]*arange(w[-1],x2+wavestep/10,wavestep)*gradient(arange(w[-1],x2+wavestep/10,wavestep)))
-                i+=1
-            y1=y2
-            y2=0
-            print(i)
-        '''
     elif area<bArea:#then the flux at the right edge of the band must be greater than 0
         y1=0
         y3=max(f)#initial upper bound is max of SED
@@ -568,42 +445,7 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     f = append(f, fextRed)
     return(w,f)
 
-'''
-def _getBestModel(table,ir):
-    import pandas as pd
-    import pymc3 as pm
-    import snsedextend
 
-
-    modelList=['k1','k2']
-
-    temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
-    temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
-    models_lin,traces_lin=snsedextend.run_models(temp,2)
-    #print([name for name,thing in inspect.getmembers(models_lin['k2'].model)])
-
-    dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
-    dfdic.index.name = 'model'
-
-    for nm in dfdic.index:
-        dfdic.loc[nm, 'dic'] = pm.stats.dic(traces_lin[nm], models_lin[nm])
-        dfdic.loc[nm, 'waic'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
-
-    dfdic = pd.melt(dfdic.reset_index(), id_vars=['model'], var_name='poly', value_name='Information Criterion')
-
-    #g = sns.factorplot(x='model', y='Information Criterion', col='poly', hue='poly', data=dfdic, kind='bar', size=6)
-    #plt.show()
-    dfwaic = pd.DataFrame(index=modelList, columns=['lin'])
-    dfwaic.index.name = 'model'
-
-    for nm in dfwaic.index:
-        dfwaic.loc[nm, 'lin'] = pm.stats.waic(traces_lin[nm], models_lin[nm])[0]
-
-    best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
-    dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], var_name=ir.upper(), value_name='waic')
-
-    snsedextend.plot_posterior_cr(models_lin,traces_lin,temp,temp_xlims,datamodelnm=ir, bestModel=best,modelnms=modelList,typ=type,bic=dfwaic)
-'''
 
 def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,bandsDone,niter=50):
     """ Interpolate the given transmission function to the wavestep of the SED, then
@@ -612,8 +454,8 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     :param newsedfile: filename of output SED file
     :param fVH 
     """
-    #dlist,wlist,flist = _getsed( sedfile ) #first time this is read in, should be in ergs/s/cm^2/AA
-
+    dlist,wlist,flist = _getsed( sedfile ) #first time this is read in, should be in ergs/s/cm^2/AA
+    '''
     tempTime=[]
     tempColor=[]
     extrap=True
@@ -635,7 +477,7 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     if not extrap:
         tempTime=time
         tempColor=modColor
-
+    '''
     i=0
 
     while dlist[i][0]<time[0]:
@@ -756,104 +598,6 @@ def bandMag(filename,currentPhase,band,zpsys,rescale=False):
 
 
 
-def extendNon1a(colorTable,bandDict=_filters,colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True):
-    """
-    Function called in main which runs the extrapolation algorithm.
-    :param sedlist: list of files to analyze (or none if all in current directory)
-    :param fVJ: input V-J
-    :param fVH: input V-H
-    :param fVK: input V-K
-    :param showplots: None if you don't want plotting, otherwise it's 'all' if you want to plot all days or a single day (i.e. 3)
-    """
-    import pickle
-    colorTable=_standardize(colorTable)
-    print('Running Bayesian Information Criterion...')
-    temp=snsedextend.BIC.run()
-    #with open('tempBIC.txt','wb') as handle:
-    #    pickle.dump(temp,handle)
-    ###### for debugging#####
-    #with open('tempBIC.txt','rb') as handle:
-    #    temp=pickle.loads(handle.read())
-
-
-    #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
-    if not isinstance(colorTable,Table):
-        raise RuntimeError('Colors argument must be an astropy table.')
-
-    for band in bandDict:
-        if not isinstance(bandDict[band],sncosmo.Bandpass):
-            bandDict=_bandCheck(bandDict,band)
-    if not colors:
-        print("No extrapolation colors defined, assuming: U-B, r-H, r-J, r-K")
-        colors=['U-B','r-J','r-H','r-K']
-    else:
-        tempColors=[x for x in colors if 'U-' in x]+[x for x in colors if '-J' in x]+[x for x in colors if '-H' in x]+[x for x in colors if '-K' in x]
-        if len(tempColors)>4:
-            raise RuntimeError("Only can do 4 colors!")
-
-
-    bands=append([col[0] for col in colors],[col[-1] for col in colors])
-    for band in _filters.keys():
-        if band not in bandDict.keys() and band in bands:
-            bandDict[band]=sncosmo.get_bandpass(_filters[band])
-    if not sedlist:
-        sedlist = glob.glob(os.path.join(sndataroot,"snsed","NON1A","*.SED"))
-    else:
-        sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
-        sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
-    for sedfile in sedlist:
-        newsedfile=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII',os.path.basename(sedfile))
-        #newsedfile=os.path.basename(sedfile)
-        if verbose:
-            print("EXTRAPOLATING %s"%newsedfile)
-        once=False
-        boundUV=False
-        boundIR=False
-        bandsDone=[]
-        for color in colors:
-            if verbose:
-                print('     Running %s extrapolation.'%color)
-            if color[0] not in bandDict.keys():
-                raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
-            if color[-1] not in bandDict.keys():
-                raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
-            try:
-                tempTime=array(temp[color[-1]]['x'])
-                tempColor=array(temp[color[-1]]['500'])
-            except:
-                tempTime=array(temp['uv']['x'])
-                tempColor=array(temp['uv']['500'])
-
-            getExtremes(tempTime,tempColor,colorTable,color)
-            #blueZP=_getZP(bandDict[color[0]],zpsys)
-            #redZP=_getZP(bandDict[color[-1]],zpsys)
-            tempMask=colorTable[color].mask
-            #colorTable[color]=10**(-.4*(colorTable[color]-(blueZP-redZP)))
-            #tempColor=10**(-.4*(tempColor-(blueZP-redZP)))
-            colorTable[color].mask=tempMask
-            if once:
-                sedfile=newsedfile
-            tempTable=colorTable[~colorTable[color].mask]
-            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,tempTime,tempColor, bandDict,zpsys,bandsDone,niter=50)
-            if UV:
-                boundUV=True
-                bandsDone.append(color[0])
-            if IR:
-                boundIR=True
-                bandsDone.append(color[-1])
-            once=True
-
-        #once=False
-
-        if showplots:
-            plotsed(newsedfile,day=showplots)
-        if boundUV:
-            _boundUVsed(newsedfile)
-        if boundIR:
-            _boundIRsed(newsedfile)
-        if verbose:
-            print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
-
 
 def getExtremes(time,curve,original,color):
     def getErrors(x):
@@ -877,8 +621,112 @@ def getExtremes(time,curve,original,color):
     plt.show()
     sys.exit()
 
+def extendIa():
+    pass
+
+def fitColorCurve(table,confidence=50,type='II',verbose=True):
+
+    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
+    result=dict([])
+    print("Running BIC for color:")
+    for color in colors:
+        print('     '+color)
+        tempTable=table[~table[color].mask]
+        tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err']],names=('time','mag','magerr'))
+        temp=BICrun(tempTable,type)
+        result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
+    return(result)
+
+def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True):
+    """
+    Function called in main which runs the extrapolation algorithm.
+    :param sedlist: list of files to analyze (or none if all in current directory)
+    :param fVJ: input V-J
+    :param fVH: input V-H
+    :param fVK: input V-K
+    :param showplots: None if you don't want plotting, otherwise it's 'all' if you want to plot all days or a single day (i.e. 3)
+    """
+    #import pickle
+    colorTable=_standardize(colorTable)
+    #print('Running Bayesian Information Criterion...')
+    #temp=snsedextend.BIC.run()
+    #sys.exit()
+    #with open('tempBIC.txt','wb') as handle:
+    #    pickle.dump(temp,handle)
+    ###### for debugging#####
+    #with open('tempBIC.txt','rb') as handle:
+    #    temp=pickle.loads(handle.read())
 
 
+    #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
+    if not isinstance(colorTable,Table):
+        raise RuntimeError('Colors argument must be an astropy table.')
+
+    for band in bandDict:
+        if not isinstance(bandDict[band],sncosmo.Bandpass):
+            bandDict=_bandCheck(bandDict,band)
+    if not colors:
+        print("No extrapolation colors defined, assuming: ",colorCurveDict.keys())
+        colors=[x for x in colorCurveDict.keys() if 'U-' in x]+[x for x in colorCurveDict.keys() if '-J' in x]+[x for x in colorCurveDict.keys() if '-H' in x]+[x for x in colorCurveDict.keys() if '-K' in x]
+    else:
+        tempColors=[x for x in colors if 'U-' in x]+[x for x in colors if '-J' in x]+[x for x in colors if '-H' in x]+[x for x in colors if '-K' in x]
+        if len(tempColors)>4:
+            raise RuntimeError("Only can do 4 colors!")
+
+
+    bands=append([col[0] for col in colors],[col[-1] for col in colors])
+    for band in _filters.keys():
+        if band not in bandDict.keys() and band in bands:
+            bandDict[band]=sncosmo.get_bandpass(_filters[band])
+    if not sedlist:
+        sedlist = glob.glob(os.path.join(sndataroot,"snsed","NON1A","*.SED"))
+    else:
+        sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
+        sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
+    for sedfile in sedlist:
+        newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
+        if verbose:
+            print("EXTRAPOLATING %s"%newsedfile)
+        once=False
+        boundUV=False
+        boundIR=False
+        bandsDone=[]
+
+        for color in colors:
+            if verbose:
+                print('     Running %s extrapolation.'%color)
+            if color[0] not in bandDict.keys():
+                raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
+            if color[-1] not in bandDict.keys():
+                raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
+
+
+            #getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
+
+            tempMask=colorTable[color].mask
+
+            colorTable[color].mask=tempMask
+            if once:
+                sedfile=newsedfile
+            tempTable=colorTable[~colorTable[color].mask]
+            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,colorCurveDict[color]['time'],colorCurveDict[color][color], bandDict,zpsys,bandsDone,niter=50)
+            if UV:
+                boundUV=True
+                bandsDone.append(color[0])
+            if IR:
+                boundIR=True
+                bandsDone.append(color[-1])
+            once=True
+
+
+        if showplots:
+            plotsed(newsedfile,day=showplots)
+        if boundUV:
+            _boundUVsed(newsedfile)
+        if boundIR:
+            _boundIRsed(newsedfile)
+        if verbose:
+            print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
 
 
 

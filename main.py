@@ -31,7 +31,7 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
-
+'''
 for i in range(len(filelist)):
     if typ[filelist[i][:-12]] in type and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
@@ -41,9 +41,10 @@ for i in range(len(filelist)):
                                             bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
                                             constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
                                             dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
+
         #else:
         #    continue
-        '''
+        """
         for color in colors[filelist[i][:-12]]:
             fig=plt.figure()
             ax=plt.gca()
@@ -56,7 +57,7 @@ for i in range(len(filelist)):
             fig.text(0.01, 0.5, 'Color Magnitude (Vega)', va='center', rotation='vertical')
             plt.savefig(os.path.join(dir,"type"+type[0],"plots",filelist[i][:-12]+"_"+color[0]+color[-1]+".pdf"),format='pdf')
             plt.close()
-        
+        """
         if typeColors:
             typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
 
@@ -64,14 +65,16 @@ for i in range(len(filelist)):
         else:
             typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
             typeColors=colorTable
-        '''
+        
 
             #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
-sys.exit()
 typeColors['SN']=typeSNe
-
+ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+'''
 from astropy.table import MaskedColumn
-#typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+typeColors.remove_columns(['B-J','B-H','B-K','u-B'])
+#print(typeColors['r-H'])
 #vColors=ascii.read(os.path.join('SEDs','typeII','vColors.dat'))
 #temp=MaskedColumn([np.nan for i in range(len(typeColors))],name='V-r',mask=[True for i in range(len(typeColors))])
 #temp2=MaskedColumn([np.nan for i in range(len(typeColors))],name='Vr_err',mask=[True for i in range(len(typeColors))])
@@ -79,13 +82,33 @@ from astropy.table import MaskedColumn
 #typeColors['Vr_err']=temp2
 #for i in range(len(vColors)):
 #    typeColors.add_row(np.append(vColors['time'][i],np.append([np.nan for j in range(len(typeColors.colnames)-3)],np.append(vColors['V-r'][i],vColors['Vr_err'][i]))),mask=np.append([False],np.append([True for k in range(len(typeColors.colnames)-3)],[False,False])))
-typeColors.sort('time')
-ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#typeColors.sort('time')
+#ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
+#sys.exit()
+'''
+curveDict=dict([])
+for band in ['uv','J','H','K']:
+    temp=ascii.read(os.path.join('hicken','type'+type[0],'tables',band+'.dat'))
+    if band =='uv':
+        color='U-B'
+    else:
+        color='r-'+band
+    curveDict[band]=snsedextend.fitColorCurve(temp,type=type[0],color=color)
+print(curveDict)
 sys.exit()
+'''
+#curveDict=snsedextend.fitColorCurve(typeColors)
+import pickle
+#with open('tempBIC.txt','wb') as handle:
+#    pickle.dump(curveDict,handle)
+#    sys.exit()
+###### for debugging#####
+with open('tempBIC.txt','rb') as handle:
+    curveDict=pickle.loads(handle.read())
 seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in type and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-snsedextend.extendNon1a(typeColors,colors=['U-B','r-J','r-H','r-K'],sedlist=sedlist,zpsys='Vega',verbose=True)
+snsedextend.extendCC(typeColors,curveDict,outFileLoc=os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','typeII'),sedlist=sedlist,zpsys='Vega',verbose=True,showplots=True)
     #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')

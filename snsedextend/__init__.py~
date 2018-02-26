@@ -3,6 +3,9 @@ warnings.filterwarnings('ignore',category=FutureWarning)
 #warnings.filterwarnings('ignore',category=ShimWarning)
 import sncosmo, definedBands,BIC,os
 from .colorCalc import *
+from .cc_extrap import *
+
+#Automatically sets environment to your SNDATA_ROOT file (Assumes you've set this environment variable,otherwise will use the builtin version)
 try:
     sndataroot = os.environ['SNDATA_ROOT']
 except:

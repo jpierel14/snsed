@@ -41,6 +41,7 @@ def _getBandMaxTime(model,table,bands,band,zp,zpsys):
     (Private)
      Helper function to obtain the time of maximum flux from an sncosmo model
     """
+
     tgrid,mflux=_snmodel_to_flux(model,table,zp,zpsys,bands[band])
     return(tgrid[where(mflux==max(mflux))])
 
@@ -247,9 +248,9 @@ def curveToColor(filename,colors,bandFit=None,snType='II',bandDict=_filters,colo
         red[_get_default_prop_name('band')]=rtemp
         #now make sure we have zero-points and fluxes for everything
         if _get_default_prop_name('zp') not in blue.colnames:
-            blue[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,blue[_get_default_prop_name('band')][i]) for i in range(len(blue))]
+            blue[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1/sncosmo.constants.HC_ERG_AA,blue[_get_default_prop_name('band')][i]) for i in range(len(blue))]
         if _get_default_prop_name('zp') not in red.colnames:
-            red[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1,red[_get_default_prop_name('band')][i]) for i in range(len(red))]
+            red[_get_default_prop_name('zp')]=[zpMag.band_flux_to_mag(1/sncosmo.constants.HC_ERG_AA,red[_get_default_prop_name('band')][i]) for i in range(len(red))]
         if _get_default_prop_name('flux') not in blue.colnames:
             blue=mag_to_flux(blue,bandDict,zpsys)
         if _get_default_prop_name('flux') not in red.colnames:
