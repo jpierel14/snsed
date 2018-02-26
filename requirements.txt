@@ -2,4 +2,3 @@ sncosmo
 astropy
 numpy
 scipy
-cpickle
