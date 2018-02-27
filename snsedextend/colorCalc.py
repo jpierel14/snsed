@@ -428,16 +428,17 @@ def colorTableCombine(tableList):
         while i<=len(result)-1 and math.fabs(result[_get_default_prop_name('time')][i]-result[_get_default_prop_name('time')][start])<.1:
             remove.append(i)
             for col in [x for x in result.colnames if x != _get_default_prop_name('time')]:
+
                 if result[i][col] and not result[start][col]:
                     result[start][col]=result[i][col]
                 elif result[i][col] and result[start][col]:
-                    result[start][col]=average(result[start][col],result[i][col])
+                    result[start][col]=average([array(result[start][col]),array(result[i][col])])
             i+=1
 
     result.remove_rows(remove)
     result.sort(_get_default_prop_name('time'))
 
-    from astropy.io import ascii
-    ascii.write(result,os.path.join('hicken','typeII','tables','allIIColors.dat'))
-    sys.exit()
+    #from astropy.io import ascii
+    #ascii.write(result,os.path.join('hicken','typeII','tables','allIIColors.dat'))
+    #sys.exit()
     return(result)

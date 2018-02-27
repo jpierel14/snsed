@@ -81,9 +81,9 @@ for i in range(len(filelist)):
 #['SN']=typeSNe
 
 #typeColors=ascii.read(os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
-#typeColors=ascii.read(os.path.join('hicken','typeII','tables','allIIColors.dat'))
+typeColors=ascii.read(os.path.join('hicken','typeII','tables','allIIColors.dat'))
 
-typeColors=snsedextend.colorTableCombine(colorTables)
+#typeColors=snsedextend.colorTableCombine(colorTables)
 #typeColors.sort('time')
 #ascii.write(typeColors,os.path.join(dir,'type'+type[0],'tables','all'+type[0]+'Colors.dat'))
 for row in typeColors:
