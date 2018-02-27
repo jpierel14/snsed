@@ -712,6 +712,8 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
 
         if showplots:
             plotSED(newsedfile,day=showplots)
+            plt.show()
+            plt.close()
         if boundUV:
             _boundUVsed(newsedfile)
         if boundIR:
@@ -719,6 +721,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
         if verbose:
             print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
         returnList.append(createSNSED(newsedfile))
+
     if len(returnList)>1:
         return returnList
     return returnList[0]
