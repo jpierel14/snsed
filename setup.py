@@ -17,7 +17,7 @@ data_files.extend(recursive_glob(pkgdatadir, '*'))
 data_files.extend(recursive_glob(exdatadir, '*'))
 data_files = [f[len(PACKAGENAME)+1:] for f in data_files]
 
-required=['astropy','matplotlib','pandas','pymc3']
+required=['numpy','scipy','cython','astropy','matplotlib','pandas','pymc3']
 warnings.warn("I'm about to install sncosmo from github, the development version",RuntimeWarning)
 #answer=raw_input('Proceed (y/n)? ')
 #if answer.lower() != 'y':
