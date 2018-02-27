@@ -1,5 +1,6 @@
 import os,sncosmo
 from .utils import _props,_filters
+import numpy as np
 
 __all__=['_findFile','_get_default_prop_name','_bandCheck','bandRegister','_standardize']
 

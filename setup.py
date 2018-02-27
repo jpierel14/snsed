@@ -21,10 +21,10 @@ data_files = [f[len(PACKAGENAME)+1:] for f in data_files]
 
 required=['astropy','matplotlib','pandas','pymc3']
 warnings.warn("I'm about to install sncosmo from github, the development version",RuntimeWarning)
-answer=raw_input('Proceed (y/n)? ')
-if answer.lower() != 'y':
-    print('Exiting...')
-    sys.exit()
+#answer=raw_input('Proceed (y/n)? ')
+#if answer.lower() != 'y':
+#    print('Exiting...')
+#    sys.exit()
 os.system('pip install git+https://github.com/sncosmo/sncosmo')
 setup(
 	name='snsedextend',
@@ -32,6 +32,6 @@ setup(
         packages=['snsedextend'],
 	author='J. R. Pierel',
 	author_email='jr23@email.sc.edu',
-	version='0.1.2',
+	version='0.1.3',
         package_data={'snsedextend': data_files}
 )
