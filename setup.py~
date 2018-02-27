@@ -30,6 +30,6 @@ setup(
         packages=['snsedextend'],
 	author='J. R. Pierel',
 	author_email='jr23@email.sc.edu',
-	version='0.1.7',
+	version='0.1.6',
         package_data={'snsedextend': data_files}
 )

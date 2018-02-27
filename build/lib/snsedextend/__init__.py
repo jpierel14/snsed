@@ -5,5 +5,6 @@ warnings.filterwarnings('ignore',category=FutureWarning)
 import definedBands
 from .colorCalc import *
 from .cc_extrap import *
+from .example import *
 
 

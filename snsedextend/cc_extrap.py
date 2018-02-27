@@ -135,10 +135,17 @@ def _getExtremes(time,curve,original,color):
 
     blue=curve-9*error
     red=curve+9*error
-    plt.plot(time,curve,color='k')
-    plt.plot(time,blue,color='b')
-    plt.plot(time,red,color='r')
-    plt.show()
+    fig=plt.figure()
+    ax=fig.gca()
+    ax.plot(time,curve,color='k')
+    ax.plot(time,blue,color='b')
+    ax.plot(time,red,color='r')
+    ax.set_xlabel('Days After Peak',fontsize=16)
+    ax.set_ylabel('Color (Magnitude)',fontsize=16)
+    ax.set_title('Extreme Versions of Measured Color Curve')
+
+    plt.savefig('../extremes.pdf',format='pdf',overwrite=True)
+    return(blue,curve,red)
 
 
 def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,zpsys,accuracy=1e-9):
@@ -638,19 +645,8 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     -------
     Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
     """
-    #import pickle
     colorTable=_standardize(colorTable)
-    #print('Running Bayesian Information Criterion...')
-    #temp=snsedextend.BIC.run()
-    #sys.exit()
-    #with open('tempBIC.txt','wb') as handle:
-    #    pickle.dump(temp,handle)
-    ###### for debugging#####
-    #with open('tempBIC.txt','rb') as handle:
-    #    temp=pickle.loads(handle.read())
 
-
-    #bandDict=dict((k.upper(),v) for k,v in bandDict.iteritems())
     if not isinstance(colorTable,Table):
         raise RuntimeError('Colors argument must be an astropy table.')
 
@@ -694,8 +690,9 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
                 raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
 
 
-            #getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
-
+            blue,med,red=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
+            if color =='r-J':
+                sys.exit()
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask

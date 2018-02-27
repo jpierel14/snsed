@@ -1,6 +1,10 @@
 from collections import OrderedDict as odict
+import os
 
-__all__=['_filters','_opticalBands','_props','_fittingParams','_needs_bounds','_UVrightBound','_UVleftBound','_IRleftBound','_IRrightBound','_zp']
+__dir__=os.path.abspath(os.path.dirname(__file__))
+
+
+__all__=['_filters','_opticalBands','_props','_fittingParams','_needs_bounds','_UVrightBound','_UVleftBound','_IRleftBound','_IRrightBound','_zp','__dir__']
 
 
 #default transmission files, user can define their own

@@ -1,6 +1,6 @@
 import numpy as np
-import os,sncosmo,snsedextend
-dir=os.path.dirname(snsedextend.__file__)
+import os,sncosmo
+dir=os.path.abspath(os.path.dirname(__file__))
 
 u_wave,u_trans=np.loadtxt(os.path.join(dir,'data','bands','uBand','tophatU.dat'),unpack=True)
 sncosmo.registry.register(sncosmo.Bandpass(u_wave,u_trans,name='tophatU'),force=True)
