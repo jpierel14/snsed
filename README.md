@@ -1,6 +1,8 @@
 J.R. Pierel & S.Rodney 
 
-2017.04.26
+2018.02.26
+
+Documentation: http://snsed.readthedocs.io/en/latest/install.html
 
 __SUMMARY__
 
