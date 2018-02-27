@@ -1,6 +1,11 @@
-import multiprocessing,cPickle,os,warnings,sys
+import multiprocessing,os,warnings,sys
 from multiprocessing import Pool
 import numpy as np
+
+if sys.version_info[0] < 3:
+    import cPickle as pick
+else:
+    import pickle as pick
 
 def foreach(toPar,parFunc,args,numThreads=multiprocessing.cpu_count()):
     p = Pool(processes=numThreads)
@@ -28,7 +33,7 @@ def _parWrap(args):
 def _pickleable(obj):
     try:
         with open(r"temp.pickle", "wb") as output_file:
-            cPickle.dump(obj, output_file)
+            pick.dump(obj, output_file)
         pickle=True
     except:
         pickle=False

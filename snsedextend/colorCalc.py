@@ -7,8 +7,8 @@ import os,sys,sncosmo,snsedextend,warnings
 from numpy import *
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn,vstack
+import pyParz
 
-import pyPar as parallel
 from .utils import *
 from .helpers import *
 
@@ -79,7 +79,7 @@ def _snFit(args):
         model.set(**constants)
 
     res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
-    return(parallel.parReturn((res,fit)))#parallel.parReturn makes sure that whatever is being returned is pickleable
+    return(pyParz.parReturn((res,fit)))#parallel.parReturn makes sure that whatever is being returned is pickleable
 
 def _snmodel_to_mag(model,table,zpsys,band):
     """
@@ -208,7 +208,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         try:
             curve=_standardize(lc)
         except:
-            raise RuntimeError,"Can't understand your lightcurve."
+            raise RuntimeError("Can't understand your lightcurve.")
     if _get_default_prop_name('zpsys') not in curve.colnames:
         curve[_get_default_prop_name('zpsys')]=zpsys
     colorTable=Table(masked=True)
@@ -278,13 +278,14 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 if len(blue)>len(red) or bandFit==color[0]:
                     args[0]=blue
 
-                    fits=parallel.foreach(mods,_snFit,args)
+                    fits=pyParz.foreach(mods,_snFit,args)
                     fitted=blue
                     notFitted=red
                     fit=color[0]
                 elif len(blue)<len(red) or bandFit==color[-1]:
                     args[0]=red
-                    fits=parallel.foreach(mods,_snFit,args)
+
+                    fits=pyParz.foreach(mods,_snFit,args)
                     fitted=red
                     notFitted=blue
                     fit=color[-1]
@@ -381,11 +382,12 @@ def mag_to_flux(table,bandDict,zpsys='AB'):
     astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
     """
     ms=sncosmo.get_magsystem(zpsys)
-    table[_get_default_prop_name('flux')]=asarray(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,asarray(table[_get_default_prop_name('mag')]),
-                                                         table[_get_default_prop_name('band')]))
+
+    table[_get_default_prop_name('flux')]=asarray(list(map(lambda x,y: ms.band_mag_to_flux(x,y)*sncosmo.constants.HC_ERG_AA,asarray(table[_get_default_prop_name('mag')]),
+                                                         table[_get_default_prop_name('band')])))
     table[_get_default_prop_name('fluxerr')] = asarray(
-        map(lambda x, y: x * y / (2.5 * log10(e)), table[_get_default_prop_name('magerr')],
-            table[_get_default_prop_name('flux')]))
+        list(map(lambda x, y: x * y / (2.5 * log10(e)), table[_get_default_prop_name('magerr')],
+            table[_get_default_prop_name('flux')])))
     return(table)
 
 def flux_to_mag(table,bandDict,zpsys='AB'):

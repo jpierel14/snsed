@@ -4,10 +4,8 @@ snsedextend/BIC.py
 snsedextend/__init__.py
 snsedextend/cc_extrap.py
 snsedextend/colorCalc.py
-snsedextend/definedBands.py
 snsedextend/example.py
 snsedextend/helpers.py
-snsedextend/pyPar.py
 snsedextend/utils.py
 snsedextend.egg-info/PKG-INFO
 snsedextend.egg-info/SOURCES.txt
