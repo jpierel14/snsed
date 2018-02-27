@@ -14,8 +14,7 @@ Read in a lightcurve:
     >>> myLC=snsedextend.load_example_data()
     >>> print(myLC)
 
-    name  band     time     mag   magerr
-    
+    name  band     time     mag   magerr\n
     ------ ---- ----------- ------ ------
     
     2006aj    U 53788.16733 18.039  0.078
