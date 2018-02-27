@@ -1,6 +1,6 @@
+cython
 numpy
 scipy
-cython
 astropy
 matplotlib
 pandas
