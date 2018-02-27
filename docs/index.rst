@@ -18,7 +18,7 @@ SNSEDextend is a software package designed to extrapolate core-collapse and Type
 
    install
    cc
-   ia
+   
    
 
 
