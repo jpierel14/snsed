@@ -17,7 +17,6 @@ data_files.extend(recursive_glob(pkgdatadir, '*'))
 data_files.extend(recursive_glob(exdatadir, '*'))
 data_files = [f[len(PACKAGENAME)+1:] for f in data_files]
 
-required=['numpy','scipy','cython','astropy','matplotlib','pandas','pymc3']
 warnings.warn("I'm about to install sncosmo from github, the development version",RuntimeWarning)
 #answer=raw_input('Proceed (y/n)? ')
 #if answer.lower() != 'y':
@@ -26,10 +25,11 @@ warnings.warn("I'm about to install sncosmo from github, the development version
 os.system('pip install git+https://github.com/sncosmo/sncosmo')
 setup(
 	name='snsedextend',
-	install_requires=['astropy','matplotlib','pandas','pymc3'],
+	install_requires=['numpy','scipy','cython',
+                          'astropy','matplotlib','pandas','pymc3>=3.0'],
         packages=['snsedextend'],
 	author='J. R. Pierel',
 	author_email='jr23@email.sc.edu',
-	version='0.1.7',
+	version='0.1.9',
         package_data={'snsedextend': data_files}
 )

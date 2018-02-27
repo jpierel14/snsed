@@ -1,4 +1,7 @@
+numpy
+scipy
+cython
 astropy
 matplotlib
 pandas
-pymc3
+pymc3>=3.0

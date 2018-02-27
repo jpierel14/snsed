@@ -135,6 +135,7 @@ def _getExtremes(time,curve,original,color):
 
     blue=curve-9*error
     red=curve+9*error
+    '''
     fig=plt.figure()
     ax=fig.gca()
     ax.plot(time,curve,color='k')
@@ -145,6 +146,7 @@ def _getExtremes(time,curve,original,color):
     ax.set_title('Extreme Versions of Measured Color Curve')
 
     plt.savefig('../extremes.pdf',format='pdf',overwrite=True)
+    '''
     return(blue,curve,red)
 
 
@@ -691,8 +693,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
 
 
             blue,med,red=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
-            if color =='r-J':
-                sys.exit()
+
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask

@@ -135,6 +135,7 @@ def _getExtremes(time,curve,original,color):
 
     blue=curve-9*error
     red=curve+9*error
+    '''
     fig=plt.figure()
     ax=fig.gca()
     ax.plot(time,curve,color='k')
@@ -145,6 +146,7 @@ def _getExtremes(time,curve,original,color):
     ax.set_title('Extreme Versions of Measured Color Curve')
 
     plt.savefig('../extremes.pdf',format='pdf',overwrite=True)
+    '''
     return(blue,curve,red)
 
 
@@ -691,8 +693,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
 
 
             blue,med,red=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
-            if color =='r-J':
-                sys.exit()
+
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask
@@ -711,6 +712,8 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
 
         if showplots:
             plotSED(newsedfile,day=showplots)
+            plt.show()
+            plt.close()
         if boundUV:
             _boundUVsed(newsedfile)
         if boundIR:
@@ -718,6 +721,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
         if verbose:
             print("     Done with %s.\a\a\a"%os.path.basename(sedfile))
         returnList.append(createSNSED(newsedfile))
+
     if len(returnList)>1:
         return returnList
     return returnList[0]
