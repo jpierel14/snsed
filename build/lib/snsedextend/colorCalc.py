@@ -266,7 +266,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 if verbose:
                     print('No model provided, running series of models.')
 
-                mod,types=loadtxt(os.path.join('snsedextend','data','sncosmo','models.ref'),dtype='str',unpack=True)
+                mod,types=loadtxt(os.path.join(__dir__,'data','sncosmo','models.ref'),dtype='str',unpack=True)
                 modDict={mod[i]:types[i] for i in range(len(mod))}
                 if snType!='Ia':
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if x[0] in modDict.keys() and modDict[x[0]][:len(snType)]==snType]
