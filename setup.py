@@ -22,7 +22,7 @@ setup(
 	name='snsedextend',
 	install_requires=['cython','numpy','scipy',
                           'astropy','matplotlib',
-                          'pandas','pymc3>=3.0','pyParz','iminuit','sncosmo'
+                          'pandas','pymc3>=3.0','pyParz','iminuit','sncosmo',
                           ],
         packages=['snsedextend'],
 	author='J. R. Pierel',
