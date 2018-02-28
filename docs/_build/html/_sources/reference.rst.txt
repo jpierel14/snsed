@@ -1,5 +1,5 @@
 ***************
-Reference / API
+Reference
 ***************
 
 .. currentmodule:: snsedextend
@@ -9,7 +9,7 @@ Reference / API
 Generating Color Tables
 =======================
 .. autosummary::
-   :toctree: api
+   #:toctree: api
 	     
    mag_to_flux
    flux_to_mag
@@ -20,7 +20,7 @@ Extrapolating SEDs
 ==================
 
 .. autosummary::
-   :toctree: api
+   #:toctree: snsedextend
 	     
    extendCC
    createSNSED

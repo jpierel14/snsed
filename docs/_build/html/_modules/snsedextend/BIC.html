@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>snsedextend.BIC &mdash; snsedextend 0.2.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="snsedextend 0.2.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> snsedextend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cc.html">Core-Collapse Extrapolations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">snsedextend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>snsedextend.BIC</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for snsedextend.BIC</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1">#import seaborn as sns</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span><span class="nn">warnings</span>
+<span class="c1">#from astropy.io import ascii</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;pymc3&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">disabled</span><span class="o">=</span><span class="kc">True</span>
+
+<span class="nd">@contextmanager</span>
+<div class="viewcode-block" id="suppress_stdout"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.suppress_stdout">[docs]</a><span class="k">def</span> <span class="nf">suppress_stdout</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">devnull</span><span class="p">:</span>
+        <span class="n">old_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">devnull</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">old_stdout</span></div>
+
+<div class="viewcode-block" id="create_poly_modelspec"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.create_poly_modelspec">[docs]</a><span class="k">def</span> <span class="nf">create_poly_modelspec</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Convenience function:</span>
+<span class="sd">    Create a polynomial modelspec string for patsy</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;y ~ 1 + x &#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;+ np.power(x,</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                                     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+
+
+<div class="viewcode-block" id="run_models"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.run_models">[docs]</a><span class="k">def</span> <span class="nf">run_models</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">upper_order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Convenience function:</span>
+<span class="sd">    Fit a range of pymc3 models of increasing polynomial complexity.</span>
+<span class="sd">    Suggest limit to max order 5 since calculation time is exponential.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">models</span><span class="p">,</span> <span class="n">traces</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(),</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">upper_order</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+
+        <span class="n">nm</span> <span class="o">=</span> <span class="s1">&#39;k</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">fml</span> <span class="o">=</span> <span class="n">create_poly_modelspec</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="c1">#with suppress_stdout():</span>
+        <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">models</span><span class="p">[</span><span class="n">nm</span><span class="p">]:</span>
+            <span class="n">pm</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">fml</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Normal</span><span class="p">())</span>
+
+            <span class="c1"># For speed, we&#39;re using Metropolis here</span>
+
+            <span class="n">traces</span><span class="p">[</span><span class="n">nm</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">(),</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">200</span><span class="p">::</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">models</span><span class="p">,</span> <span class="n">traces</span></div>
+
+<span class="kn">from</span> <span class="nn">matplotlib.offsetbox</span> <span class="k">import</span> <span class="n">AnchoredText</span>
+
+<div class="viewcode-block" id="plot_posterior_cr"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.plot_posterior_cr">[docs]</a><span class="k">def</span> <span class="nf">plot_posterior_cr</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">traces</span><span class="p">,</span> <span class="n">rawdata</span><span class="p">,</span> <span class="n">xlims</span><span class="p">,</span>
+                      <span class="n">datamodelnm</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">modelnms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">bestModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">allDat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">typ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">bic</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Convenience function:</span>
+<span class="sd">    Plot posterior predictions with credible regions shown as filled areas.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ax</span><span class="o">=</span><span class="p">{}</span>
+    <span class="c1">#f, ((ax[1],ax[2]),(ax[3],ax[4])) = plt.subplots(nrows=2,ncols=2,sharex=True,sharey=True, figsize=(16,12))</span>
+    <span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+    <span class="n">i</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;Days After Peak&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;Color (Magnitude)&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">datamodelnm</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;UV&#39;</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Posterior Predictive Fits -- Data: U-Optical, Type </span><span class="si">{}</span><span class="s1"> -- Best Model: Order </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">typ</span><span class="p">,</span> <span class="n">bestModel</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Posterior Predictive Fits -- Data: Optical-</span><span class="si">{}</span><span class="s1">, Type </span><span class="si">{}</span><span class="s1"> -- Best Model: Order </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">datamodelnm</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span><span class="n">typ</span><span class="p">,</span> <span class="n">bestModel</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">modelnm</span> <span class="ow">in</span> <span class="n">modelnms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">modelnm</span><span class="o">==</span><span class="n">bestModel</span><span class="p">:</span>
+            <span class="c1">## Get traces and calc posterior prediction for npoints in x</span>
+            <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="n">mdl</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">modelnm</span><span class="p">]</span>
+            <span class="n">trc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">trace_to_dataframe</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">modelnm</span><span class="p">][</span><span class="o">-</span><span class="mi">1000</span><span class="p">:])</span>
+            <span class="n">trc</span> <span class="o">=</span> <span class="n">trc</span><span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mdl</span><span class="o">.</span><span class="n">cont_vars</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]]</span>
+
+            <span class="n">ordr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">modelnm</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">npoints</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">pwrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">npoints</span><span class="p">,</span><span class="n">ordr</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ordr</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="n">pwrs</span>
+            <span class="n">cr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">trc</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+            <span class="c1">## Calculate credible regions and plot over the datapoints</span>
+            <span class="n">dfp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">cr</span><span class="p">,[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+                               <span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;025&#39;</span><span class="p">,</span><span class="s1">&#39;250&#39;</span><span class="p">,</span><span class="s1">&#39;500&#39;</span><span class="p">,</span><span class="s1">&#39;750&#39;</span><span class="p">,</span><span class="s1">&#39;975&#39;</span><span class="p">])</span>
+            <span class="n">dfp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">dfp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getModels"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.getModels">[docs]</a><span class="k">def</span> <span class="nf">getModels</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">traces</span><span class="p">,</span> <span class="n">rawdata</span><span class="p">,</span> <span class="n">xlims</span><span class="p">,</span>
+            <span class="n">datamodelnm</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">modelnms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">bestModel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">allDat</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">typ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">bic</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">modelnm</span> <span class="ow">in</span> <span class="n">modelnms</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">modelnm</span><span class="o">==</span><span class="n">bestModel</span><span class="p">:</span>
+            <span class="c1">## Get traces and calc posterior prediction for npoints in x</span>
+            <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="n">mdl</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">modelnm</span><span class="p">]</span>
+            <span class="n">trc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">trace_to_dataframe</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">modelnm</span><span class="p">][</span><span class="o">-</span><span class="mi">1000</span><span class="p">:])</span>
+            <span class="n">trc</span> <span class="o">=</span> <span class="n">trc</span><span class="p">[[</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mdl</span><span class="o">.</span><span class="n">cont_vars</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]]</span>
+
+            <span class="n">ordr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">modelnm</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">npoints</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">pwrs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">npoints</span><span class="p">,</span><span class="n">ordr</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ordr</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="n">pwrs</span>
+            <span class="n">cr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">trc</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+            <span class="c1">## Calculate credible regions and plot over the datapoints</span>
+            <span class="n">dfp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">cr</span><span class="p">,[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+                               <span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;025&#39;</span><span class="p">,</span><span class="s1">&#39;250&#39;</span><span class="p">,</span><span class="s1">&#39;500&#39;</span><span class="p">,</span><span class="s1">&#39;750&#39;</span><span class="p">,</span><span class="s1">&#39;975&#39;</span><span class="p">])</span>
+            <span class="n">dfp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">return</span><span class="p">(</span><span class="n">dfp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BICrun"><a class="viewcode-back" href="../../source/snsedextend.html#snsedextend.BIC.BICrun">[docs]</a><span class="k">def</span> <span class="nf">BICrun</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;II&#39;</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+    <span class="n">modelList</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k1&#39;</span><span class="p">,</span><span class="s1">&#39;k2&#39;</span><span class="p">]</span>
+    <span class="c1">#print(logging.Logger.manager.loggerDict)</span>
+    <span class="n">temp</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]),</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]),</span><span class="s1">&#39;error&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;magerr&#39;</span><span class="p">])})</span>
+    <span class="n">temp_xlims</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span><span class="n">temp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">models_lin</span><span class="p">,</span><span class="n">traces_lin</span><span class="o">=</span><span class="n">run_models</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="n">upper_order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">dfdic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">modelList</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dic&#39;</span><span class="p">,</span><span class="s1">&#39;waic&#39;</span><span class="p">])</span>
+    <span class="n">dfdic</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;model&#39;</span>
+    <span class="k">for</span> <span class="n">nm</span> <span class="ow">in</span> <span class="n">dfdic</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="c1">#dfdic.loc[nm, &#39;dic&#39;] = pm.stats.dic(traces_lin[nm], models_lin[nm])</span>
+        <span class="n">dfdic</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nm</span><span class="p">,</span> <span class="s1">&#39;waic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">waic</span><span class="p">(</span><span class="n">traces_lin</span><span class="p">[</span><span class="n">nm</span><span class="p">],</span> <span class="n">models_lin</span><span class="p">[</span><span class="n">nm</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">dfwaic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">modelList</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lin&#39;</span><span class="p">])</span>
+    <span class="n">dfwaic</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;model&#39;</span>
+
+    <span class="k">for</span> <span class="n">nm</span> <span class="ow">in</span> <span class="n">dfwaic</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">dfwaic</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nm</span><span class="p">,</span> <span class="s1">&#39;lin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">waic</span><span class="p">(</span><span class="n">traces_lin</span><span class="p">[</span><span class="n">nm</span><span class="p">],</span> <span class="n">models_lin</span><span class="p">[</span><span class="n">nm</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">best</span><span class="o">=</span><span class="n">dfwaic</span><span class="p">[</span><span class="n">dfwaic</span><span class="p">[</span><span class="s1">&#39;lin&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dfwaic</span><span class="p">[</span><span class="s1">&#39;lin&#39;</span><span class="p">])]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dfwaic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">dfwaic</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;waic&#39;</span><span class="p">)</span>
+
+
+    <span class="k">return</span><span class="p">(</span><span class="n">getModels</span><span class="p">(</span><span class="n">models_lin</span><span class="p">,</span><span class="n">traces_lin</span><span class="p">,</span><span class="n">temp</span><span class="p">,</span><span class="n">temp_xlims</span><span class="p">,</span> <span class="n">bestModel</span><span class="o">=</span><span class="n">best</span><span class="p">,</span><span class="n">modelnms</span><span class="o">=</span><span class="n">modelList</span><span class="p">,</span><span class="n">bic</span><span class="o">=</span><span class="n">dfwaic</span><span class="p">))</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, J. R. Pierel.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.2.7',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

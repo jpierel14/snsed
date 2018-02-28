@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/snsedextend/example_setup/example.lc" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/example.py" afterPath="$PROJECT_DIR$/snsedextend/example.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/#index.rst#" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/.#index.rst" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/cc.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/cc.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/reference.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/reference.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterPath="$PROJECT_DIR$/docs/_build/html/objects.inv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterPath="$PROJECT_DIR$/docs/_build/html/.buildinfo" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/index.rst.txt" afterPath="$PROJECT_DIR$/docs/_build/html/_sources/index.rst.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/reference.rst.txt" afterPath="$PROJECT_DIR$/docs/_build/html/_sources/reference.rst.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/cc.html" afterPath="$PROJECT_DIR$/docs/_build/html/cc.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterPath="$PROJECT_DIR$/docs/_build/html/genindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/index.html" afterPath="$PROJECT_DIR$/docs/_build/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/install.html" afterPath="$PROJECT_DIR$/docs/_build/html/install.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/reference.html" afterPath="$PROJECT_DIR$/docs/_build/html/reference.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/search.html" afterPath="$PROJECT_DIR$/docs/_build/html/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterPath="$PROJECT_DIR$/docs/_build/html/searchindex.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/conf.py" afterPath="$PROJECT_DIR$/docs/conf.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.rst" afterPath="$PROJECT_DIR$/docs/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/reference.rst" afterPath="$PROJECT_DIR$/docs/reference.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/snsedextend/colorCalc.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +58,8 @@
       <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state relative-caret-position="247">
+              <caret line="399" column="28" lean-forward="false" selection-start-line="399" selection-start-column="28" selection-end-line="399" selection-end-column="28" />
               <folding>
                 <element signature="e#62#104#0" expanded="true" />
               </folding>
@@ -49,8 +70,8 @@
       <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-50">
-              <caret line="727" column="0" lean-forward="true" selection-start-line="727" selection-start-column="0" selection-end-line="727" selection-end-column="0" />
+            <state relative-caret-position="349">
+              <caret line="599" column="4" lean-forward="true" selection-start-line="599" selection-start-column="4" selection-end-line="599" selection-end-column="4" />
               <folding>
                 <element signature="e#61#99#0" expanded="true" />
               </folding>
@@ -127,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ipytho</find>
       <find>BIC</find>
       <find>_flux_to_mag</find>
       <find>_UVrightBound</find>
@@ -157,6 +177,7 @@
       <find>parRe</find>
       <find>warnings</find>
       <find>fitColor</find>
+      <find>-------</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -182,12 +203,12 @@
         <option value="$PROJECT_DIR$/snsedextend/helpers.py" />
         <option value="$PROJECT_DIR$/snsedextend/definedBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
-        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/snsedextend/pyPar.py" />
         <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
-        <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/snsedextend/example.py" />
+        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
+        <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
       </list>
     </option>
   </component>
@@ -816,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state relative-caret-position="247">
+          <caret line="399" column="28" lean-forward="false" selection-start-line="399" selection-start-column="28" selection-end-line="399" selection-end-column="28" />
           <folding>
             <element signature="e#62#104#0" expanded="true" />
           </folding>
@@ -826,8 +847,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50">
-          <caret line="727" column="0" lean-forward="true" selection-start-line="727" selection-start-column="0" selection-end-line="727" selection-end-column="0" />
+        <state relative-caret-position="349">
+          <caret line="599" column="4" lean-forward="true" selection-start-line="599" selection-start-column="4" selection-end-line="599" selection-end-column="4" />
           <folding>
             <element signature="e#61#99#0" expanded="true" />
           </folding>

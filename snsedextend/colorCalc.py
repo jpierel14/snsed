@@ -165,8 +165,8 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     """
     Function takes a lightcurve file and creates a color table for it.
 
-    Parameters
-    ----------
+    
+    
     :param lc: Name of lightcurve file you want to read, or astropy Table containing data
         :type: str or astropy.Table
     :param colors: Colors you want to calculate for the given SN (i.e U-B, r'-J)
@@ -190,9 +190,9 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         :type: Boolean,optional
     :param kwargs: Catches all SNCOSMO fitting parameters here
 
-    Returns
-    -------
-    colorTable: Astropy Table object containing color information
+    
+    
+    :return: colorTable: Astropy Table object containing color information
     """
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
@@ -368,8 +368,8 @@ def mag_to_flux(table,bandDict,zpsys='AB'):
     """
     Accepts an astropy table of magnitude data and does the conversion to fluxes (flux in ergs/s/cm^2/AA)
 
-    Parameters
-    ----------
+    
+    
     :param table: Table containing mag, mag error error, and band columns
         :type: astropy.Table
     :param bandDict: translates band to sncosmo.Bandpass object (i.e. 'U'-->bessellux)
@@ -377,9 +377,9 @@ def mag_to_flux(table,bandDict,zpsys='AB'):
     :param zpsys: magnitude system
         :type:str,optional
 
-    Returns
-    -------
-    astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
+    
+    
+    :return: astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
     """
     ms=sncosmo.get_magsystem(zpsys)
 
@@ -394,8 +394,8 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     """
     Accepts an astropy table of flux data and does the conversion to mags (flux in ergs/s/cm^2/AA)
 
-    Parameters
-    ----------
+    
+    
     :param table: Table containing flux, flux error error, and band columns
         :type: astropy.Table
     :param bandDict: translates band to sncosmo.Bandpass object (i.e. 'U'-->bessellux)
@@ -403,9 +403,9 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     :param zpsys: magnitude system
         :type:str,optional
 
-    Returns
-    -------
-    astropy.Table object with mag and mag error added
+    
+    
+    :return: astropy.Table object with mag and mag error added
     """
     ms=sncosmo.get_magsystem(zpsys)
     table[_get_default_prop_name('mag')] = asarray(map(lambda x, y: ms.band_flux_to_mag(x/sncosmo.constants.HC_ERG_AA,y), table[_get_default_prop_name('flux')],
@@ -415,6 +415,12 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     return(table)
 
 def colorTableCombine(tableList):
+    """
+    Takes a list of color tables generated from curveToTable and returns a concatenated table.
+    :param tableList: List of astropy.Table objects
+        :type: list
+    :return: Concatenated astropy.Table object
+    """
     result=None
     for table in tableList:
         if result:
@@ -440,7 +446,4 @@ def colorTableCombine(tableList):
     result.remove_rows(remove)
     result.sort(_get_default_prop_name('time'))
 
-    #from astropy.io import ascii
-    #ascii.write(result,os.path.join('hicken','typeII','tables','allIIColors.dat'))
-    #sys.exit()
     return(result)
