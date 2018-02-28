@@ -171,16 +171,16 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">mag_to_flux</span></code></td>
-<td></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">mag_to_flux</span></code>(table,&nbsp;bandDict[,&nbsp;zpsys])</td>
+<td>Accepts an astropy table of magnitude data and does the conversion to fluxes (flux in ergs/s/cm^2/AA)</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">flux_to_mag</span></code></td>
-<td></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">flux_to_mag</span></code>(table,&nbsp;bandDict[,&nbsp;zpsys])</td>
+<td>Accepts an astropy table of flux data and does the conversion to mags (flux in ergs/s/cm^2/AA)</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">curveToColor</span></code></td>
-<td></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">curveToColor</span></code>(lc,&nbsp;colors[,&nbsp;bandFit,&nbsp;snType,&nbsp;...])</td>
+<td>Function takes a lightcurve file and creates a color table for it.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">colorTableCombine</span></code></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">colorTableCombine</span></code>(tableList)</td>
 <td></td>
 </tr>
 </tbody>
@@ -194,17 +194,17 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">extendCC</span></code></td>
-<td></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">extendCC</span></code>(colorTable,&nbsp;colorCurveDict[,&nbsp;...])</td>
+<td>Function used at top level to extend a core-collapse SED.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">createSNSED</span></code></td>
-<td></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">createSNSED</span></code>(filename[,&nbsp;rescale])</td>
+<td>Creates an sncosmo.Source object from a timeseries source (flux in photons/s/cm^2 as in sncosmo,assumes the file</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">plotSED</span></code></td>
-<td></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">plotSED</span></code>(sedfile,&nbsp;day[,&nbsp;normalize,&nbsp;MINWAVE,&nbsp;...])</td>
+<td>Simple plotting function to visualize the SED file.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fitColorCurve</span></code></td>
-<td></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fitColorCurve</span></code>(table[,&nbsp;confidence,&nbsp;type,&nbsp;verbose])</td>
+<td>Fits color curves calculated in colorCalc module using BIC</td>
 </tr>
 </tbody>
 </table>

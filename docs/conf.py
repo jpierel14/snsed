@@ -47,9 +47,9 @@ autoclass_content = "class"
 autodoc_default_flags = ["members", "inherited-members"]
 autodoc_docstring_signature = False
 sphinx_gallery_conf = {
-    'examples_dirs': '_examples',  # path to examples scripts
-    'gallery_dirs': 'examples',   # path to gallery generated examples
-    'backreferences_dir': 'modules/generated',  # path to store the module
+    #'examples_dirs': '_examples',  # path to examples scripts
+    #'gallery_dirs': 'examples',   # path to gallery generated examples
+    #'backreferences_dir': 'modules/generated',  # path to store the module
                                              # using example template
     'doc_module': ('snsedextend',),  # documented module(s)
     'download_section_examples': False,

@@ -9,7 +9,7 @@ Reference
 Generating Color Tables
 =======================
 .. autosummary::
-   #:toctree: api
+   #:toctree: source
 	     
    mag_to_flux
    flux_to_mag
@@ -20,7 +20,7 @@ Extrapolating SEDs
 ==================
 
 .. autosummary::
-   #:toctree: snsedextend
+   #:toctree: source
 	     
    extendCC
    createSNSED
