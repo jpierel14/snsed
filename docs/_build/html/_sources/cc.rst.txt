@@ -11,7 +11,7 @@ Read in a lightcurve:
     >>> from __future__ import print_function
     >>> import snsedextend
     >>> sedFile=snsedextend.example_sed
-    >>> myLC=snsedextend.load_example_lc()
+    >>> myLC=snsedextend.load_example_data()
     >>> print(myLC)
 
     name  band     time     mag   magerr
@@ -137,16 +137,4 @@ Plotting from Timeseries
 ========================
 You can directly plot an SED file.
 
-    >>> snsedextend.plotSED(sedFile,showPlot=True)
-
-Multiple Light Curves
-=====================
-In order to improve the constraints on your color curve, you'll likely want to fit multiple light curves of the same type simultaneously and compile all the results into a single color table. If you just run the curveToTable function in a loop and save the results as a list of color tables, then you can compile them into a single color table with:
-
-    >>> newTable=colorTableCombine(tableList)
-    
-Where here each element in tableList is just a table generated from curveToColor for different light curves. Now newTable can be sent to fitColorCurve (see above).
-
-
-
-    >>> 
+    >>> snsedextend.plotSED(sedFile)
