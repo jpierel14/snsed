@@ -2,7 +2,7 @@ cython
 numpy
 scipy
 astropy
-matplotlib,
+matplotlib
 pandas
 pymc3>=3.0
 pyParz
