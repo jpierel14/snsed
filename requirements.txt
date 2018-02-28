@@ -1,3 +1,5 @@
+sphinx
+sphinx-autobuild
 pyparsing
 backports.functools_lru_cache
 cycler
