@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # snsedextend documentation build configuration file, created by
-# sphinx-quickstart on Wed Feb 28 11:59:50 2018.
+# sphinx-quickstart on Wed Feb 28 14:09:47 2018.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -18,7 +18,6 @@
 #
 import os
 import sys
-import snsedextend
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
 
@@ -32,20 +31,14 @@ sys.path.insert(0, os.path.abspath('../'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.autosummary'
+              'sphinx.ext.mathjax',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.napoleon'
 ]
-
-
-numpydoc_show_class_members = False
-autosummary_generate = True
-autoclass_content = "class"
-autodoc_default_flags = ["members", "inherited-members"]
-autodoc_docstring_signature = False
+napoleon_google_docstring = False
+napoleon_use_param = False
+napoleon_use_ivar = True
 sphinx_gallery_conf = {
     #'examples_dirs': '_examples',  # path to examples scripts
     #'gallery_dirs': 'examples',   # path to gallery generated examples
@@ -56,7 +49,6 @@ sphinx_gallery_conf = {
     'download_all_examples': False  # don't package up examples.
     #'default_thumb_file': '_logo/spectral_white_bkg.png',
 }
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -71,8 +63,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'snsedextend'
-copyright = u'2018, J. R. Pierel'
-author = u'J. R. Pierel'
+copyright = u'2018, J.R. Pierel'
+author = u'J.R. Pierel'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -99,7 +91,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -152,7 +144,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'snsedextend.tex', u'snsedextend Documentation',
-     u'J. R. Pierel', 'manual'),
+     u'J.R. Pierel', 'manual'),
 ]
 
 
@@ -179,6 +171,3 @@ texinfo_documents = [
 
 
 
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}

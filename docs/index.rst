@@ -14,11 +14,10 @@ SNSEDextend is a software package designed to extrapolate core-collapse and Type
    :maxdepth: 2
    :caption: Contents:
 
-   .. include:: examples/index.rst
    install
    cc
    reference
-   examples/index
+   
 Indices and tables
 ==================
 
