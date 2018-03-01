@@ -27,7 +27,6 @@ snsedextend/data/bands/rBand/tophatR.dat
 snsedextend/data/bands/uBand/tophatU.dat
 snsedextend/data/bands/vBand/tophatV.dat
 snsedextend/data/sncosmo/models.ref
-snsedextend/example_setup/example.lc
 snsedextend/example_setup/SEDs/CSP-2004fe.SED
 snsedextend/example_setup/SEDs/CSP-2004gq.SED
 snsedextend/example_setup/SEDs/SDSS-004012.SED
@@ -36,3 +35,9 @@ snsedextend/example_setup/SEDs/SDSS-014475.SED
 snsedextend/example_setup/SEDs/SDSS-015475.SED
 snsedextend/example_setup/SEDs/SDSS-017548.SED
 snsedextend/example_setup/SEDs/SNLS-04D4jv.SED
+snsedextend/example_setup/lcs/example_2004aw.lc
+snsedextend/example_setup/lcs/example_2005mf.lc
+snsedextend/example_setup/lcs/example_2006aj.lc
+snsedextend/example_setup/lcs/example_2007D.lc
+snsedextend/example_setup/lcs/example_2007I.lc
+snsedextend/example_setup/lcs/example_2007gr.lc

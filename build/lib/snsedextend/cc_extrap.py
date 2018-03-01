@@ -20,7 +20,7 @@ __all__=['extendCC','createSNSED','plotSED','fitColorCurve']
 try:
     sndataroot = os.environ['SNDATA_ROOT']
 except:
-    os.environ['SNDATA_ROOT']=os.path.join(os.path.dirname(snsedextend),'SNDATA_ROOT')
+    os.environ['SNDATA_ROOT']=os.path.join(__current_dir__,'SNDATA_ROOT')
     sndataroot=os.environ['SNDATA_ROOT']
 
 class snSource(sncosmo.Source):
@@ -564,8 +564,8 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     """
     Calculates the magnitude in the given band from a timeseries file using sncosmo.Bandmag
 
-    Parameters
-    ----------
+    
+    
     :param filename: Filename of the timeseries source
         :type: str
     :param currentPhase: Phase from peak to measure
@@ -577,9 +577,7 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     :param rescale: If you want to rescale the flux in the file
         :type: Boolean
 
-    Returns
-    -------
-    Magnitude in the given band from sncosmo.Bandmag (float)
+    :return: Magnitude in the given band from sncosmo.Bandmag (float)
     """
     sed=createSNSED(filename,rescale=rescale)
     model=sncosmo.Model(sed)
@@ -598,9 +596,9 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True):
     :param verbose: Printing on?
         :type: Boolean,optional
 
-    Returns
-    -------
-    A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as
+    
+    
+    :return: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as
     values.
     """
     colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
@@ -620,8 +618,8 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     """
     Function used at top level to extend a core-collapse SED.
 
-    Parameters
-    ----------
+    
+    
     :param colorTable: Colortable made by colorCalc.curveToColor
         :type: astropy.Table
     :param colorCurveDict: Dictionary of color curves, such as made by fitColorCurve
@@ -643,9 +641,9 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     :param verbose: Printing on?
         :type: Boolean, optional
     
-    Returns
-    -------
-    Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
+    
+    
+    :return: Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
     """
     colorTable=_standardize(colorTable)
 
@@ -791,17 +789,17 @@ def createSNSED(filename,rescale=False):
      Creates an sncosmo.Source object from a timeseries source (flux in photons/s/cm^2 as in sncosmo,assumes the file
      is in ergs though)
 
-     Parameters
-     ----------
+     
+     
      :param filename: Name of file containing the timerseries source
         :type: str
     :param rescale: If you want to rescale the flux so that it is in photons at the end instead of ergs (divides by
             ergs/AA
         :type: Boolean, optional
 
-    Returns
-    -------
-    sncosmo.Source object
+    
+    
+    :return: ncosmo.Source object
 
     """
     phase,wave,flux=sncosmo.read_griddata_ascii(filename)

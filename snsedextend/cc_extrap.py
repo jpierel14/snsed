@@ -20,7 +20,7 @@ __all__=['extendCC','createSNSED','plotSED','fitColorCurve']
 try:
     sndataroot = os.environ['SNDATA_ROOT']
 except:
-    os.environ['SNDATA_ROOT']=os.path.join(os.path.dirname(snsedextend),'SNDATA_ROOT')
+    os.environ['SNDATA_ROOT']=os.path.join(__current_dir__,'SNDATA_ROOT')
     sndataroot=os.environ['SNDATA_ROOT']
 
 class snSource(sncosmo.Source):

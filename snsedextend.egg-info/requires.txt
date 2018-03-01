@@ -7,4 +7,5 @@ pandas
 pymc3>=3.0
 pyParz
 iminuit
-sncosmo
+sncosmo>=1.5
+theano
