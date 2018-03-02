@@ -23,7 +23,7 @@ setup(
 	install_requires=['cython','numpy','scipy',
                           'astropy','matplotlib',
                           'pandas','pymc3>=3.0',
-                          'pyParz','iminuit','sncosmo>=1.5','theano'],
+                          'pyParz>=0.0.3','iminuit','sncosmo>=1.5','theano'],
         packages=['snsedextend'],
 	author='J. R. Pierel',
 	author_email='jr23@email.sc.edu',
