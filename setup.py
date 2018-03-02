@@ -20,10 +20,10 @@ data_files = [f[len(PACKAGENAME)+1:] for f in data_files]
 
 setup(
 	name='snsedextend',
-	install_requires=['cython','numpy','scipy',
+	install_requires=['cython','numpy','scipy','sncosmo>=1.5',
                           'astropy','matplotlib',
                           'pandas','pymc3>=3.0',
-                          'pyParz>=0.0.3','iminuit','sncosmo>=1.5','theano'],
+                          'pyParz>=0.0.3','iminuit','theano'],
         packages=['snsedextend'],
 	author='J. R. Pierel',
 	author_email='jr23@email.sc.edu',
