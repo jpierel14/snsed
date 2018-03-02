@@ -121,4 +121,4 @@ Plotting from Timeseries
 ========================
 You can directly plot an SED file.
 
-    >>> snsedextend.plotSED(sedFile)
+    >>> snsedextend.plotSED(sedFile,day=0,showPlot)

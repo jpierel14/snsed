@@ -1,0 +1,20 @@
+Getting Started
+===============
+
+Read in a lightcurve:
+
+
+.. include:: ex.py
+     
+	
+		
+.. code-block:: python
+     :linenos:
+     
+	
+     from __future__ import print_function
+     import snsedextend
+     sedFile=snsedextend.example_sed
+     myLC=snsedextend.load_example_lc()
+     print(myLC)
+

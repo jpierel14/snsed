@@ -725,7 +725,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     return returnList[0]
 
 
-def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True,figFile=None,showPlot=False,**kwargs):
+def plotSED( sedfile,day, normalize=False,MINWAVE=3000,MAXWAVE=20000,saveFig=True,figFile=None,showPlot=False,**kwargs):
     """
     Simple plotting function to visualize the SED file.
     :param sedfile: SED filename to read
@@ -740,6 +740,7 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True
     dlist,wlist,flist = _getsed( sedfile )
     fig=plt.figure()
     ax=fig.gca()
+
     for i in range( len(wlist) ) :
         if MINWAVE:
             idx1,val= _find_nearest(wlist[i],MINWAVE)
@@ -753,13 +754,16 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True
         thisday = dlist[i][0]
 
         if day!='all' :
-            if abs(thisday-day)>0.6 : continue
+            if abs(thisday-day)>0.6:
+                continue
         if normalize :
-            ax.plot( wlist[i], flist[i]/flist[i].max()+thisday, **kwargs )
-
+            ax.plot( wlist[i], flist[i]/flist[i].max(), **kwargs )
+            break
         else :
+
             ax.plot( wlist[i][idx1:idx2], flist[i][idx1:idx2], label=str(thisday), **kwargs )
-        break
+            break
+
     if 'xlabel' in kwargs.keys():
         xlabel=kwargs.pop('xlabel')
     else:
@@ -776,12 +780,13 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    if showPlot:
-        plt.show()
+
     if saveFig:
         if not figFile:
             figFile=os.path.basename(sedfile)[:-3]+'pdf'
         plt.savefig(figFile,format='pdf',overwrite=True)
+    if showPlot:
+        plt.show()
     return
 
 def createSNSED(filename,rescale=False):
