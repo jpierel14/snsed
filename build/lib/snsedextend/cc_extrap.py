@@ -564,20 +564,17 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     """
     Calculates the magnitude in the given band from a timeseries file using sncosmo.Bandmag
 
-    
-    
     :param filename: Filename of the timeseries source
-        :type: str
+    :type filename: str
     :param currentPhase: Phase from peak to measure
-        :type: double
+    :type currentPhase: double
     :param band: Band you want to measure the magnitude in
-        :type: str or sncosmo.Bandpass
+    :type band: str or sncosmo.Bandpass
     :param zpsys: magnitude system
-        :type: str or sncosmo.MagSystem
+    :type zpsys: str or sncosmo.MagSystem
     :param rescale: If you want to rescale the flux in the file
-        :type: Boolean
-
-    :return: Magnitude in the given band from sncosmo.Bandmag (float)
+    :type rescale: Boolean
+    :returns: Magnitude in the given band from sncosmo.Bandmag (float)
     """
     sed=createSNSED(filename,rescale=rescale)
     model=sncosmo.Model(sed)
@@ -587,19 +584,16 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
 def fitColorCurve(table,confidence=50,type='II',verbose=True):
     """
     Fits color curves calculated in colorCalc module using BIC
-    :param table: colorTable from curveToColor function
-        :type: astropy.Table
-    :param confidence: Confidence interval
-        :type: double (2.5,25,50,75,97.5),optional
-    :param type: SN type
-        :type: str,optional
-    :param verbose: Printing on?
-        :type: Boolean,optional
 
-    
-    
-    :return: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as
-    values.
+    :param table: colorTable from curveToColor function
+    :type table: astropy.Table
+    :param confidence: Confidence interval
+    :type confidence: double (2.5,25,50,75,97.5),optional
+    :param type: SN type
+    :type type: str,optional
+    :param verbose: Printing on?
+    :type verbose: Boolean,optional
+    :returns: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as values.
     """
     colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
     result=dict([])
@@ -618,32 +612,27 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     """
     Function used at top level to extend a core-collapse SED.
 
-    
-    
     :param colorTable: Colortable made by colorCalc.curveToColor
-        :type: astropy.Table
+    :type colorTable: astropy.Table
     :param colorCurveDict: Dictionary of color curves, such as made by fitColorCurve
-        :type: dict
+    :type colorCurveDict: dict
     :param outFileLoc:  Place you want the new SED to be saved, default current directory
-        :type: str,optional
+    :type outFileLoc: str,optional
     :param bandDict: sncosmo bandpass for each band used in the fitting/table generation
-        :type: dict,optional
+    :type bandDict: dict,optional
     :param colorExtreme: 'blue,'median','red' describes which curve extreme to use
-        :str,optional
+    :type colorExtreme: str,optional
     :param colors: Colors you would like to use for extrapolation
-        :type: list or None,optional
+    :type colors: list or None,optional
     :param zpsys: Magnitude system
-        :type: str,optional
+    :type zpsys: str,optional
     :param sedlist: list of SEDs to extrapolate, if None then uses all SEDs in SNDATA_ROOT
-        :type: list or None,optional
+    :type sedlist: list or None,optional
     :param showplots: If you would like to see plots as they're extrapolated
-        :type: Boolean,optional
+    :type showplots: Boolean,optional
     :param verbose: Printing on?
-        :type: Boolean, optional
-    
-    
-    
-    :return: Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
+    :type verbose: Boolean, optional
+    :returns: Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
     """
     colorTable=_standardize(colorTable)
 
@@ -725,21 +714,27 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     return returnList[0]
 
 
-def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True,figFile=None,showPlot=False,**kwargs):
+def plotSED( sedfile,day, normalize=False,MINWAVE=3000,MAXWAVE=20000,saveFig=True,figFile=None,showPlot=False,**kwargs):
     """
     Simple plotting function to visualize the SED file.
+
     :param sedfile: SED filename to read
-        :type: str
+    :type sedfile: str
     :param day: The day you want to plot, or 'all'
-        :type: double or str (if all)
+    :type day: double or str (if all)
     :param normalize: Boolean to normalize the data
+    :type normalize: Boolean
     :param MINWAVE: Allows user to plot in a specific window, left edge
+    :type MINWAVE: float
     :param MAXWAVE: Allows user to plot in a specific window, right edge
+    :type MAXWAVE: float
+    :returns: None
     """
 
     dlist,wlist,flist = _getsed( sedfile )
     fig=plt.figure()
     ax=fig.gca()
+
     for i in range( len(wlist) ) :
         if MINWAVE:
             idx1,val= _find_nearest(wlist[i],MINWAVE)
@@ -753,13 +748,16 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True
         thisday = dlist[i][0]
 
         if day!='all' :
-            if abs(thisday-day)>0.6 : continue
+            if abs(thisday-day)>0.6:
+                continue
         if normalize :
-            ax.plot( wlist[i], flist[i]/flist[i].max()+thisday, **kwargs )
-
+            ax.plot( wlist[i], flist[i]/flist[i].max(), **kwargs )
+            break
         else :
+
             ax.plot( wlist[i][idx1:idx2], flist[i][idx1:idx2], label=str(thisday), **kwargs )
-        break
+            break
+
     if 'xlabel' in kwargs.keys():
         xlabel=kwargs.pop('xlabel')
     else:
@@ -776,31 +774,25 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=None,MAXWAVE=None,saveFig=True
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    if showPlot:
-        plt.show()
+
     if saveFig:
         if not figFile:
             figFile=os.path.basename(sedfile)[:-3]+'pdf'
         plt.savefig(figFile,format='pdf',overwrite=True)
+    if showPlot:
+        plt.show()
     return
 
 def createSNSED(filename,rescale=False):
     """
-     Creates an sncosmo.Source object from a timeseries source (flux in photons/s/cm^2 as in sncosmo,assumes the file
-     is in ergs though)
+    Creates an sncosmo.Source object from a timeseries source (flux in photons/s/cm^2 as in sncosmo,assumes the file
+    is in ergs though)
 
-     
-     
-     :param filename: Name of file containing the timerseries source
-        :type: str
-    :param rescale: If you want to rescale the flux so that it is in photons at the end instead of ergs (divides by
-            ergs/AA
-        :type: Boolean, optional
-
-    
-    
-    :return: ncosmo.Source object
-
+    :param filename: Name of file containing the timerseries source
+    :type filename: str
+    :param rescale: If you want to rescale the flux so that it is in photons at the end instead of ergs (divides by ergs/AA
+    :type rescale: Boolean, optional
+    :returns: ncosmo.Source object
     """
     phase,wave,flux=sncosmo.read_griddata_ascii(filename)
     if rescale:

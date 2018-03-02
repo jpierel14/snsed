@@ -165,34 +165,28 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     """
     Function takes a lightcurve file and creates a color table for it.
 
-    
-    
     :param lc: Name of lightcurve file you want to read, or astropy Table containing data
-        :type: str or astropy.Table
+    :type lc: str or astropy.Table
     :param colors: Colors you want to calculate for the given SN (i.e U-B, r'-J)
-        :type: str or list of strings
+    :type colors: str or list of strings
     :param bandFit: If there is a specific band you would like to fit instead of default
-        :type: str,optional
+    :type bandFit: str,optional
     :param snType: Classification of SN
-        :type: str,optional
+    :type snType: str,optional
     :param bandDict: sncosmo bandpass for each band used in the fitting/table generation
-        :type: dict,optional
+    :type bandDict: dict,optional
     :param color_bands: bands making up the known component of chosen colors
-        :type: list,optional
+    :type color_bands: list,optional
     :param zpsys: magnitude system (i.e. AB or Vega)
-        :type: str,optional
-    :param model: If there is a specific sncosmo model you would like to fit with, otherwise all models mathcing the
-                    SN classification will be tried
-        :type: str,optional
+    :type zpsys: str,optional
+    :param model: If there is a specific sncosmo model you would like to fit with, otherwise all models mathcing the SN classification will be tried
+    :type model: str,optional
     :param singleBand: If you would like to only fit the bands in the color
-        :type: Boolean,optional
+    :type singleBand: Boolean,optional
     :param verbose: If you would like printing information to be turned on/off
-        :type: Boolean,optional
+    :type verbose: Boolean,optional
     :param kwargs: Catches all SNCOSMO fitting parameters here
-
-    
-    
-    :return: colorTable: Astropy Table object containing color information
+    :returns: colorTable: Astropy Table object containing color information
     """
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
@@ -368,18 +362,13 @@ def mag_to_flux(table,bandDict,zpsys='AB'):
     """
     Accepts an astropy table of magnitude data and does the conversion to fluxes (flux in ergs/s/cm^2/AA)
 
-    
-    
     :param table: Table containing mag, mag error error, and band columns
-        :type: astropy.Table
+    :type table: astropy.Table
     :param bandDict: translates band to sncosmo.Bandpass object (i.e. 'U'-->bessellux)
-        :type: dict
+    :type bandDict: dict
     :param zpsys: magnitude system
-        :type:str,optional
-
-    
-    
-    :return: astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
+    :type zpsys: str,optional
+    :returns: astropy.Table object with flux and flux error added (flux in ergs/s/cm^2/AA)
     """
     ms=sncosmo.get_magsystem(zpsys)
 
@@ -394,18 +383,13 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
     """
     Accepts an astropy table of flux data and does the conversion to mags (flux in ergs/s/cm^2/AA)
 
-    
-    
     :param table: Table containing flux, flux error error, and band columns
-        :type: astropy.Table
+    :type table: astropy.Table
     :param bandDict: translates band to sncosmo.Bandpass object (i.e. 'U'-->bessellux)
-        :type: dict
+    :type bandDict: dict
     :param zpsys: magnitude system
-        :type:str,optional
-
-    
-    
-    :return: astropy.Table object with mag and mag error added
+    :type zpsys: str,optional
+    :returns: astropy.Table object with mag and mag error added
     """
     ms=sncosmo.get_magsystem(zpsys)
     table[_get_default_prop_name('mag')] = asarray(map(lambda x, y: ms.band_flux_to_mag(x/sncosmo.constants.HC_ERG_AA,y), table[_get_default_prop_name('flux')],
@@ -417,9 +401,10 @@ def flux_to_mag(table,bandDict,zpsys='AB'):
 def colorTableCombine(tableList):
     """
     Takes a list of color tables generated from curveToTable and returns a concatenated table.
+
     :param tableList: List of astropy.Table objects
-        :type: list
-    :return: Concatenated astropy.Table object
+    :type tableList: list
+    :returns: Concatenated astropy.Table object
     """
     result=None
     for table in tableList:
