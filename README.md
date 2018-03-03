@@ -2,7 +2,7 @@ J.R. Pierel & S.Rodney
 
 2018.02.26
 
-Documentation: http://snsed.readthedocs.io/en/latest/install.html
+Documentation: http://snsedextend.readthedocs.io/en/latest/
 
 __SUMMARY__
 
