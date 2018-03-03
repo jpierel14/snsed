@@ -1,4 +1,5 @@
 numpy
 cython
+scipy
 pyParz
 astropy==2.0.4

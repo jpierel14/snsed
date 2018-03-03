@@ -1,11 +1,11 @@
 cython
 numpy
 scipy
+sncosmo>=1.5
 astropy
 matplotlib
 pandas
 pymc3>=3.0
-pyParz
+pyParz>=0.0.3
 iminuit
-sncosmo>=1.5
 theano
