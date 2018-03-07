@@ -9,8 +9,8 @@ import sncosmo
 
 sndataroot = os.environ['SNDATA_ROOT']
 dir='bianco'
-snType=['Ic']
-filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*clipped.dat'))]
+snType=['Ib']
+filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
 sn,redshift=np.loadtxt(os.path.join(dir,'redshift.ref'),dtype='str',unpack=True)
@@ -21,7 +21,7 @@ sn,dusts=np.loadtxt(os.path.join(dir,'dust.ref'),dtype='str',unpack=True)
 dust={sn[i]:dusts[i] for i in range(len(sn))}
 sn,types=np.loadtxt(os.path.join(dir,'type.ref'),dtype='str',unpack=True)
 typ={sn[i]:types[i] for i in range(len(sn))}
-sne,peaks=np.loadtxt(os.path.join(dir,'timeOfPeak.dat'),dtype='str',unpack=True)
+sne,peaks=np.loadtxt(os.path.join(dir,'timeOfPeak.ref'),dtype='str',unpack=True)
 peaks={sne[i]:float(peaks[i]) for i in range(len(sne))}
 
 typeColors=None
@@ -36,15 +36,15 @@ for k in colors:
 colorTables=[]
 typeSNe=None
 for i in range(len(filelist)):
-    if typ[filelist[i][:-12]] in snType and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
+    if typ[filelist[i][:-4]] in snType:# and filelist[i] not in ['lc_2005kl_clipped.dat','lc_2005az_clipped.dat','lc_2008aq_clipped.dat','lc_2007av_clipped.dat']:#['lc_2006fo_clipped.dat','lc_2006jc_clipped.dat','lc_2004ao_clipped.dat','lc_2007D_clipped.dat','lc_2005bf_clipped.dat','lc_2005nb_clipped.dat','lc_2006ld_clipped.dat']:
 
         print(filelist[i])
         #if filelist[i]:# in ['lc_2005bf_clipped.dat','lc_2005hg_clipped.dat']:
         #print(colors[filelist[i][:-12]],typ[filelist[i][:-12]],'vega',{'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},{'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},'CCM89Dust',
         #      ['rest','obs'],['host','mw'])
-        temp=snsedextend.curveToColor(os.path.join(dir,filelist[i]),colors[filelist[i][:-12]],snType=typ[filelist[i][:-12]],zpsys='Vega',
-                                            bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},
-                                            constants={'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},
+        temp=snsedextend.curveToColor(os.path.join(dir,filelist[i]),['U-B','r-J','r-H','r-K'],snType=typ[filelist[i][:-4]],zpsys='Vega',
+                                            bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-4]]-5,peaks[filelist[i][:-4]]+5)},
+                                            constants={'z':redshift[filelist[i][:-4]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-4]]},
                                             dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
         #else:
         #    continue

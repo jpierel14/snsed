@@ -3,7 +3,7 @@
 # 2017.03.31
 
 
-import os,sys,sncosmo,snsedextend,warnings,importlib,sncosmo_fitting
+import os,sys,sncosmo,snsedextend,warnings,importlib
 from numpy import *
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn,vstack

@@ -5,36 +5,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/modules.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/snsedextend.rst" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/snsedextend.iml" afterPath="$PROJECT_DIR$/.idea/snsedextend.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2004aw_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2004gq_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2004gt.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005az_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005bf_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005hg_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005kl_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005mf_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005nb.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005nb_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006F_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006T_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006aj_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006fo_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006jc.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2006jc_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007C_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007D_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007I_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007ce.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007ce_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007gr_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007uy.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2007uy_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2008D_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2008aq_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2009er.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2009er_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2009iz_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2009jf_clipped.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/peaks.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/sne.dat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/timeOfPeak.dat" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/snsedextend-0.3.0-py2.7.egg" afterPath="$PROJECT_DIR$/dist/snsedextend-0.3.0-py2.7.egg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2004aw.dat" afterPath="$PROJECT_DIR$/bianco/lc_2004aw.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2004gk.dat" afterPath="$PROJECT_DIR$/bianco/lc_2004gk.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2004gq.dat" afterPath="$PROJECT_DIR$/bianco/lc_2004gq.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2005az.dat" afterPath="$PROJECT_DIR$/bianco/lc_2005az.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2005bf.dat" afterPath="$PROJECT_DIR$/bianco/lc_2005bf.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2005hg.dat" afterPath="$PROJECT_DIR$/bianco/lc_2005hg.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2005kl.dat" afterPath="$PROJECT_DIR$/bianco/lc_2005kl.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2005mf.dat" afterPath="$PROJECT_DIR$/bianco/lc_2005mf.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2006F.dat" afterPath="$PROJECT_DIR$/bianco/lc_2006F.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2006T.dat" afterPath="$PROJECT_DIR$/bianco/lc_2006T.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2006aj.dat" afterPath="$PROJECT_DIR$/bianco/lc_2006aj.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2006fo.dat" afterPath="$PROJECT_DIR$/bianco/lc_2006fo.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2007C.dat" afterPath="$PROJECT_DIR$/bianco/lc_2007C.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2007D.dat" afterPath="$PROJECT_DIR$/bianco/lc_2007D.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2007I.dat" afterPath="$PROJECT_DIR$/bianco/lc_2007I.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2007gr.dat" afterPath="$PROJECT_DIR$/bianco/lc_2007gr.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2008D.dat" afterPath="$PROJECT_DIR$/bianco/lc_2008D.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2008aq.dat" afterPath="$PROJECT_DIR$/bianco/lc_2008aq.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2009iz.dat" afterPath="$PROJECT_DIR$/bianco/lc_2009iz.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2009jf.dat" afterPath="$PROJECT_DIR$/bianco/lc_2009jf.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/cc_extrap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/colorCalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/utils.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/snsedextend/colorCalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/utils.py" afterPath="$PROJECT_DIR$/snsedextend/utils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +75,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1520206029379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1520443913737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
@@ -62,11 +93,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+            <state relative-caret-position="347">
+              <caret line="44" column="91" lean-forward="false" selection-start-line="44" selection-start-column="91" selection-end-line="44" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -75,11 +106,9 @@
       <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="332" column="61" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="332" selection-end-column="61" />
-              <folding>
-                <element signature="e#62#130#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-5876">
+              <caret line="5" column="52" lean-forward="false" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -87,8 +116,8 @@
       <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="771" column="74" lean-forward="false" selection-start-line="771" selection-start-column="74" selection-end-line="771" selection-end-column="74" />
+            <state relative-caret-position="424">
+              <caret line="758" column="0" lean-forward="false" selection-start-line="758" selection-start-column="0" selection-end-line="758" selection-end-column="0" />
               <folding>
                 <element signature="e#61#99#0" expanded="true" />
               </folding>
@@ -96,10 +125,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BIC.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
+            <state relative-caret-position="-1074">
               <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -188,11 +217,11 @@
       <find>generate_chisq</find>
       <find>fitdata</find>
       <find>modDict</find>
-      <find>bandD</find>
       <find>bandDict</find>
       <find>bandDict=</find>
       <find>_standard</find>
       <find>_standardize</find>
+      <find>bandD</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -223,8 +252,8 @@
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
         <option value="$PROJECT_DIR$/snsedextend/sncosmo_fitting.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+        <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
       </list>
     </option>
   </component>
@@ -502,7 +531,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="-180" width="1920" height="1080" extended-state="0" />
+    <frame x="1440" y="-180" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.116145834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -818,16 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/example.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -842,9 +861,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
           <caret line="460" column="17" lean-forward="false" selection-start-line="460" selection-start-column="17" selection-end-line="460" selection-end-column="17" />
-          <folding>
-            <element signature="e#64#111#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -853,16 +870,6 @@
         <state relative-caret-position="-197">
           <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="771" column="74" lean-forward="false" selection-start-line="771" selection-start-column="74" selection-end-line="771" selection-end-column="74" />
-          <folding>
-            <element signature="e#61#99#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -878,19 +885,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="332" column="61" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="332" selection-end-column="61" />
+        <state relative-caret-position="-5876">
+          <caret line="5" column="52" lean-forward="false" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="758" column="0" lean-forward="false" selection-start-line="758" selection-start-column="0" selection-end-line="758" selection-end-column="0" />
           <folding>
-            <element signature="e#62#130#0" expanded="true" />
+            <element signature="e#61#99#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+        <state relative-caret-position="347">
+          <caret line="44" column="91" lean-forward="false" selection-start-line="44" selection-start-column="91" selection-end-line="44" selection-end-column="91" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1074">
+          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

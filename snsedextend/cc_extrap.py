@@ -756,7 +756,6 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=1200,MAXWAVE=25000,saveFig=Tru
     fig=plt.figure()
     ax=fig.gca()
 
-
     if MINWAVE:
         idx1,val= _find_nearest(wlist,MINWAVE)
     else:
