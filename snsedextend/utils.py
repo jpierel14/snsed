@@ -4,7 +4,7 @@ import os
 
 
 
-__all__=['_filters','_opticalBands','_props','_fittingParams','_needs_bounds','_UVrightBound','_UVleftBound','_IRleftBound','_IRrightBound','_zp','__dir__','__current_dir__']
+__all__=['_filters','_opticalBands','_props','_fittingParams','_fittingPackages','_needs_bounds','_UVrightBound','_UVleftBound','_IRleftBound','_IRrightBound','_zp','__dir__','__current_dir__']
 __current_dir__=os.path.abspath(os.getcwd())
 __dir__=os.path.abspath(os.path.dirname(__file__))
 
@@ -50,6 +50,12 @@ _fittingParams=odict([
     ('effect_names',None),
     ('effect_frames',None)
 ])
+
+_fittingPackages={
+    'minuit':'iminuit',
+    'nest':'nestle',
+    'mcmc':'emcee'
+}
 
 #dictionary of zero-points (calculated later based on transmission files)
 _zp={}

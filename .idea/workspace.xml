@@ -5,108 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/#cc.rst#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/.#cc.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/cc.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/examples.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/examples/index.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/install.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/reference.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/source/modules.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctrees/source/snsedextend.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/SDSS-004012.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/example_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/snsedextend/BIC.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/snsedextend/cc_extrap.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/snsedextend/colorCalc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/snsedextend/example.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/snsedextend/helpers.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/cc.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/examples.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/examples/index.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/index.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/install.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/reference.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/source/modules.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/source/snsedextend.rst.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ajax-loader.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/alabaster.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/basic.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/classic.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment-bright.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment-close.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/css/badge_only.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/css/theme.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/custom.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/down-pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/down.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/file.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/Inconsolata-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/Inconsolata-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/Inconsolata.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/Lato-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/Lato-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/RobotoSlab-Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/RobotoSlab-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fonts/fontawesome-webfont.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery-3.1.0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/js/modernizr.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/js/theme.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/minus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/plus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/pygments.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/sidebar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore-1.3.1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/up-pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/websupport.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/cc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/examples.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/examples/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/install.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/reference.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/search.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/source/modules.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/source/snsedextend.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/source/modules.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/source/snsedextend.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/cc.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/conf.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples/#ex.py#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples/#ex.txt#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples/#index.rst#" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples/ex.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/examples/example_plot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/index.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/install.rst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/reference.rst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/source/modules.rst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/source/snsedextend.rst" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/snsedextend.iml" afterPath="$PROJECT_DIR$/.idea/snsedextend.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-013376.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014450.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-014599.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015031.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015320.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-015339.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017564.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-017862.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018109.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018297.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018408.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018441.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018457.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018590.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018596.SED" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" afterPath="$PROJECT_DIR$/SEDs/typeII/SDSS-018700.SED" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/cc_extrap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/colorCalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Makefile" afterPath="$PROJECT_DIR$/docs/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/make.bat" afterPath="$PROJECT_DIR$/docs/make.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/snsedextend/utils.py" afterPath="$PROJECT_DIR$/build/lib/snsedextend/utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" afterPath="$PROJECT_DIR$/hicken/typeII/tables/allIIColors.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/snsedextend.egg-info/SOURCES.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/utils.py" afterPath="$PROJECT_DIR$/snsedextend/utils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -116,7 +44,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1519755238452" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1520206029379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
@@ -134,13 +62,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="390" column="17" lean-forward="false" selection-start-line="390" selection-start-column="17" selection-end-line="390" selection-end-column="17" />
+            <state relative-caret-position="278">
+              <caret line="332" column="61" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="332" selection-end-column="61" />
               <folding>
-                <element signature="e#62#104#0" expanded="true" />
+                <element signature="e#62#130#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,8 +87,8 @@
       <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="595" column="126" lean-forward="false" selection-start-line="595" selection-start-column="126" selection-end-line="595" selection-end-column="126" />
+            <state relative-caret-position="152">
+              <caret line="771" column="74" lean-forward="false" selection-start-line="771" selection-start-column="74" selection-end-line="771" selection-end-column="74" />
               <folding>
                 <element signature="e#61#99#0" expanded="true" />
               </folding>
@@ -183,11 +121,9 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#44#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-197">
+              <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -195,7 +131,7 @@
       <file leaf-file-name="helpers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
+            <state relative-caret-position="147">
               <caret line="23" column="7" lean-forward="false" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
@@ -227,17 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>BIC</find>
-      <find>_flux_to_mag</find>
-      <find>_UVrightBound</find>
-      <find>band</find>
-      <find>bandRe</find>
-      <find>_getFilter</find>
-      <find>_snmodel_to</find>
-      <find>1</find>
-      <find>bandMag</find>
-      <find>_createSED</find>
-      <find>create</find>
       <find>constants</find>
       <find>createSN</find>
       <find>plotsed</find>
@@ -257,6 +182,17 @@
       <find>warnings</find>
       <find>fitColor</find>
       <find>-------</find>
+      <find>read</find>
+      <find>generate_c</find>
+      <find>print(vpar</find>
+      <find>generate_chisq</find>
+      <find>fitdata</find>
+      <find>modDict</find>
+      <find>bandD</find>
+      <find>bandDict</find>
+      <find>bandDict=</find>
+      <find>_standard</find>
+      <find>_standardize</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -283,9 +219,10 @@
         <option value="$PROJECT_DIR$/snsedextend/definedBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/pyPar.py" />
         <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/snsedextend/example.py" />
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
+        <option value="$PROJECT_DIR$/snsedextend/sncosmo_fitting.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
       </list>
@@ -572,7 +509,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36301368" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36301368" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -624,6 +561,34 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2925">
+          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py" />
     <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -647,34 +612,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/extrapolate.py" />
-    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2925">
-          <caret line="195" column="0" lean-forward="false" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -701,7 +641,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -728,7 +670,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -755,7 +699,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -783,7 +729,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2730">
           <caret line="186" column="12" lean-forward="false" selection-start-line="186" selection-start-column="12" selection-end-line="186" selection-end-column="12" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -792,7 +740,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3345">
           <caret line="227" column="33" lean-forward="false" selection-start-line="227" selection-start-column="33" selection-end-line="227" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -801,7 +751,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2910">
           <caret line="198" column="44" lean-forward="false" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -858,16 +810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="7" lean-forward="false" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -886,14 +828,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-112">
-          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/example.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -904,33 +838,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/sncosmo_fitting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="460" column="17" lean-forward="false" selection-start-line="460" selection-start-column="17" selection-end-line="460" selection-end-column="17" />
+          <folding>
+            <element signature="e#64#111#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-197">
+          <caret line="0" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="595" column="126" lean-forward="false" selection-start-line="595" selection-start-column="126" selection-end-line="595" selection-end-column="126" />
+        <state relative-caret-position="152">
+          <caret line="771" column="74" lean-forward="false" selection-start-line="771" selection-start-column="74" selection-end-line="771" selection-end-column="74" />
           <folding>
             <element signature="e#61#99#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="23" column="7" lean-forward="false" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="390" column="17" lean-forward="false" selection-start-line="390" selection-start-column="17" selection-end-line="390" selection-end-column="17" />
+        <state relative-caret-position="278">
+          <caret line="332" column="61" lean-forward="true" selection-start-line="327" selection-start-column="20" selection-end-line="332" selection-end-column="61" />
           <folding>
-            <element signature="e#62#104#0" expanded="true" />
+            <element signature="e#62#130#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

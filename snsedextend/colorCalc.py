@@ -3,7 +3,7 @@
 # 2017.03.31
 
 
-import os,sys,sncosmo,snsedextend,warnings
+import os,sys,sncosmo,snsedextend,warnings,importlib,sncosmo_fitting
 from numpy import *
 from scipy import interpolate as scint
 from astropy.table import Table,Column,MaskedColumn,vstack
@@ -11,7 +11,7 @@ import pyParz
 
 from .utils import *
 from .helpers import *
-
+from sncosmo.photdata import photometric_data
 
 __all__=['mag_to_flux','flux_to_mag','curveToColor','colorTableCombine']
 
@@ -78,7 +78,11 @@ def _snFit(args):
         constants = {x:constants[x] for x in constants.keys() if x in model.param_names}
         model.set(**constants)
 
-    res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
+    if method=='nest' and 'amplitude' in params and 'amplitude' not in bounds.keys():
+        res,fit=sn_func[method](curve, model, params,guess_amplitude_bound=True, bounds=bounds,verbose=False)
+    else:
+        res,fit=sn_func[method](curve, model, params, bounds=bounds,verbose=False)
+
     return(pyParz.parReturn((res,fit)))#parallel.parReturn makes sure that whatever is being returned is pickleable
 
 def _snmodel_to_mag(model,table,zpsys,band):
@@ -120,46 +124,91 @@ def _snmodel_to_flux(model,table,zp,zpsys,band):
     return(tgrid,mflux)
 
 
-def _getReddeningCoeff(band):
+def _unredden(color, bands, ebv, r_v=3.1):
     """
     (Private)
-     Helper function that contains the reddening coefficients from O'donnell 1994
+    Helper function that will get a magnitude correction from reddening coefficients using the CCM 1989 (and O'Donnell 1994)parameterization.
     """
-    wave=[10000/2.86,10000/2.78,10000/2.44,10000/2.27,10000/2.13,10000/1.43,10000/1.11,10000/.8,10000/.63,10000/.46,10000/.29]
-    a=[.913,0.958,.98,1.0,.974,0.855,0.661,0.421,0.225,0.148,0.043]
-    b=[2.14,1.898,1.284,1,.803,-.309,-.555,-.458,-.243,-.099,.159]
-    aInterpFunc=scint.interp1d(wave,a)
-    bInterpFunc=scint.interp1d(wave,b)
-    return(aInterpFunc(band.wave_eff),bInterpFunc(band.wave_eff))
-
-
-
-def _unredden(color,bands,ebv,r_v):
-    """
-    (Private)
-    Helper function that will get a magnitude correction from reddening coefficients.
-    """
-    A_v=r_v*ebv
     blue=bands[color[0]]
     red=bands[color[-1]]
     if not isinstance(blue,sncosmo.Bandpass):
         blue=sncosmo.get_bandpass(blue)
     if not isinstance(red,sncosmo.Bandpass):
         red=sncosmo.get_bandpass(red)
-    if color[0]=='V':
-        a,b=_getReddeningCoeff(red)
-        A_blue=A_v
-        A_red=(a+b/r_v)*A_v
-    elif color[-1]=='V':
-        a,b=_getReddeningCoeff(blue)
-        A_blue=(a+b/r_v)*A_v
-        A_red=A_v
+
+
+    blue_wave = array(blue.wave_eff, float)
+    blue_a_lambda = _ccm_extinction(blue_wave, ebv, r_v)
+    red_wave=array(red.wave_eff,float)
+    red_a_lambda=_ccm_extinction(red_wave,ebv,r_v)
+
+    return(blue_a_lambda-red_a_lambda)
+
+
+def _ccm_extinction(wave, ebv, r_v=3.1):
+    """
+    (Private)
+    Heler function for dereddening.
+
+    """
+    scalar = not iterable(wave)
+    if scalar:
+        wave = array([wave], float)
     else:
-        a_blue,b_blue=_getReddeningCoeff(blue)
-        a_red,b_red=_getReddeningCoeff(red)
-        A_blue=(a_blue+b_blue/r_v)*A_v
-        A_red=(a_red+b_red/r_v)*A_v
-    return(A_blue-A_red)
+        wave = array(wave, float)
+
+    x = 10000.0/wave
+    npts = wave.size
+    a = zeros(npts, float)
+    b = zeros(npts, float)
+
+    #Infrared
+    good = where( (x > 0.3) & (x < 1.1) )
+    a[good] = 0.574 * x[good]**(1.61)
+    b[good] = -0.527 * x[good]**(1.61)
+
+    # Optical & Near IR
+    good = where( (x  >= 1.1) & (x < 3.3) )
+    y = x[good] - 1.82
+
+    c1 = array([ 1.0 , 0.104,   -0.609,    0.701,  1.137,
+                    -1.718,   -0.827,    1.647, -0.505 ])
+    c2 = array([ 0.0,  1.952,    2.908,   -3.989, -7.985,
+                    11.102,    5.491,  -10.805,  3.347 ] )
+
+    a[good] = polyval(c1[::-1], y)
+    b[good] = polyval(c2[::-1], y)
+
+    # Mid-UV
+    good = where( (x >= 3.3) & (x < 8) )
+    y = x[good]
+    F_a = zeros(size(good),float)
+    F_b = zeros(size(good),float)
+    good1 = where( y > 5.9 )
+
+    if size(good1) > 0:
+        y1 = y[good1] - 5.9
+        F_a[ good1] = -0.04473 * y1**2 - 0.009779 * y1**3
+        F_b[ good1] =   0.2130 * y1**2  +  0.1207 * y1**3
+
+    a[good] =  1.752 - 0.316*y - (0.104 / ( (y-4.67)**2 + 0.341 )) + F_a
+    b[good] = -3.090 + 1.825*y + (1.206 / ( (y-4.62)**2 + 0.263 )) + F_b
+
+    # Far-UV
+    good = where( (x >= 8) & (x <= 11) )
+    y = x[good] - 8.0
+    c1 = [ -1.073, -0.628,  0.137, -0.070 ]
+    c2 = [ 13.670,  4.257, -0.420,  0.374 ]
+    a[good] = polyval(c1[::-1], y)
+    b[good] = polyval(c2[::-1], y)
+
+    # Defining the Extinction at each wavelength
+    a_v = r_v * ebv
+    a_lambda = a_v * (a + b/r_v)
+    if scalar:
+        a_lambda = a_lambda[0]
+    return a_lambda
+
 
 def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
     """
@@ -188,6 +237,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     :param kwargs: Catches all SNCOSMO fitting parameters here
     :returns: colorTable: Astropy Table object containing color information
     """
+
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
         if band not in bandDict.keys() and band in bands:
@@ -219,6 +269,11 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     for p in _fittingParams:
         args.append(kwargs.get(p,_fittingParams[p]))
 
+        if p == 'method':
+            try:
+                importlib.import_module(_fittingPackages[args[-1]])
+            except RuntimeError:
+                sys.exit()
     for color in colors: #start looping through desired colors
         if bandDict[color[0]].wave_eff<_UVrightBound: #then extrapolating into the UV from optical
             if not bandFit:
@@ -268,18 +323,40 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'salt2' in x[0]]
 
                 mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}
-
                 if len(blue)>len(red) or bandFit==color[0]:
                     args[0]=blue
-
-                    fits=pyParz.foreach(mods,_snFit,args)
+                    if len(blue)>60:
+                        fits=[]
+                        for mod in mods:
+                            fits.append(_snFit([mod]+args))
+                    else:
+                        fits=pyParz.foreach(mods,_snFit,args)
                     fitted=blue
                     notFitted=red
                     fit=color[0]
                 elif len(blue)<len(red) or bandFit==color[-1]:
                     args[0]=red
+                    '''
+                    data,temp= sncosmo_fitting.cut_bands(photometric_data(red), sncosmo.Model(tempMod),
+                                                             z_bounds=all_bounds.get('z', None),
+                                                             warn=True)
+                    print(data.fluxerr)
+                    cov = diag(data.fluxerr**2) if data.fluxcov is None else data.fluxcov
+                    invcov = linalg.pinv(cov)
 
+                    args.append(invcov)
+                    
+                    sys.exit()
+                    
                     fits=pyParz.foreach(mods,_snFit,args)
+                    args.pop()
+                    '''
+                    if len(red)>60:
+                        fits=[]
+                        for mod in mods:
+                            fits.append(_snFit([mod]+args))
+                    else:
+                        fits=pyParz.foreach(mods,_snFit,args)
                     fitted=red
                     notFitted=blue
                     fit=color[-1]

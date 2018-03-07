@@ -150,7 +150,7 @@ def _getExtremes(time,curve,original,color):
     return(blue,curve,red)
 
 
-def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,zpsys,accuracy=1e-9):
+def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,zpsys,UVoverwrite,accuracy=1e-9):
     """
     (Private)
     Algorithm to extrapolate an SED into the UV
@@ -165,9 +165,12 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
         w2 = append(wextRed,w[idx:])
         f2 = append(fextRed,f[idx:])
 
-    else: #if the SED extends to the band, then cut it off at the band for new extrapolation
-        w2=w[idx:]
-        f2=f[idx:]
+    else:
+        if UVoverwrite: #if the SED extends to the band, then cut it off at the band for new extrapolation
+            w2=w[idx:]
+            f2=f[idx:]
+        else: #don't extrapolate
+            return(w,f)
     if idx > idx2:
         w1=w[:idx2]
         f1=f[:idx2]
@@ -287,7 +290,7 @@ def _extrapolate_uv(band,rArea,color,xTrans,xWave,f,w,niter,log,index,bandDict,z
 
 
 
-def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,bandDict,zpsys,model,bandsDone,accuracy=1e-12):
+def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,bandDict,zpsys,model,bandsDone,IRoverwrite,accuracy=1e-12):
     """
     (Private)
     Algorithm for extrapolation of SED into the IR
@@ -305,6 +308,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
         w2 = append(w[:idx+1], wextRed)
         f2 = append(f[:idx+1], fextRed)
     else: #if the SED extends to the band:
+        if not IRoverwrite:
+            return(w,f)
         if not any([_checkBandOverlap(bandDict[x],bandDict[band]) for x in bandsDone]): #  then cut it off at the band for new extrapolation
             w2=w[:idx+1]
             f2=f[:idx+1]
@@ -439,7 +444,7 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
 
 
 
-def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,bandsDone,niter=50):
+def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50):
     """
     (Private)
     Intermediate sed extrapolation function. Interpolate the given transmission function to the wavestep of the SED,
@@ -447,6 +452,7 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
 
     """
     dlist,wlist,flist = _getsed( sedfile ) #first time this is read in, should be in ergs/s/cm^2/AA
+
     i=0
 
     while dlist[i][0]<time[0]:
@@ -469,6 +475,7 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     bTrans=bands[blue].trans
     rWave=bands[red].wave
     rTrans=bands[red].trans
+
     bInterpFunc=scint.interp1d(bWave,bTrans)
     rInterpFunc=scint.interp1d(rWave,rTrans)
     cInterpFunc=scint.interp1d(time,modColor)
@@ -478,8 +485,8 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     sed=createSNSED(sedfile,rescale=False) #now the original sed is in ergs/s/cm^2/AA
     model=sncosmo.Model(sed)
 
-    fout = open( newsedfile, 'w' )
-    log= open('./error.log','w')
+    fout = open( newsedfile, 'wb' )
+    log= open('./error.log','wb')
 
     def _extrap_helper(wave1,interpFunc1,wave2,interpFunc2,known,currentPhase):
         area=model.bandmag(bands[known],zpsys,currentPhase)
@@ -496,11 +503,11 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
         wavestep = w[1] - w[0]
         if bands[blue].wave_eff<=_UVrightBound:
             bWave,bTrans,rArea=_extrap_helper(rWave,rInterpFunc,bWave,bInterpFunc,red,d[0])
-            wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i,bands,zpsys)
+            wnew,fnew=_extrapolate_uv(blue,rArea,colorData[i],bTrans,bWave,f,w,niter,log,i,bands,zpsys,UVoverwrite)
             UV=True
         elif bands[red].wave_eff>=_IRleftBound:
             rWave,rTrans,bArea=_extrap_helper(bWave,bInterpFunc,rWave,rInterpFunc,blue,d[0])
-            wnew,fnew=_extrapolate_ir(red,bArea,colorData[i],rTrans,rWave,d,f,w,niter,log,i,IR,bands,zpsys,model,bandsDone)
+            wnew,fnew=_extrapolate_ir(red,bArea,colorData[i],rTrans,rWave,d,f,w,niter,log,i,IR,bands,zpsys,model,bandsDone,IRoverwrite)
             IR=True
         else:
             raise RuntimeError("You supplied a color that does not support extrapolation to the IR or UV!")
@@ -608,7 +615,7 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True):
         result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
     return(result)
 
-def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True):
+def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,medianColor=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -632,6 +639,10 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     :type showplots: Boolean,optional
     :param verbose: Printing on?
     :type verbose: Boolean, optional
+    :param UVoverwrite: Whether you would like to overwrite existing UV data
+    :type UVoverwrite: Boolean,options
+    :param IRoverwrite: Whether you would like to overwrite existing IR data
+    :type IRoverwrite: Boolean,optional
     :returns: Saves extrapolated SED to outFileLoc, and returns an sncosmo.Source SED from the extrapolated timeseries.
     """
     colorTable=_standardize(colorTable)
@@ -662,9 +673,17 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
         sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
     returnList=[]
     for sedfile in sedlist:
+        VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
+        if VRColor/medianColor>=1:
+            colorExtreme='blue'
+        elif VRColor/medianColor<=-1:
+            colorExtreme='red'
+        else:
+            colorExtreme='median'
+
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
-            print("EXTRAPOLATING %s"%newsedfile)
+            print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
         once=False
         boundUV=False
         boundIR=False
@@ -679,7 +698,8 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
                 raise RuntimeError('Band "%s" defined in color "%s", but band is not defined.')
 
 
-            blue,med,red=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
+            extremeColors=dict([])
+            extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
 
             tempMask=colorTable[color].mask
 
@@ -687,7 +707,7 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
-            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,colorCurveDict[color]['time'],colorCurveDict[color][color], bandDict,zpsys,bandsDone,niter=50)
+            UV,IR=_extrapolatesed(sedfile, newsedfile,color,tempTable,colorCurveDict[color]['time'],extremeColors[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
             if UV:
                 boundUV=True
                 bandsDone.append(color[0])
@@ -714,14 +734,14 @@ def extendCC(colorTable,colorCurveDict,outFileLoc='.',bandDict=_filters,colorExt
     return returnList[0]
 
 
-def plotSED( sedfile,day, normalize=False,MINWAVE=3000,MAXWAVE=20000,saveFig=True,figFile=None,showPlot=False,**kwargs):
+def plotSED( sedfile,day, normalize=False,MINWAVE=1200,MAXWAVE=25000,saveFig=True,figFile=None,showPlot=False,**kwargs):
     """
     Simple plotting function to visualize the SED file.
 
     :param sedfile: SED filename to read
     :type sedfile: str
-    :param day: The day you want to plot, or 'all'
-    :type day: double or str (if all)
+    :param day: The day you want to plot
+    :type day: double
     :param normalize: Boolean to normalize the data
     :type normalize: Boolean
     :param MINWAVE: Allows user to plot in a specific window, left edge
@@ -731,32 +751,26 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=3000,MAXWAVE=20000,saveFig=Tru
     :returns: None
     """
 
-    dlist,wlist,flist = _getsed( sedfile )
+    dlist,wlist,flist = sncosmo.read_griddata_ascii(sedfile)
+    ind,dayVal=_find_nearest(dlist,day)
     fig=plt.figure()
     ax=fig.gca()
 
-    for i in range( len(wlist) ) :
-        if MINWAVE:
-            idx1,val= _find_nearest(wlist[i],MINWAVE)
-        else:
-            idx1=None
-        if MAXWAVE:
-            idx2,val=_find_nearest(wlist[i],MAXWAVE)
-        else:
-            idx2=None
 
-        thisday = dlist[i][0]
+    if MINWAVE:
+        idx1,val= _find_nearest(wlist,MINWAVE)
+    else:
+        idx1=None
+    if MAXWAVE:
+        idx2,val=_find_nearest(wlist,MAXWAVE)
+    else:
+        idx2=None
 
-        if day!='all' :
-            if abs(thisday-day)>0.6:
-                continue
-        if normalize :
-            ax.plot( wlist[i], flist[i]/flist[i].max(), **kwargs )
-            break
-        else :
+    if normalize :
+        ax.plot( wlist[idx1:idx2], flist[ind][idx1:idx2]/flist[ind][idx1:idx2].max(), **kwargs )
+    else :
+        ax.plot( wlist[idx1:idx2], flist[ind][idx1:idx2], label=str(dayVal), **kwargs )
 
-            ax.plot( wlist[i][idx1:idx2], flist[i][idx1:idx2], label=str(thisday), **kwargs )
-            break
 
     if 'xlabel' in kwargs.keys():
         xlabel=kwargs.pop('xlabel')
@@ -769,7 +783,7 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=3000,MAXWAVE=20000,saveFig=Tru
     if 'title' in kwargs.keys():
         title=kwargs.pop('title')
     else:
-        title=os.path.basename(sedfile)+"Extrapolated--Phase="+str(thisday)
+        title=os.path.basename(sedfile)+" Extrapolated--Phase="+str(dayVal)
     ax.set_title(title)
 
     ax.set_xlabel(xlabel)
@@ -798,4 +812,5 @@ def createSNSED(filename,rescale=False):
     if rescale:
         for i in range( len(phase) ) :
             flux[i]=flux[i]/sncosmo.constants.HC_ERG_AA
-    return(snSource(phase,wave,flux,name=os.path.basename(filename)))
+    return(sncosmo.TimeSeriesSource(phase,wave,flux,zero_before=True,name=os.path.basename(filename)))
+    #return(snSource(phase,wave,flux,name=os.path.basename(filename)))

@@ -6,6 +6,7 @@ snsedextend/cc_extrap.py
 snsedextend/colorCalc.py
 snsedextend/example.py
 snsedextend/helpers.py
+snsedextend/sncosmo_fitting.py
 snsedextend/utils.py
 snsedextend.egg-info/PKG-INFO
 snsedextend.egg-info/SOURCES.txt
