@@ -588,7 +588,7 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     return(model.bandmag(band,zpsys,currentPhase))
 
 
-def fitColorCurve(table,confidence=50,type='II',verbose=True):
+def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
     """
     Fits color curves calculated in colorCalc module using BIC
 
@@ -610,8 +610,9 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True):
         if verbose:
             print('     '+color)
         tempTable=table[~table[color].mask]
-        tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err']],names=('time','mag','magerr'))
-        temp=BICrun(tempTable,type)
+
+        tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err'],tempTable['SN']],names=('time','mag','magerr','SN'))
+        temp=BICrun(tempTable,color=color,type=type,savefig=savefig)
         result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
     return(result)
 

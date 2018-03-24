@@ -8,8 +8,8 @@ from astropy.io import ascii
 import sncosmo
 
 sndataroot = os.environ['SNDATA_ROOT']
-dir='bianco'
-snType=['Ib']
+dir='hicken'
+snType=['II','IIP']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
@@ -46,6 +46,7 @@ for i in range(len(filelist)):
                                             bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-4]]-5,peaks[filelist[i][:-4]]+5)},
                                             constants={'z':redshift[filelist[i][:-4]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-4]]},
                                             dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
+
         #else:
         #    continue
         """
@@ -73,8 +74,8 @@ for i in range(len(filelist)):
         if typeSNe:
             typeSNe=typeSNe+[filelist[i][:-12].replace('lc','SN') for j in range(len(colorTable))]
         """
-        typeSNe=[filelist[i][:-12].replace('lc','SN') for j in range(len(temp))]
-        #temp['SN']=typeSNe
+        typeSNe=[filelist[i][:-4].replace('lc','SN') for j in range(len(temp))]
+        temp['SN']=typeSNe
         temp.remove_columns([x for x in temp.colnames if x in ['B-J','B-H','B-K','u-B']])
         if len(temp.colnames)>1:
             colorTables.append(temp)
@@ -87,15 +88,15 @@ typeColors=snsedextend.colorTableCombine(colorTables)
 #ascii.write(typeColors,os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
 
 #typeColors=ascii.read(os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
-
-curveDict=snsedextend.fitColorCurve(typeColors)
+print(typeColors['SN'])
+curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=True)
 import pickle
 #with open('tempBIC.txt','wb') as handle:
 #    pickle.dump(curveDict,handle)
 #    sys.exit()
 ###### for debugging#####
-with open('tempBIC.txt','rb') as handle:
-    curveDict=pickle.loads(handle.read())
+#with open('tempBIC.txt','rb') as handle:
+#    curveDict=pickle.loads(handle.read())
 seds=np.loadtxt(os.path.join('/Users','jpierel','rodney','snsedextend','SEDs','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 

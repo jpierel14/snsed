@@ -59,46 +59,21 @@ def run_models(df, upper_order=5):
 
 from matplotlib.offsetbox import AnchoredText
 
-def plot_posterior_cr(models, traces, rawdata, xlims,
-                      datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None):
-    '''
-    Convenience function:
-    Plot posterior predictions with credible regions shown as filled areas.
-    '''
-    ax={}
-    #f, ((ax[1],ax[2]),(ax[3],ax[4])) = plt.subplots(nrows=2,ncols=2,sharex=True,sharey=True, figsize=(16,12))
-    f, (ax[1],ax[2]) = plt.subplots(nrows=2,ncols=1,sharex=True,sharey=True, figsize=(16,12))
-    i=1
-    f.text(0.5, 0.05, 'Days After Peak', ha='center', va='center',size=22)
-    f.text(0.05, 0.5, 'Color (Magnitude)', ha='center', va='center', rotation='vertical',size=22)
-    if datamodelnm.upper()=='UV':
-        f.suptitle('Posterior Predictive Fits -- Data: U-Optical, Type {} -- Best Model: Order {}'.format(
-            typ, bestModel[1]), fontsize=24)
-    else:
-        f.suptitle('Posterior Predictive Fits -- Data: Optical-{}, Type {} -- Best Model: Order {}'.format(
-            datamodelnm.upper(),typ, bestModel[1]), fontsize=24)
-    for modelnm in modelnms:
-        if modelnm==bestModel:
-            ## Get traces and calc posterior prediction for npoints in x
-            npoints = 100
-            mdl = models[modelnm]
-            trc = pm.trace_to_dataframe(traces[modelnm][-1000:])
-            trc = trc[[str(v) for v in mdl.cont_vars[:-1]]]
 
-            ordr = int(modelnm[-1:])
-            x = np.linspace(xlims[0], xlims[1], npoints).reshape((npoints,1))
-            pwrs = np.ones((npoints,ordr+1)) * np.arange(ordr+1)
-            X = x ** pwrs
-            cr = np.dot(X,trc.T)
+def getModels(models, traces, rawdata,table, xlims,
+            datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None,color=None,savefig=False):
+    if savefig:
+        colors=['b','k','y','orange','cyan','violet','r','g']
+        import seaborn as sns
+        fig=plt.figure()
+        ax=fig.gca()
 
-            ## Calculate credible regions and plot over the datapoints
-            dfp = pd.DataFrame(np.percentile(cr,[2.5, 25, 50, 75, 97.5], axis=1).T
-                               ,columns=['025','250','500','750','975'])
-            dfp['x'] = x
-            return(dfp)
 
-def getModels(models, traces, rawdata, xlims,
-            datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None):
+
+        sne,types=np.loadtxt('hicken/type.ref',dtype='str',unpack=True)
+        typeDict={'SN_'+sne[i][3:]:types[i] for i in range(len(sne))}
+        colorDict={np.unique([typeDict[x] for x in table['SN']])[i]:colors[i] for i in range(len(np.unique([typeDict[x] for x in table['SN']])))}
+        table['snTypes']=[typeDict[x] for x in table['SN']]
 
     for modelnm in modelnms:
         if modelnm==bestModel:
@@ -118,13 +93,52 @@ def getModels(models, traces, rawdata, xlims,
             dfp = pd.DataFrame(np.percentile(cr,[2.5, 25, 50, 75, 97.5], axis=1).T
                                ,columns=['025','250','500','750','975'])
             dfp['x'] = x
+            if savefig:
+                pal = sns.color_palette('Reds')
+                ax.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
+                                ,color=pal[1], label='CR 95%')
+                ax.fill_between(dfp['x'], dfp['250'], dfp['750'], alpha=0.5
+                                ,color=pal[4], label='CR 50%')
+                ax.plot(dfp['x'], dfp['500'], alpha=0.6, color=pal[5], label='Median')
+                _ = ax.legend(loc='lower right',fontsize=10)
+                _ = ax.set_xlim(xlims)
+                #_ = ax1d.errorbar(allDat['x'],allDat['y'],yerr=allDat['error'],fmt='.',color='red')
+                types=[]
+                for type in np.unique([typeDict[x] for x in rawdata['names']]):
+                    types.append(ax.errorbar(table['time'][table['snTypes']==type],table['mag'][table['snTypes']==type],yerr=table['magerr'][table['snTypes']==type],fmt='.',color=colorDict[type]))
+                _ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
+                           ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax)
+                ax.set_xlabel('Days After Peak',size=14)
+                ax.set_ylabel('Color (Magnitude)', size=14)
+                plt.figlegend(types,[str(x) for x in np.unique([typeDict[x] for x in rawdata['names']])],bbox_to_anchor=(.7,.23))
+                if color[0]=='U':
+                    out='U'
+                    ax.set_title('Posterior Predictive Fits -- Data: U-B, Type {} -- Best Model: Order {}'.format(
+                        typ, bestModel[1]), fontsize=12)
+                else:
+                    out=color[-1]
+                    ax.set_title('Posterior Predictive Fits -- Data: r-{}, Type {} -- Best Model: Order {}'.format(
+                color[-1],typ, bestModel[1]), fontsize=12)
+                plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
+                plt.close()
+                fig=plt.figure()
+                ax=fig.gca()
+                sne=np.unique(np.asarray(table['SN']))
+                snColorDict={sne[i]:colors[i] for i in range(len(sne))}
+                allSne=[]
+                for sn in sne:
+                    allSne.append(ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],color=snColorDict[sn]))
+                plt.figlegend(allSne,sne,bbox_to_anchor=(.9,.4))
+                ax.set_xlabel('Days After Peak',size=14)
+                ax.set_ylabel('Color (Magnitude)', size=14)
+                ax.set_title('Color Curve by Supernova: Type {} -- Color={}'.format(typ,color))
+                plt.savefig('type'+typ+'_'+out.upper()+'_fits_SNe.pdf',format='pdf')
             return(dfp)
 
-def BICrun(table,type='II',verbose=False):
-
+def BICrun(table,color=None,type='II',verbose=False,savefig=False):
     modelList=['k1','k2']
     #print(logging.Logger.manager.loggerDict)
-    temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr'])})
+    temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr']),'names':table['SN']})
     temp_xlims = (temp['x'].min() - np.ptp(temp['x'])/10,temp['x'].max() + np.ptp(temp['x'])/10)
     models_lin,traces_lin=run_models(temp,upper_order=2)
     dfdic = pd.DataFrame(index=modelList, columns=['dic','waic'])
@@ -142,8 +156,7 @@ def BICrun(table,type='II',verbose=False):
     best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
     dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], value_name='waic')
 
-
-    return(getModels(models_lin,traces_lin,temp,temp_xlims, bestModel=best,modelnms=modelList,bic=dfwaic))
+    return(getModels(models_lin,traces_lin,temp,table,temp_xlims, bestModel=best,modelnms=modelList,bic=dfwaic,typ=type,color=color,savefig=savefig))
 
 
 
