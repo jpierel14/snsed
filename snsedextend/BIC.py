@@ -61,7 +61,7 @@ from matplotlib.offsetbox import AnchoredText
 
 
 def getModels(models, traces, rawdata,table, xlims,
-            datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None,color=None,savefig=False):
+              datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None,color=None,savefig=False):
     if savefig:
         colors=['b','k','y','orange','cyan','violet','r','g']
         import seaborn as sns
@@ -70,7 +70,7 @@ def getModels(models, traces, rawdata,table, xlims,
 
 
 
-        sne,types=np.loadtxt('hicken/type.ref',dtype='str',unpack=True)
+        sne,types=np.loadtxt('bianco/type.ref',dtype='str',unpack=True)
         typeDict={'SN_'+sne[i][3:]:types[i] for i in range(len(sne))}
         colorDict={np.unique([typeDict[x] for x in table['SN']])[i]:colors[i] for i in range(len(np.unique([typeDict[x] for x in table['SN']])))}
         table['snTypes']=[typeDict[x] for x in table['SN']]
@@ -107,7 +107,7 @@ def getModels(models, traces, rawdata,table, xlims,
                 for type in np.unique([typeDict[x] for x in rawdata['names']]):
                     types.append(ax.errorbar(table['time'][table['snTypes']==type],table['mag'][table['snTypes']==type],yerr=table['magerr'][table['snTypes']==type],fmt='.',color=colorDict[type]))
                 _ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
-                           ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax)
+                                ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax)
                 ax.set_xlabel('Days After Peak',size=14)
                 ax.set_ylabel('Color (Magnitude)', size=14)
                 plt.figlegend(types,[str(x) for x in np.unique([typeDict[x] for x in rawdata['names']])],bbox_to_anchor=(.7,.23))
@@ -118,7 +118,7 @@ def getModels(models, traces, rawdata,table, xlims,
                 else:
                     out=color[-1]
                     ax.set_title('Posterior Predictive Fits -- Data: r-{}, Type {} -- Best Model: Order {}'.format(
-                color[-1],typ, bestModel[1]), fontsize=12)
+                        color[-1],typ, bestModel[1]), fontsize=12)
                 plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
                 plt.close()
                 fig=plt.figure()

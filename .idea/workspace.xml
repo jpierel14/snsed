@@ -5,49 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4d1bce7-a675-45fb-9ca6-38552f51e63b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2004gk.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005az.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bianco/lc_2005bf.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2002bx_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2005kd.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2005kd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2006ca_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2006cd_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2006it_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2007av.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2007av_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2007rt.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008aj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008bj_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008bn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008in.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008in_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2008ip_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2009ay_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2009kn.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2009kn_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/lc_2010bq_clipped.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/peaks.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/sne.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/hicken/timeOfPeak.dat" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2004aw.dat" afterPath="$PROJECT_DIR$/bianco/lc_2004aw.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/lc_2007C.dat" afterPath="$PROJECT_DIR$/bianco/lc_2007C.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bianco/timeOfPeak.ref" afterPath="$PROJECT_DIR$/bianco/timeOfPeak.ref" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2002bx.dat" afterPath="$PROJECT_DIR$/hicken/lc_2002bx.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2006ca.dat" afterPath="$PROJECT_DIR$/hicken/lc_2006ca.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2006cd.dat" afterPath="$PROJECT_DIR$/hicken/lc_2006cd.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2006it.dat" afterPath="$PROJECT_DIR$/hicken/lc_2006it.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2008aj.dat" afterPath="$PROJECT_DIR$/hicken/lc_2008aj.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2008bj.dat" afterPath="$PROJECT_DIR$/hicken/lc_2008bj.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2008bn.dat" afterPath="$PROJECT_DIR$/hicken/lc_2008bn.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2008ip.dat" afterPath="$PROJECT_DIR$/hicken/lc_2008ip.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2009ay.dat" afterPath="$PROJECT_DIR$/hicken/lc_2009ay.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hicken/lc_2010bq.dat" afterPath="$PROJECT_DIR$/hicken/lc_2010bq.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/BIC.py" afterPath="$PROJECT_DIR$/snsedextend/BIC.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/cc_extrap.py" afterPath="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/colorCalc.py" afterPath="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/helpers.py" afterPath="$PROJECT_DIR$/snsedextend/helpers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/snsedextend/spec.py" afterPath="$PROJECT_DIR$/snsedextend/spec.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -57,7 +19,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1521404858034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/snsedextend$main.coverage" NAME="main Coverage Results" MODIFIED="1522173755799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/snsedextend$snsedextend.coverage" NAME="snsedextend Coverage Results" MODIFIED="1494429870974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
@@ -75,12 +37,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="106" column="8" lean-forward="false" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="8" />
-              <folding />
+            <state relative-caret-position="256">
+              <caret line="96" column="3" lean-forward="false" selection-start-line="96" selection-start-column="3" selection-end-line="96" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,8 +52,8 @@
       <file leaf-file-name="colorCalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-735">
-              <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+            <state relative-caret-position="181">
+              <caret line="241" column="18" lean-forward="false" selection-start-line="241" selection-start-column="16" selection-end-line="241" selection-end-column="18" />
               <folding>
                 <element signature="e#62#114#0" expanded="true" />
               </folding>
@@ -100,11 +64,9 @@
       <file leaf-file-name="cc_extrap.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="650" column="21" lean-forward="false" selection-start-line="650" selection-start-column="21" selection-end-line="650" selection-end-column="21" />
-              <folding>
-                <element signature="e#61#99#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="225">
+              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -112,8 +74,8 @@
       <file leaf-file-name="BIC.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="72" column="38" lean-forward="false" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+            <state relative-caret-position="267">
+              <caret line="130" column="49" lean-forward="false" selection-start-line="130" selection-start-column="49" selection-end-line="130" selection-end-column="49" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -131,13 +93,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spec.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/snsedextend/spec.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="163">
+              <caret line="103" column="44" lean-forward="false" selection-start-line="103" selection-start-column="44" selection-end-line="103" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,10 +120,10 @@
       <file leaf-file-name="helpers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="23" column="7" lean-forward="false" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+            <state relative-caret-position="60">
+              <caret line="4" column="103" lean-forward="false" selection-start-line="4" selection-start-column="103" selection-end-line="4" selection-end-column="103" />
               <folding>
-                <element signature="e#0#17#0" expanded="true" />
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -178,8 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>models.re</find>
-      <find>raise</find>
       <find>foreach</find>
       <find>pyPar</find>
       <find>forea</find>
@@ -208,6 +180,8 @@
       <find>_unredden</find>
       <find>isinstance</find>
       <find>_snFit</find>
+      <find>_find</find>
+      <find>_find_nearest</find>
     </findStrings>
     <replaceStrings>
       <replace>Nstep</replace>
@@ -229,17 +203,18 @@
         <option value="$PROJECT_DIR$/snsedextend/defaultBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/extrapolate.py" />
         <option value="$PROJECT_DIR$/snsedextend/colors.py" />
-        <option value="$PROJECT_DIR$/snsedextend/helpers.py" />
         <option value="$PROJECT_DIR$/snsedextend/definedBands.py" />
         <option value="$PROJECT_DIR$/snsedextend/pyPar.py" />
         <option value="$PROJECT_DIR$/snsedextend/__init__.py" />
         <option value="$PROJECT_DIR$/snsedextend/example.py" />
         <option value="$PROJECT_DIR$/snsedextend/utils.py" />
         <option value="$PROJECT_DIR$/snsedextend/sncosmo_fitting.py" />
+        <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+        <option value="$PROJECT_DIR$/snsedextend/helpers.py" />
         <option value="$PROJECT_DIR$/snsedextend/cc_extrap.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/snsedextend/BIC.py" />
-        <option value="$PROJECT_DIR$/snsedextend/colorCalc.py" />
+        <option value="$PROJECT_DIR$/snsedextend/spec.py" />
       </list>
     </option>
   </component>
@@ -576,14 +551,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/snsedextend/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="32" lean-forward="false" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2925">
@@ -599,7 +566,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -628,7 +595,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -657,7 +624,7 @@
         <state relative-caret-position="60">
           <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -686,7 +653,7 @@
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -715,7 +682,7 @@
         <state relative-caret-position="3000">
           <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -745,7 +712,7 @@
         <state relative-caret-position="2730">
           <caret line="186" column="12" lean-forward="false" selection-start-line="186" selection-start-column="12" selection-end-line="186" selection-end-column="12" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -756,7 +723,7 @@
         <state relative-caret-position="3345">
           <caret line="227" column="33" lean-forward="false" selection-start-line="227" selection-start-column="33" selection-end-line="227" selection-end-column="33" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -767,7 +734,7 @@
         <state relative-caret-position="2910">
           <caret line="198" column="44" lean-forward="false" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
           <folding>
-            <element signature="e#0#18#0" expanded="false" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -841,50 +808,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="72" column="38" lean-forward="false" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+        <state relative-caret-position="270">
+          <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="106" column="8" lean-forward="false" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="650" column="21" lean-forward="false" selection-start-line="650" selection-start-column="21" selection-end-line="650" selection-end-column="21" />
-          <folding>
-            <element signature="e#61#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-735">
-          <caret line="158" column="0" lean-forward="false" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
-          <folding>
-            <element signature="e#62#114#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="23" column="7" lean-forward="false" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -899,12 +828,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/snsedextend/utils.py">
+    <entry file="file://$PROJECT_DIR$/snsedextend/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="4" column="103" lean-forward="false" selection-start-line="4" selection-start-column="103" selection-end-line="4" selection-end-column="103" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/colorCalc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="241" column="18" lean-forward="false" selection-start-line="241" selection-start-column="16" selection-end-line="241" selection-end-column="18" />
+          <folding>
+            <element signature="e#62#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/cc_extrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/spec.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="103" column="44" lean-forward="false" selection-start-line="103" selection-start-column="44" selection-end-line="103" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/snsedextend/BIC.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="130" column="49" lean-forward="false" selection-start-line="130" selection-start-column="49" selection-end-line="130" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="96" column="3" lean-forward="false" selection-start-line="96" selection-start-column="3" selection-end-line="96" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

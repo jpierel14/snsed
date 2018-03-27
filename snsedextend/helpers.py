@@ -1,8 +1,8 @@
-import os,sncosmo
+import os,sncosmo,math
 from .utils import _props,_filters
 import numpy as np
 
-__all__=['_findFile','_get_default_prop_name','_bandCheck','bandRegister','_standardize']
+__all__=['_findFile','_get_default_prop_name','_bandCheck','bandRegister','_standardize','_find_nearest']
 
 def _findFile(filename):
     """Helper function that does a quick recurisive directory seach for a transmission file.
@@ -18,7 +18,17 @@ def _get_default_prop_name(prop):
             return key
     return prop
 
+def _find_nearest(array,value):
+    """
+    (Private)
+    Helper function to find the nearest value in an array
+    """
 
+    idx = np.searchsorted(array, value, side="left")
+    if idx > 0 and (idx == len(array) or math.fabs(value - array[idx-1]) < math.fabs(value - array[idx])):
+        return idx-1,array[idx-1]
+    else:
+        return idx,array[idx]
 
 def _bandCheck(bandDict,band):
     """
