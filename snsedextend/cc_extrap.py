@@ -761,6 +761,7 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=1200,MAXWAVE=25000,saveFig=Tru
 
     dlist,wlist,flist = sncosmo.read_griddata_ascii(sedfile)
     ind,dayVal=_find_nearest(dlist,day)
+    print(dayVal)
     fig=plt.figure()
     ax=fig.gca()
 

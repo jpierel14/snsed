@@ -57,6 +57,12 @@ _fittingPackages={
     'mcmc':'emcee'
 }
 
+_defaultSpec={
+    'Ib':'sn2007Y.lnw',
+    'IIP':'sn2006bp.lnw',
+    'Ic':'sn1983V.lnw'
+}
+
 #dictionary of zero-points (calculated later based on transmission files)
 _zp={}
 

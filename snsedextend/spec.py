@@ -1,9 +1,11 @@
-import glob,os,sys,scipy,sncosmo
+import glob,os,sys,scipy,sncosmo,math
 import numpy as np
 from scipy.interpolate import interp1d,interp2d
 from astropy.table import Table,hstack
 from astropy.io import ascii
-from .utils import __dir__
+from scipy.interpolate import UnivariateSpline as spl
+import matplotlib.pyplot as plt
+from .utils import __dir__,_defaultSpec
 from helpers import _find_nearest
 
 '''
@@ -81,13 +83,28 @@ def createAveSpec(snType,specList,phases,waves):
 	tempTable=Table()
 	tempTable['wave']=waves
 	finalSpec=hstack([tempTable,finalSpec])
-	ascii.write(finalSpec,os.path.join(__dir__,'data','default','type'+snType,snType+'_aveSpec.dat'),overwrite=True)
+	#ascii.write(finalSpec,os.path.join(__dir__,'data','default','type'+snType,snType+'_aveSpec.dat'),overwrite=True)
 	#fig=plt.figure()
 	#ax=fig.gca()
 	#ax.plot(finalSpec['wave'],finalSpec['0'])
 	#plt.show()
 	return(finalSpec)
 
+def _readSpec(spec):
+	with open(spec) as f:
+		for line in f:
+			line=line.split()
+
+			num=int(line[4])+2
+			data=np.loadtxt(spec,skiprows=num)
+			time=data[0][1:]
+			if len(np.unique(time))!=len(time):
+				print(os.path.basename(spec)+" has duplicate columns, skipping...")
+				sys.exit()
+			data=data[1:][:]
+			allSpec=Table(data,names=['wave']+['p:'+str(x) for x in time])
+			break
+	return(allSpec)
 
 def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	phase,newWave,flux=sncosmo.read_griddata_ascii(sedFile)
@@ -95,39 +112,65 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	if len(wave)==0:
 		return(flux)
 	#flux=flux[:][newWave==wave]
-	if not specList and not specName:
-		allSpec=ascii.read(os.path.join(__dir__,'data','default','type'+snType,snType+'_aveSpec.dat'))
-		#if int(phase[i])==0:
-		import matplotlib.pyplot as plt
-		fig=plt.figure()
-		ax=fig.gca()
-		ax.plot(allSpec['wave'],allSpec['p:0'])
-		plt.show()
-		plt.close()
-		x=[float(x[2:]) for x in allSpec.colnames if x !='wave']
-		y=allSpec['wave']
+	if specList:
+		spec=createAveSpec(specList)
+	elif specName:
+		spec=os.path.join(__dir__,'data','spectra',specName)
+		allSpec=_readSpec(spec)
+	else:
+		spec=os.path.join(__dir__,'data','spectra',_defaultSpec[snType])
+		allSpec=_readSpec(spec)
 
-		allSpec.remove_column('wave')
 
-		#alldat=[]
-		#for row in allSpec:
-		#	alldat.append([row[c] for c in allSpec.colnames])
-		func=interp2d(x,y,np.array([list(r) for r in np.array(allSpec)]))
-		newFlux=np.transpose(func(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]],wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]))
 
-		if np.all(newFlux==np.zeros(len(newFlux))):
-			return
-		for i in range(len(phase)):
-			if phase[i] in phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]]:
-				tempFlux=np.append(np.zeros(len(newWave[newWave<wave[0]])+len(wave)-len(wave[wave>=y[0]])),np.append(newFlux[i],np.zeros(len(newWave[newWave>wave[-1]])+len(wave)-len(wave[wave<=y[-1]]))))
+	x=[float(x[2:]) for x in allSpec.colnames if x !='wave']
+	y=allSpec['wave']
+	allSpec.remove_column('wave')
 
-				flux[i]+=tempFlux
 
-		#func=interp2d([x1,x2],y,[[allSpec['p:'+str(int(x1))][i],allSpec['p:'+str(int(x2))][i]] for i in range(len(y))])
-		#tempFlux=np.append(np.zeros(len(newWave[newWave<wave[0]])),np.append(func(phase,wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]),np.zeros(len(newWave[newWave>wave[-1]]))))
-		#flux+=tempFlux
-		sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
-		return
+	func=interp2d(x,y,np.array([list(r) for r in np.array(allSpec)]))
+	tempFlux=np.transpose(func(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]],newWave[newWave>4000][newWave[newWave>4000]<7500]))
+	finalFlux=np.transpose(func(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]],wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]))
+	#if os.path.basename(sedFile)=='SDSS-015339.SED':
+	#	print(finalFlux)
+	#	print(wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]])
+	#	sys.exit()
+	splines=[]
+	for p in phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]]:
+
+		ind=np.where(phase==p)[0][0]
+		mySpline=spl(newWave[newWave>4000][newWave[newWave>4000]<7500],flux[ind][newWave<7500][newWave[newWave<7500]>4000],k=5,ext=1)
+		tempSpline=mySpline(newWave[newWave<7500][newWave[newWave<7500]>4000])
+		splines.append(np.log10(flux[ind][newWave<7500][newWave[newWave<7500]>4000]/tempSpline))
+
+	splines=np.array(splines)
+	waves=wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]
+	for i in range(len(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]])):
+		#const1=np.median(tempFlux[i])/np.max(tempFlux[i])
+		#const2=np.median(splines[i])/np.max(splines[i])
+		#const=const1/const2
+		const=np.nanmedian([math.fabs(k) for k in splines[i]/tempFlux[i]])
+		finalFlux[i]*=const
+		#if tempFlux[i][0]>splines[i][0]:
+		#	constMinus=tempFlux[i][0]-splines[i][0]
+		#	finalFlux[i]-=constMinus
+		#else:
+		#	constMinus=splines[i][0]-tempFlux[i][0]
+		#	tempFlux[i]+=constMinus
+		#splines[i]+=finalFlux[i]
+		ind=np.where(phase==phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]][i])[0][0]
+		for j in range(len(waves)):
+			ind2=np.where(newWave==waves[j])[0][0]
+
+			flux[ind][ind2]=max(0,flux[ind][ind2]+finalFlux[i][j])
+	fig=plt.figure()
+	ax=fig.gca()
+	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
+	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
+	plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
+	plt.close()
+	sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
+	return
 
 def addCCSpec(snType,sed=None,waveRange=None,phase=None,wave=None,flux=None,specList=None,specName=None):
 	if not sed:
@@ -147,7 +190,7 @@ def addIaSpec():
 	#mySne=sne[types=='IIP']
 	#aveSpec=createAveSpec('II',[os.path.join('data','spectra',x+'.lnw') for x in mySne],np.arange(-50,150,1),np.arange(1000,20000,10))
 #	#addSpec('Ia',None)
-#	f=addSpec('Ib',np.arange(-5,21,1),np.arange(4000,18000,50),np.arange(4000,10000,50),np.zeros([len(np.arange(-5,21,1)),len(np.arange(4000,18000,50))]))
+#	f=addSpec('Ib',np.arange(-5,21,1),np.arange(4000,17500,50),np.arange(4000,10000,50),np.zeros([len(np.arange(-5,21,1)),len(np.arange(4000,17500,50))]))
 
 
 #if __name__=='__main__':
