@@ -11,9 +11,9 @@ import pickle
 sndataroot = os.environ['SNDATA_ROOT']
 
 
-dir='bianco'
-snType=['Ib']
-filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
+dir='hicken'
+snType=['II','IIP']
+filelist=[os.path.basename(file) for file in ['hicken/lc_2009ay','hicken/lc_2010bq']]#glob.glob(os.path.join(dir,'*.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
 sn,redshift=np.loadtxt(os.path.join(dir,'redshift.ref'),dtype='str',unpack=True)
@@ -35,7 +35,7 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
-'''
+
 colorTables=[]
 typeSNe=None
 for i in range(len(filelist)):
@@ -94,7 +94,7 @@ curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=True)
 with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
     pickle.dump(curveDict,handle)
 
-'''
+
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 
 #typeColors=ascii.read(os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
