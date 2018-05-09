@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 #import seaborn as sns
-import sys,os,warnings
+import sys,os,warnings,matplotlib
 #from astropy.io import ascii
 from contextlib import contextmanager
 
@@ -118,23 +118,42 @@ def getModels(models, traces, rawdata,table, xlims,
                 '''
                 if color[0]=='U':
                     out='U'
-                    ax.set_title('Posterior Predictive Fits -- Data: U-B, Type {} -- Best Model: Order {}'.format(
-                        typ, bestModel[1]), fontsize=12)
+                    #ax.set_title('Posterior Predictive Fits -- Data: U-B, Type {} -- Best Model: Order {}'.format(
+                    #    typ, bestModel[1]), fontsize=12)
                 else:
                     out=color[-1]
-                    ax.set_title('Posterior Predictive Fits -- Data: r-{}, Type {} -- Best Model: Order {}'.format(
-                        color[-1],typ, bestModel[1]), fontsize=12)
+                    #ax.set_title('Posterior Predictive Fits -- Data: r-{}, Type {} -- Best Model: Order {}'.format(
+                    #   color[-1],typ, bestModel[1]), fontsize=12)
+                #plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
+                #plt.close()
+                cmap = matplotlib.cm.get_cmap('jet')
+
                 fig=plt.figure()
                 ax=fig.gca()
                 sne=np.unique(np.asarray(table['SN']))
                 snColorDict={sne[i]:colors[i] for i in range(len(sne))}
                 allSne=[]
+                #for sn in sne:
+                #    #allSne.append(ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],color=snColorDict[sn]))
+                #norm = matplotlib.colors.Normalize(vmin=min(table['mag']), vmax=max(table['mag']))
+                allVR=[]
+                shapes=['.','*','o','^','+','8','s']
+
+                b=0
                 for sn in sne:
-                    allSne.append(ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],color=snColorDict[sn]))
-                plt.figlegend(allSne,sne,bbox_to_anchor=(.9,.4))
+                    temp=ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],marker=shapes[b],label=sn)
+                    b+=1
+                    ax.errorbar(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],yerr=table['magerr'][table['SN']==sn],fmt=None, marker=None, mew=0,lw=.5,color='k',alpha=.4,label=None)#,c=cmap,fmt='.')
+                plt.colorbar(temp)
+                ax.legend(loc='lower right')
+                ax.plot(dfp['x'], dfp['500'], color='k', label='Median')
+                ax.plot(dfp['x'],dfp['500']+np.std(table['mag']),color='r',linestyle='--')
+                ax.plot(dfp['x'],dfp['500']-np.std(table['mag']),color='b',linestyle='--')
+                #plt.figlegend(allSne,sne,bbox_to_anchor=(.9,.4))
                 ax.set_xlabel('Days After Peak',size=14)
                 ax.set_ylabel('Color (Magnitude)', size=14)
                 ax.set_title('Color Curve by Supernova: Type {} -- Color={}'.format(typ,color))
+                
                 plt.savefig('type'+typ+'_'+out.upper()+'_fits_SNe.pdf',format='pdf')
             return(dfp)
 
