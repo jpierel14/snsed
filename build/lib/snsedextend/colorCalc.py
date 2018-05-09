@@ -291,7 +291,8 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             red=curve[curve[_get_default_prop_name('band')]==color[-1]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for color %s but missing necessary band(s)')
+                print('Asked for color %s but missing necessary band(s)'%color)
+            bandFit=None
             continue
 
         btemp=[bandDict[blue[_get_default_prop_name('band')][i]].name for i in range(len(blue))]
@@ -323,7 +324,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                     mods = [x for x in sncosmo.models._SOURCES._loaders.keys() if 'salt2' in x[0]]
 
                 mods = {x[0] if isinstance(x,(tuple,list)) else x for x in mods}
-                if len(blue)>len(red) or bandFit==color[0]:
+                if  bandFit==color[0] or len(blue)>len(red):
                     args[0]=blue
                     if len(blue)>60:
                         fits=[]
@@ -334,7 +335,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                     fitted=blue
                     notFitted=red
                     fit=color[0]
-                elif len(blue)<len(red) or bandFit==color[-1]:
+                elif bandFit==color[-1] or len(blue)<len(red):
                     args[0]=red
                     '''
                     data,temp= sncosmo_fitting.cut_bands(photometric_data(red), sncosmo.Model(tempMod),
@@ -372,7 +373,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                             bestRes=res
                 if verbose:
                     print('Best fit model is "%s", with a Chi-squared of %f'%(bestFit._source.name,bestChisq))
-            elif len(blue)>len(red) or bandFit==color[0]:
+            elif bandFit==color[0] or len(blue)>len(red):
                 args[0]=blue
                 bestRes,bestFit=_snFit(append(model,args))
                 fitted=blue
@@ -380,7 +381,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 fit=color[0]
                 if verbose:
                     print('The model you chose (%s) completed with a Chi-squared of %f'%(model,bestRes.chisq))
-            elif len(blue)<len(red) or bandFit==color[-1]:
+            elif bandFit==color[-1] or len(blue)<len(red):
                 args[0]=red
                 bestRes,bestFit=_snFit(append(model,args))
                 fitted=red
@@ -407,6 +408,8 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 fit=color[-1]
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
+
+        return(bestFit,bestRes,t0,fitted,notFitted)
         tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
 
         ugrid,UMagErr,lgrid,LMagErr=_getErrorFromModel(append([bestFit._source.name,fitted],args[1:]),zpsys,bandDict[fit])
@@ -419,6 +422,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         linterp=interpFunc(array(notFitted[_get_default_prop_name('time')]-t0))
         magerr=mean([minterp-uinterp,linterp-minterp],axis=0)
 
+
         for i in range(len(minterp)):
             colorTable.add_row(append(notFitted[_get_default_prop_name('time')][i]-t0,[1 for j in range(len(colorTable.colnames)-1)]),mask=[True if j>0 else False for j in range(len(colorTable.colnames))])
         if fit==color[0]:
@@ -426,11 +430,22 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         else:
             colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],array(notFitted[_get_default_prop_name('mag')])-minterp),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
         colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
+        #colorTable['V-r']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],[bestFit.color('bessellv','sdss::r',zpsys,t0) for i in range(len(linterp))]),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
+        tempVRCorr=0
         for name in bestFit.effect_names:
             magCorr=_unredden(color,bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
             colorTable[color]-=magCorr
+            tempVRCorr+=_unredden('V-R',bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
+            corr1=_ccm_extinction(sncosmo.get_bandpass('besselli').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
+            corr2=_ccm_extinction(sncosmo.get_bandpass('bessellr').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
+            corr3=_ccm_extinction(sncosmo.get_bandpass('bessellb').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
+            corr4=_ccm_extinction(sncosmo.get_bandpass('bessellv').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
+        vr=[x-tempVRCorr for x in bestFit.color('bessellv','bessellr',zpsys,arange(t0-20,t0+100,1))]
+        #vr=(bestFit.bandmag('bessellr',zpsys,arange(t0-20,t0+100,1))-bestFit.bandmag('besselli',zpsys,arange(t0-20,t0+100,1))-(corr2-corr1))/(bestFit.bandmag('bessellb',zpsys,arange(t0-20,t0+100,1))-bestFit.bandmag('bessellv',zpsys,arange(t0-20,t0+100,1))-(corr3-corr4))
+        bandFit=None
     colorTable.sort(_get_default_prop_name('time'))
-    return(colorTable)
+
+    return(colorTable,vr)
 
 
 
@@ -492,20 +507,20 @@ def colorTableCombine(tableList):
     import math
     remove=[]
     i=0
+
     while i<len(result)-1:
         i+=1
         start=i-1
-        while i<=len(result)-1 and math.fabs(result[_get_default_prop_name('time')][i]-result[_get_default_prop_name('time')][start])<.1:
+        while i<=len(result)-1 and math.fabs(result[_get_default_prop_name('time')][i]-result[_get_default_prop_name('time')][start])<.01:
             remove.append(i)
-            for col in [x for x in result.colnames if x != _get_default_prop_name('time')]:
+            for col in [x for x in result.colnames if x != _get_default_prop_name('time') and x!='SN']:
+                    if result[i][col] and not result[start][col]:
+                        result[start][col]=result[i][col]
+                    elif result[i][col] and result[start][col]:
+                        result[start][col]=average([array(result[start][col]),array(result[i][col])])
 
-                if result[i][col] and not result[start][col]:
-                    result[start][col]=result[i][col]
-                elif result[i][col] and result[start][col]:
-                    result[start][col]=average([array(result[start][col]),array(result[i][col])])
             i+=1
 
     result.remove_rows(remove)
     result.sort(_get_default_prop_name('time'))
-
     return(result)

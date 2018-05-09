@@ -586,7 +586,7 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     return(model.bandmag(band,zpsys,currentPhase))
 
 
-def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
+def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=False):
     """
     Fits color curves calculated in colorCalc module using BIC
 
@@ -600,7 +600,7 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
     :type verbose: Boolean,optional
     :returns: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as values.
     """
-    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
+    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-' and x!='V-r']
     result=dict([])
     if verbose:
         print("Running BIC for color:")
@@ -608,13 +608,12 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
         if verbose:
             print('     '+color)
         tempTable=table[~table[color].mask]
-
         tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err'],tempTable['SN']],names=('time','mag','magerr','SN'))
-        temp=BICrun(tempTable,color=color,type=type,savefig=savefig)
+        temp=BICrun(tempTable,color=color,type=type,savefig=savefig,vr=vrDict)
         result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
     return(result)
 
-def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,medianColor=None,specList=None,specName=None):
+def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,medianColor=None,colorVar=None,specList=None,specName=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -680,10 +679,10 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
     for sedfile in sedlist:
         origWave=_getWave(sedfile)
         VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
-        if VRColor/medianColor>=1:
-            colorExtreme='blue'
-        elif VRColor/medianColor<=-1:
+        if VRColor>=(medianColor+colorVar):
             colorExtreme='red'
+        elif VRColor<=(medianColor-colorVar):
+            colorExtreme='blue'
         else:
             colorExtreme='median'
 

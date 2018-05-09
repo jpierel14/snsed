@@ -59,6 +59,7 @@ _fittingPackages={
 
 _defaultSpec={
     'Ib':'sn2007Y.lnw',
+    'II':'sn2006bp.lnw',
     'IIP':'sn2006bp.lnw',
     'Ic':'sn1983V.lnw'
 }
