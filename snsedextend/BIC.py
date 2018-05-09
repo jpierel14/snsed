@@ -94,6 +94,7 @@ def getModels(models, traces, rawdata,table, xlims,
                                ,columns=['025','250','500','750','975'])
             dfp['x'] = x
             if savefig:
+                '''
                 pal = sns.color_palette('Reds')
                 ax.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
                                 ,color=pal[1], label='CR 95%')
@@ -111,6 +112,10 @@ def getModels(models, traces, rawdata,table, xlims,
                 ax.set_xlabel('Days After Peak',size=14)
                 ax.set_ylabel('Color (Magnitude)', size=14)
                 plt.figlegend(types,[str(x) for x in np.unique([typeDict[x] for x in rawdata['names']])],bbox_to_anchor=(.7,.23))
+                
+                plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
+                plt.close()
+                '''
                 if color[0]=='U':
                     out='U'
                     ax.set_title('Posterior Predictive Fits -- Data: U-B, Type {} -- Best Model: Order {}'.format(
@@ -119,8 +124,6 @@ def getModels(models, traces, rawdata,table, xlims,
                     out=color[-1]
                     ax.set_title('Posterior Predictive Fits -- Data: r-{}, Type {} -- Best Model: Order {}'.format(
                         color[-1],typ, bestModel[1]), fontsize=12)
-                plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
-                plt.close()
                 fig=plt.figure()
                 ax=fig.gca()
                 sne=np.unique(np.asarray(table['SN']))
