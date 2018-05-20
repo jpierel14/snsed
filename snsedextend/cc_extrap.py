@@ -615,9 +615,11 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
     return(result)
 
 def _shiftCurve(time,curveDict,bb,zpsys,color):
-    
-    shift=curveDict['median'][time==0-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
-
+    func=scint.interp1d(time,curveDict['median'])
+    shift=func(0)-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
+    for key in curveDict.keys():
+        curveDict[key]-=shift
+    return(curveDict)
 
 
 
@@ -719,7 +721,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
 
-            UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],extremeColors[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
+            UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],shiftedCurve[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
             if UV:
                 boundUV=True
                 bandsDone.append(color[0])
