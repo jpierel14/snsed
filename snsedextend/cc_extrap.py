@@ -615,7 +615,9 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
     return(result)
 
 def _shiftCurve(curve):
+    blackbody=getBB(phase,wave,flux)#np.transpose(interpfunc(wave,[0])))
 
+    tempMod=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,np.arange(5000,30000,50),blackbody))
 
 def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
