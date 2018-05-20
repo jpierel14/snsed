@@ -14,6 +14,7 @@ from .utils import *
 from .helpers import *
 from .BIC import BICrun
 from .spec import _addCCSpec
+from .bb import *
 
 __all__=['extendCC','createSNSED','plotSED','fitColorCurve']
 
@@ -600,7 +601,7 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
     :type verbose: Boolean,optional
     :returns: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as values.
     """
-    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-' and x!='V-r']
+    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
     result=dict([])
     if verbose:
         print("Running BIC for color:")
@@ -613,7 +614,10 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
         result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
     return(result)
 
-def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,medianColor=None,colorVar=None,specList=None,specName=None):
+def _shiftCurve(curve):
+
+
+def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -678,16 +682,8 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
     returnList=[]
     for sedfile in sedlist:
         origWave=_getWave(sedfile)
-        if not colorExtreme:
-            VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
-            if VRColor>=(medianColor+colorVar):
-                colorExtreme='red'
-            elif VRColor<=(medianColor-colorVar):
-                colorExtreme='blue'
-            else:
-                colorExtreme='median'
 
-        newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile)+'_'+colorExtreme)
+        newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
             print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
         once=False
@@ -705,6 +701,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
             extremeColors=dict([])
+            shiftedCurve=_shiftCurve(extremeColors['median'])
             extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
 
             tempMask=colorTable[color].mask
@@ -713,6 +710,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
+
             UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],extremeColors[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
             if UV:
                 boundUV=True

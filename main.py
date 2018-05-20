@@ -35,7 +35,7 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
-
+'''
 colorTables=[]
 typeSNe=None
 vrDict=dict([])
@@ -107,6 +107,7 @@ ascii.write(typeColors,os.path.join('snsedextend','data','default','type'+snType
 with open('tempvr.dat','wb') as handle:
     pickle.dump(vrDict,handle)
 
+'''
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 handle= open('tempvr.dat','rb')
 vrDict=pickle.load(handle)
@@ -129,34 +130,9 @@ curveDict=pickle.load(handle)
 seds=np.loadtxt(os.path.join('snsedextend','data','default','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-colors=[]
-for sed in sedlist:
-    model=sncosmo.Model(snsedextend.createSNSED(os.path.join(sndataroot,"snsed","NON1A",sed)))
-    colors.append(model.color('bessellv','sdss::r','vega',0))
-medColor=np.median(colors)
-colorVar=np.std(colors)/np.sqrt(len(colors))
 
-#avgColor=0.174970112635
-#print(avgColor)
-#fig=plt.figure()
-#ax=fig.gca()
-#ax.scatter([i for i in range(len(colors))],colors)
-#plt.show()
-#plt.close()
-#sys.exit()
-'''
- VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
-        if VRColor/medianColor>=1:
-            colorExtreme='blue'
-        elif VRColor/medianColor<=-1:
-            colorExtreme='red'
-        else:
-            colorExtreme='median'
-'''
 #sedlist=[os.path.join(sndataroot,'snsed','NON1A','CSP-2004fe.SED')]
-for c in ['red','blue','median']:
-    #seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','Type_'+snType[0]),colorExtreme=c,sedlist=sedlist,zpsys='Vega',verbose=True,medianColor=medColor,colorVar=colorVar)
-    seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','blackbodyExtrap','bbDat'),colorExtreme=c,sedlist=sedlist,zpsys='Vega',verbose=True,medianColor=medColor,colorVar=colorVar)
+seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','blackbodyExtrap','bbDat'),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
 
 #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
