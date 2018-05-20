@@ -614,10 +614,12 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
         result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
     return(result)
 
-def _shiftCurve(curve):
-    blackbody=getBB(phase,wave,flux)#np.transpose(interpfunc(wave,[0])))
+def _shiftCurve(time,curveDict,bb,zpsys,color):
+    
+    shift=curveDict['median'][time==0-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
 
-    tempMod=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,np.arange(5000,30000,50),blackbody))
+
+
 
 def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
@@ -682,9 +684,13 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
         sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
         sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
     returnList=[]
+
+
     for sedfile in sedlist:
         origWave=_getWave(sedfile)
-
+        phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+        bbWave,blackbody=getBB(phase,wave,flux)
+        blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
             print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
@@ -703,9 +709,9 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
             extremeColors=dict([])
-            shiftedCurve=_shiftCurve(extremeColors['median'])
-            extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
 
+            extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
+            shiftedCurve=_shiftCurve(colorCurveDict[color]['time'],extremeColors,blackbody)
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask

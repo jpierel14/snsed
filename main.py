@@ -88,43 +88,44 @@ for i in range(len(filelist)):
 #['SN']=typeSNe
 #sys.exit()
 #typeColors=ascii.read(os.path.join('hicken','typeII','tables','allIIColors.dat'))
-import matplotlib.pyplot as plt
-fig=plt.figure()
-ax=fig.gca()
-col='R/(B+V'
-colDict={'SN_2005hg':'b','SN_2006fo':'k','SN_2007C':'g','SN_2008D':'orange','SN_2009iz':'cyan','SN_2009jf':'violet'}
+#import matplotlib.pyplot as plt
+#fig=plt.figure()
+#ax=fig.gca()
+#col='R/(B+V'
+#colDict={'SN_2005hg':'b','SN_2006fo':'k','SN_2007C':'g','SN_2008D':'orange','SN_2009iz':'cyan','SN_2009jf':'violet'}
 #colDict={'SN_2005kl':'b','SN_2006aj':'g','SN_2005mf':'k','SN_2007D':'orange','SN_2007I':'cyan','SN_2007gr':'violet'}
-for sn in vrDict.keys():
-    if sn in colDict.keys():
-        ax.plot(np.arange(-20,100,1),vrDict[sn],label=sn,color=colDict[sn])
-ax.legend()
-ax.set_title(col)
-plt.savefig(snType[0]+'_'+'test'+'.pdf',format='pdf',overwrite=True)
+#for sn in vrDict.keys():
+#    if sn in colDict.keys():
+#        ax.plot(np.arange(-20,100,1),vrDict[sn],label=sn,color=colDict[sn])
+#ax.legend()
+#ax.set_title(col)
+#plt.savefig(snType[0]+'_'+'test'+'.pdf',format='pdf',overwrite=True)
 #sys.exit()
 typeColors=snsedextend.colorTableCombine(colorTables)
 
 ascii.write(typeColors,os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
-with open('tempvr.dat','wb') as handle:
-    pickle.dump(vrDict,handle)
+#with open('tempvr.dat','wb') as handle:
+#    pickle.dump(vrDict,handle)
 
-'''
+
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
-handle= open('tempvr.dat','rb')
-vrDict=pickle.load(handle)
+#handle= open('tempvr.dat','rb')
+#vrDict=pickle.load(handle)
 curveDict=snsedextend.fitColorCurve(typeColors,vrDict,type=snType[0],savefig=True)
 #sys.exit()
 
 with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
     pickle.dump(curveDict,handle)
 
-
-typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
+#typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 
 #typeColors=ascii.read(os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
-
+'''
 
 #    sys.exit()
 ###### for debugging#####
+typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
+
 handle= open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'rb')
 curveDict=pickle.load(handle)
 seds=np.loadtxt(os.path.join('snsedextend','data','default','NON1A.LIST'),dtype='str',unpack=True)
