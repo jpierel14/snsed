@@ -11,8 +11,8 @@ import pickle
 sndataroot = os.environ['SNDATA_ROOT']
 
 
-dir='hicken'
-snType=['II']
+dir='bianco'
+snType=['Ic']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
 
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
@@ -36,7 +36,7 @@ for k in colors:
     elif not isinstance(colors[k],(list,tuple)):
         colors[k]=[colors[k]]
 
-
+'''
 colorTables=[]
 typeSNe=None
 vrDict=dict([])
@@ -47,7 +47,7 @@ for i in range(len(filelist)):
         #if filelist[i]:# in ['lc_2005bf_clipped.dat','lc_2005hg_clipped.dat']:
         #print(colors[filelist[i][:-12]],typ[filelist[i][:-12]],'vega',{'hostebv':(-1,1),'t0':(peaks[filelist[i][:-12]]-5,peaks[filelist[i][:-12]]+5)},{'z':redshift[filelist[i][:-12]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-12]]},'CCM89Dust',
         #      ['rest','obs'],['host','mw'])
-        temp,vr=snsedextend.curveToColor(os.path.join(dir,filelist[i]),['U-B','r-J','r-H','r-K'],snType=typ[filelist[i][:-4]],zpsys='Vega',
+        temp =snsedextend.curveToColor(os.path.join(dir,filelist[i]),['U-B','r-J','r-H','r-K'],snType=typ[filelist[i][:-4]],zpsys='Vega',
                                       bounds={'hostebv':(-1,1),'t0':(peaks[filelist[i][:-4]]-5,peaks[filelist[i][:-4]]+5)},
                                       constants={'z':redshift[filelist[i][:-4]],'hostr_v':3.1,'mwr_v':3.1,'mwebv':dust[filelist[i][:-4]]},
                                       dust='CCM89Dust',effect_frames=['rest','obs'],effect_names=['host','mw'])
@@ -81,7 +81,6 @@ for i in range(len(filelist)):
         """
         typeSNe=[filelist[i][:-4].replace('lc','SN') for j in range(len(temp))]
         temp['SN']=typeSNe
-        vrDict[typeSNe[0]]=vr
         temp.remove_columns([x for x in temp.colnames if x in ['B-J','B-H','B-K','u-B']])
         if len(temp.colnames)>1:
             colorTables.append(temp)
@@ -136,7 +135,7 @@ sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType 
 
 
 #sedlist=[os.path.join(sndataroot,'snsed','NON1A','CSP-2004fe.SED')]
-seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs','Type_'+snType[0]),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
+seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs.P18-UV2IR','Type_'+snType[0]),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
 
 #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')

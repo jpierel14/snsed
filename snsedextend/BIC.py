@@ -99,9 +99,7 @@ def getModels(models, traces, rawdata,table, xlims,
                                ,columns=['025','250','500','750','975'])
             dfp['x'] = x
             if savefig:
-<<<<<<< HEAD
 
-=======
                 '''
                 pal = sns.color_palette('Reds')
                 ax.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
@@ -124,7 +122,6 @@ def getModels(models, traces, rawdata,table, xlims,
                 plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
                 plt.close()
                 '''
->>>>>>> master
                 if color[0]=='U':
                     out='U'
                     #ax.set_title('Posterior Predictive Fits -- Data: U-B, Type {} -- Best Model: Order {}'.format(
@@ -150,16 +147,13 @@ def getModels(models, traces, rawdata,table, xlims,
 
                 b=0
                 for sn in sne:
-<<<<<<< HEAD
                     ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],label=sn)
                     b+=1
                     ax.errorbar(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],yerr=table['magerr'][table['SN']==sn],fmt=None, marker=None, mew=0,lw=.5,color='k',alpha=.4,label=None)#,c=cmap,fmt='.')
-=======
                     temp=ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],marker=shapes[b],label=sn)
                     b+=1
                     ax.errorbar(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],yerr=table['magerr'][table['SN']==sn],fmt=None, marker=None, mew=0,lw=.5,color='k',alpha=.4,label=None)#,c=cmap,fmt='.')
                 plt.colorbar(temp)
->>>>>>> master
                 ax.legend(loc='lower right')
                 ax.plot(dfp['x'], dfp['500'], color='k', label='Median')
                 ax.plot(dfp['x'],dfp['500']+np.std(table['mag']),color='r',linestyle='--')

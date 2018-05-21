@@ -41,7 +41,8 @@ def getBB(phase,wave,flux):
         else:
             flux2=flux[p][wave<9000][wave[wave<9000]>4200]
             wave2=wave[wave<9000][wave[wave<9000]>4200]*u.AA
-            res=minimize(_bbChi,np.array([6000,1]),args=(wave2,smooth(flux2,len(flux2)/3,2)),bounds=((0,None),(0,None)))
+            win=int(len(flux2)/3) if (int(len(flux2)/3))%2!=0 else int(len(flux)/3)+1
+            res=minimize(_bbChi,np.array([6000,1]),args=(wave2,smooth(flux2,win,2)),bounds=((0,None),(0,None)))
 
             temp,const=res.x
             bbFlux=fluxFromBB(temp,const,newWave)

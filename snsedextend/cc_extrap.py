@@ -725,19 +725,12 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
     for sedfile in sedlist:
 
-        origWave=_getWave(sedfile)
         phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
         bbWave,blackbody=getBB(phase,wave,flux)
         blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
 
         origWave=_getWave(sedfile,bandDict,colors)
-        VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
-        if VRColor/medianColor>=1:
-            colorExtreme='blue'
-        elif VRColor/medianColor<=-1:
-            colorExtreme='red'
-        else:
-            colorExtreme='median'
+
 
 
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
@@ -770,7 +763,6 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
-
             UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],shiftedCurve[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
             if UV:
                 boundUV=True
@@ -780,9 +772,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
                 bandsDone.append(color[-1])
             once=True
 
-
         _addCCSpec(snType,newsedfile,origWave,specList,specName)
-
         #phase,wave,flux=sncosmo.read_griddata_ascii(newsedfile)
         #temp=sncosmo.Model(sncosmo.TimeSeriesSource(phase,wave,flux))
         #for col in [('sdss::r','paritel::j'),('sdss::r','paritel::h'),('sdss::r','paritel::ks')]:

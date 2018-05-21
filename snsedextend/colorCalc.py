@@ -409,7 +409,6 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
 
-        #return(bestFit,bestRes,t0,fitted,notFitted)
         tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
 
         ugrid,UMagErr,lgrid,LMagErr=_getErrorFromModel(append([bestFit._source.name,fitted],args[1:]),zpsys,bandDict[fit])
@@ -430,22 +429,11 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         else:
             colorTable[color]=MaskedColumn(append([1 for j in range(len(colorTable)-len(minterp))],array(notFitted[_get_default_prop_name('mag')])-minterp),mask=[True if j<(len(colorTable)-len(minterp)) else False for j in range(len(colorTable))])
         colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
-        #colorTable['V-r']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],[bestFit.color('bessellv','sdss::r',zpsys,t0) for i in range(len(linterp))]),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
-        tempVRCorr=0
-        for name in bestFit.effect_names:
-            magCorr=_unredden(color,bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
-            colorTable[color]-=magCorr
-            tempVRCorr+=_unredden('V-R',bandDict,bestRes.parameters[bestRes.param_names.index(name+'ebv')],bestRes.parameters[bestRes.param_names.index(name+'r_v')])
-            corr1=_ccm_extinction(sncosmo.get_bandpass('besselli').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
-            corr2=_ccm_extinction(sncosmo.get_bandpass('bessellr').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
-            corr3=_ccm_extinction(sncosmo.get_bandpass('bessellb').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
-            corr4=_ccm_extinction(sncosmo.get_bandpass('bessellv').wave_eff, bestRes.parameters[bestRes.param_names.index(name+'ebv')], r_v=3.1)
-        vr=[x-tempVRCorr for x in bestFit.color('bessellv','bessellr',zpsys,arange(t0-20,t0+100,1))]
-        #vr=(bestFit.bandmag('bessellr',zpsys,arange(t0-20,t0+100,1))-bestFit.bandmag('besselli',zpsys,arange(t0-20,t0+100,1))-(corr2-corr1))/(bestFit.bandmag('bessellb',zpsys,arange(t0-20,t0+100,1))-bestFit.bandmag('bessellv',zpsys,arange(t0-20,t0+100,1))-(corr3-corr4))
+
         bandFit=None
     colorTable.sort(_get_default_prop_name('time'))
 
-    return(colorTable,vr)
+    return(colorTable)
 
 
 
