@@ -587,7 +587,34 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     return(model.bandmag(band,zpsys,currentPhase))
 
 
-def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=False):
+def _shiftCurve(time,curveDict,bb,color,zpsys):
+    func=scint.interp1d(time,curveDict['median'])
+    shift=func(0)-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
+    for key in curveDict.keys():
+        curveDict[key]-=shift
+    return(curveDict)
+
+
+def _flattenCurve(curve,color,time):
+
+    func=scint.interp1d(curve['time'],curve[color])
+    minVal=func(np.min(time))
+    maxVal=func(np.max(time))
+
+    curve.add_row((np.max(time),maxVal))
+    curve.add_row((np.min(time),minVal))
+    curve.sort(_get_default_prop_name('time'))
+
+    curve[curve[_get_default_prop_name('time')]<np.min(time)][color]=minVal
+    curve[curve[_get_default_prop_name('time')]>np.max(time)][color]=maxVal
+
+    return(curve)
+
+
+
+
+
+def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
     """
     Fits color curves calculated in colorCalc module using BIC
 
@@ -610,16 +637,13 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
             print('     '+color)
         tempTable=table[~table[color].mask]
         tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err'],tempTable['SN']],names=('time','mag','magerr','SN'))
-        temp=BICrun(tempTable,color=color,type=type,savefig=savefig,vr=vrDict)
-        result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
+        temp=BICrun(tempTable,color=color,type=type,savefig=savefig)
+
+        result[color]=_flattenCurve(Table([temp['x'],temp[str(confidence*10)]],names=(_get_default_prop_name('time'),color)),color,tempTable[_get_default_prop_name('time')])
+
+
     return(result)
 
-def _shiftCurve(time,curveDict,bb,zpsys,color):
-    func=scint.interp1d(time,curveDict['median'])
-    shift=func(0)-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
-    for key in curveDict.keys():
-        curveDict[key]-=shift
-    return(curveDict)
 
 
 
@@ -713,7 +737,10 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
             extremeColors=dict([])
 
             extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
-            shiftedCurve=_shiftCurve(colorCurveDict[color]['time'],extremeColors,blackbody)
+            if sncosmo.get_bandpass(_filters[color[0]]).wave_eff>_UVrightBound:
+                shiftedCurve=_shiftCurve(colorCurveDict[color]['time'],extremeColors,blackbody,color,zpsys)
+            else:
+                shiftedCurve=extremeColors
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask
@@ -732,6 +759,11 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
         _addCCSpec(snType,newsedfile,origWave,specList,specName)
+
+        #phase,wave,flux=sncosmo.read_griddata_ascii(newsedfile)
+        #temp=sncosmo.Model(sncosmo.TimeSeriesSource(phase,wave,flux))
+        #for col in [('sdss::r','paritel::j'),('sdss::r','paritel::h'),('sdss::r','paritel::ks')]:
+        #    print(temp.color(col[0],col[1],'vega',0),blackbody.color(col[0],col[1],'vega',0))
 
         if showplots:
             plotSED(newsedfile,day=showplots)

@@ -163,12 +163,12 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 			ind2=np.where(newWave==waves[j])[0][0]
 
 			flux[ind][ind2]=max(0,flux[ind][ind2]+finalFlux[i][j])
-	fig=plt.figure()
-	ax=fig.gca()
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
-	plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
-	plt.close()
+	#fig=plt.figure()
+	#ax=fig.gca()
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
+	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
+	#plt.close()
 	sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
 	return
 

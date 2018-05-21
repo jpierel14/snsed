@@ -12,7 +12,7 @@ sndataroot = os.environ['SNDATA_ROOT']
 
 
 dir='hicken'
-snType=['II','IIP']
+snType=['II']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
 #IIn=['lc_2008ip.dat','lc_2010bq.dat']
@@ -111,7 +111,7 @@ ascii.write(typeColors,os.path.join('snsedextend','data','default','type'+snType
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 #handle= open('tempvr.dat','rb')
 #vrDict=pickle.load(handle)
-curveDict=snsedextend.fitColorCurve(typeColors,vrDict,type=snType[0],savefig=True)
+curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=True)
 #sys.exit()
 
 with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
@@ -120,8 +120,8 @@ with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]
 #typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 
 #typeColors=ascii.read(os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
-'''
 
+'''
 #    sys.exit()
 ###### for debugging#####
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
@@ -133,7 +133,7 @@ sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType 
 
 
 #sedlist=[os.path.join(sndataroot,'snsed','NON1A','CSP-2004fe.SED')]
-seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','blackbodyExtrap','bbDat'),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
+seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs','Type_'+snType[0]),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
 
 #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
