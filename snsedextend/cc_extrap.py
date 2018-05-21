@@ -562,8 +562,19 @@ def _boundIRsed(sedfile):
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[j], fnew[j] ))
     fout.close()
 
-def _getWave(sedfile):
+def _getWave(sedfile,bandDict,colors):
     phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+    for color in colors:
+        wave1=sncosmo.get_bandpass(bandDict[color[0]]).wave
+        wave2=sncosmo.get_bandpass(bandDict[color[-1]]).wave
+        if wave1[0]>=wave[0] and wave1[-1]<=wave[-1]:
+            if wave2[0]>=wave[0] and wave2[-1]<=wave[-1]:
+                if wave2[0]>=_IRleftBound:
+                    wave=wave[wave<wave2[0]]
+            else:
+                wave=wave[wave<wave2[0]]
+        else:
+            wave=wave[wave>wave1[-1]]
     return(wave)
 
 def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
@@ -713,10 +724,22 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
     for sedfile in sedlist:
+<<<<<<< HEAD
         origWave=_getWave(sedfile)
         phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
         bbWave,blackbody=getBB(phase,wave,flux)
         blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
+=======
+        origWave=_getWave(sedfile,bandDict,colors)
+        VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
+        if VRColor/medianColor>=1:
+            colorExtreme='blue'
+        elif VRColor/medianColor<=-1:
+            colorExtreme='red'
+        else:
+            colorExtreme='median'
+
+>>>>>>> master
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
             print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
