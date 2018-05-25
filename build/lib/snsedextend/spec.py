@@ -5,6 +5,8 @@ from astropy.table import Table,hstack
 from astropy.io import ascii
 from scipy.interpolate import UnivariateSpline as spl
 import matplotlib.pyplot as plt
+from scipy.optimize import minimize
+
 from .utils import __dir__,_defaultSpec
 from helpers import _find_nearest
 
@@ -106,6 +108,44 @@ def _readSpec(spec):
 			break
 	return(allSpec)
 
+def _chisquared(obs,actual):
+	return(np.sum(((obs-actual)**2)))
+
+def _specChi(const,sedFlux,tempFlux):
+	return(_chisquared(sedFlux,tempFlux*const))
+
+def _findBest(snType,wave,flux):
+	flux=flux[wave>4200][wave[wave>4200]<6500]
+	wave=wave[wave>4200][wave[wave>4200]<6500]
+
+	mySpline=spl(wave,flux,k=5,ext=1)
+	tempSpline=mySpline(wave)
+	splineRemoved=np.log10(flux/tempSpline)
+	sne,types=np.loadtxt(os.path.join(__dir__,'data','spectra','snTypes.ref'),dtype='str',unpack=True)
+	mySpecs=sne[types==snType]
+	bestChi=np.inf
+	bestSpec=None
+	bestConst=None
+	for spec in mySpecs:
+		data=_readSpec(os.path.join(__dir__,'data','spectra',spec+'.lnw'))
+		x=np.array([float(col[2:]) for col in data.colnames if col !='wave'])
+
+
+		if len(x)<2:
+			continue
+		y=data['wave']
+
+		data.remove_column('wave')
+		func=interp2d(x,y,np.array([list(r) for r in np.array(data)]))
+		tempFlux=np.transpose(func(0,wave))[0]
+		res=minimize(_specChi,np.array([1]),args=(splineRemoved,tempFlux))
+		if res.fun<bestChi:
+			bestChi=res.fun
+			bestSpec=spec
+			bestConst=res.x
+	return(_readSpec(os.path.join(__dir__,'data','spectra',bestSpec+'.lnw')),bestConst)
+
+
 def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	phase,newWave,flux=sncosmo.read_griddata_ascii(sedFile)
 	wave=np.append(newWave[newWave<oldWave[0]],newWave[newWave>oldWave[-1]])
@@ -118,8 +158,12 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 		spec=os.path.join(__dir__,'data','spectra',specName)
 		allSpec=_readSpec(spec)
 	else:
-		spec=os.path.join(__dir__,'data','spectra',_defaultSpec[snType])
-		allSpec=_readSpec(spec)
+		tempInd,tempVal=_find_nearest(phase,0)
+		if snType=='II':
+			snType='IIP'
+		allSpec,bestConst=_findBest(snType,newWave,flux[tempInd])
+		#spec=os.path.join(__dir__,'data','spectra',_defaultSpec[snType])
+		#allSpec=_readSpec(spec)
 
 
 
@@ -127,14 +171,16 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	y=allSpec['wave']
 	allSpec.remove_column('wave')
 
-
 	func=interp2d(x,y,np.array([list(r) for r in np.array(allSpec)]))
 	tempFlux=np.transpose(func(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]],newWave[newWave>4000][newWave[newWave>4000]<7500]))
 	finalFlux=np.transpose(func(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]],wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]))
+	if np.max(np.max(finalFlux))==0:
+		return
 	#if os.path.basename(sedFile)=='SDSS-015339.SED':
 	#	print(finalFlux)
 	#	print(wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]])
 	#	sys.exit()
+
 	splines=[]
 	for p in phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]]:
 
@@ -146,11 +192,14 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	splines=np.array(splines)
 	waves=wave[wave>=y[0]][wave[wave>=y[0]]<=y[-1]]
 	for i in range(len(phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]])):
-		#const1=np.median(tempFlux[i])/np.max(tempFlux[i])
-		#const2=np.median(splines[i])/np.max(splines[i])
-		#const=const1/const2
-		const=np.nanmedian([math.fabs(k) for k in splines[i]/tempFlux[i]])
+		#const1=math.fabs(np.max(splines[i])/np.max(tempFlux[i]))
+
+		#const2=math.fabs(np.min(splines[i])/np.max(tempFlux[i]))
+		const=minimize(_specChi,np.array([bestConst]),args=(splines[i],tempFlux[i])).x
+		#const=np.nanmedian([math.fabs(k) for k in splines[i]/tempFlux[i]])
 		finalFlux[i]*=const
+		if i==4:
+			final=const
 		#if tempFlux[i][0]>splines[i][0]:
 		#	constMinus=tempFlux[i][0]-splines[i][0]
 		#	finalFlux[i]-=constMinus
@@ -161,14 +210,20 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 		ind=np.where(phase==phase[phase>=x[0]][phase[phase>=x[0]]<=x[-1]][i])[0][0]
 		for j in range(len(waves)):
 			ind2=np.where(newWave==waves[j])[0][0]
-
 			flux[ind][ind2]=max(0,flux[ind][ind2]+finalFlux[i][j])
-	fig=plt.figure()
-	ax=fig.gca()
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
-	plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
-	plt.close()
+	#fig=plt.figure()
+	#ax=fig.gca()
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
+	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
+	#plt.close()
+
+	#fig=plt.figure()
+	#ax=fig.gca()
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*final)
+	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
+	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
+	#plt.close()
 	sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
 	return
 

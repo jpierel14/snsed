@@ -103,27 +103,24 @@ for i in range(len(filelist)):
 #sys.exit()
 typeColors=snsedextend.colorTableCombine(colorTables)
 
-ascii.write(typeColors,os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
+ascii.write(typeColors,'hicken/IIn/IInColors.tab')#os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 #with open('tempvr.dat','wb') as handle:
 #    pickle.dump(vrDict,handle)
 
 
-typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 #handle= open('tempvr.dat','rb')
 #vrDict=pickle.load(handle)
-curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=True)
+curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=False)
 #sys.exit()
 
-with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
+with open('hicken/IIn/Curve.pick','wb') as handle:#os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
     pickle.dump(curveDict,handle)
 
 #typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 
-typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
-
-#typeColors=ascii.read(os.path.join(dir,'type'+snType[0],'tables','all'+snType[0]+'Colors.dat'))
 
 '''
+
 #    sys.exit()
 ###### for debugging#####
 typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
@@ -133,10 +130,9 @@ curveDict=pickle.load(handle)
 seds=np.loadtxt(os.path.join('snsedextend','data','default','NON1A.LIST'),dtype='str',unpack=True)
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
-
 #sedlist=[os.path.join(sndataroot,'snsed','NON1A','CSP-2004fe.SED')]
-seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs.P18-UV2IR','Type_'+snType[0]),colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True)
-
+seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc='.',colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True,showplots=1)
+#outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs.P18-UV2IR','Type_'+snType[0])
 #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')
 #sncosmo.write_lc(typeColors,'lcs_clipped2/tables/allColors.dat')

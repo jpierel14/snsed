@@ -2,6 +2,7 @@ README.md
 setup.py
 snsedextend/BIC.py
 snsedextend/__init__.py
+snsedextend/bb.py
 snsedextend/cc_extrap.py
 snsedextend/colorCalc.py
 snsedextend/example.py
@@ -28,6 +29,7 @@ snsedextend/data/bands/rBand/tophatR.dat
 snsedextend/data/bands/uBand/tophatU.dat
 snsedextend/data/bands/vBand/tophatV.dat
 snsedextend/data/default/NON1A.LIST
+snsedextend/data/default/NON1A.LIST~
 snsedextend/data/default/typeII/IIColors.dat
 snsedextend/data/default/typeII/IICurve.pick
 snsedextend/data/default/typeII/II_aveSpec.dat

@@ -14,6 +14,7 @@ from .utils import *
 from .helpers import *
 from .BIC import BICrun
 from .spec import _addCCSpec
+from .bb import *
 
 __all__=['extendCC','createSNSED','plotSED','fitColorCurve']
 
@@ -561,8 +562,19 @@ def _boundIRsed(sedfile):
             fout.write("%5.1f  %10i  %12.7e \n"%( d[0], wnew[j], fnew[j] ))
     fout.close()
 
-def _getWave(sedfile):
+def _getWave(sedfile,bandDict,colors):
     phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+    for color in colors:
+        wave1=sncosmo.get_bandpass(bandDict[color[0]]).wave
+        wave2=sncosmo.get_bandpass(bandDict[color[-1]]).wave
+        if wave1[0]>=wave[0] and wave1[-1]<=wave[-1]:
+            if wave2[0]>=wave[0] and wave2[-1]<=wave[-1]:
+                if wave2[0]>=_IRleftBound:
+                    wave=wave[wave<wave2[0]]
+            else:
+                wave=wave[wave<wave2[0]]
+        else:
+            wave=wave[wave>wave1[-1]]
     return(wave)
 
 def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
@@ -586,7 +598,34 @@ def bandMag(filename,currentPhase,band,zpsys='AB',rescale=False):
     return(model.bandmag(band,zpsys,currentPhase))
 
 
-def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=False):
+def _shiftCurve(time,curveDict,bb,color,zpsys):
+    func=scint.interp1d(time,curveDict['median'])
+    shift=func(0)-bb.color(_filters[color[0]],_filters[color[-1]],zpsys,0)
+    for key in curveDict.keys():
+        curveDict[key]-=shift
+    return(curveDict)
+
+
+def _flattenCurve(curve,color,time):
+
+    func=scint.interp1d(curve['time'],curve[color])
+    minVal=func(np.min(time))
+    maxVal=func(np.max(time))
+
+    curve.add_row((np.max(time),maxVal))
+    curve.add_row((np.min(time),minVal))
+    curve.sort(_get_default_prop_name('time'))
+
+    curve[curve[_get_default_prop_name('time')]<np.min(time)][color]=minVal
+    curve[curve[_get_default_prop_name('time')]>np.max(time)][color]=maxVal
+
+    return(curve)
+
+
+
+
+
+def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
     """
     Fits color curves calculated in colorCalc module using BIC
 
@@ -600,7 +639,7 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
     :type verbose: Boolean,optional
     :returns: A dictionary containing colors from the colorTable input as keys, time/color vectors in astropy.Table format as values.
     """
-    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-' and x!='V-r']
+    colors=[x for x in table.colnames if len(x)==3 and x[1]=='-']
     result=dict([])
     if verbose:
         print("Running BIC for color:")
@@ -609,11 +648,17 @@ def fitColorCurve(table,vrDict,confidence=50,type='II',verbose=True,savefig=Fals
             print('     '+color)
         tempTable=table[~table[color].mask]
         tempTable=Table([tempTable['time'],tempTable[color],tempTable[color[0]+color[-1]+'_err'],tempTable['SN']],names=('time','mag','magerr','SN'))
-        temp=BICrun(tempTable,color=color,type=type,savefig=savefig,vr=vrDict)
-        result[color]=Table([temp['x'],temp[str(confidence*10)]],names=('time',color))
+        temp=BICrun(tempTable,color=color,type=type,savefig=savefig)
+
+        result[color]=_flattenCurve(Table([temp['x'],temp[str(confidence*10)]],names=(_get_default_prop_name('time'),color)),color,tempTable[_get_default_prop_name('time')])
+
+
     return(result)
 
-def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,medianColor=None,colorVar=None,specList=None,specName=None):
+
+
+
+def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -676,15 +721,17 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
         sedlist=[sedlist] if not isinstance(sedlist,(tuple,list)) else sedlist
         sedlist=[os.path.join(sndataroot,"snsed","NON1A",sed) for sed in sedlist]
     returnList=[]
+
+
     for sedfile in sedlist:
-        origWave=_getWave(sedfile)
-        VRColor=(sncosmo.Model(createSNSED(sedfile)).color('bessellv','sdss::r',zpsys,0))
-        if VRColor>=(medianColor+colorVar):
-            colorExtreme='red'
-        elif VRColor<=(medianColor-colorVar):
-            colorExtreme='blue'
-        else:
-            colorExtreme='median'
+
+        phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+        bbWave,blackbody=getBB(phase,wave,flux)
+        blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
+
+        origWave=_getWave(sedfile,bandDict,colors)
+
+
 
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
@@ -704,15 +751,19 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
             extremeColors=dict([])
-            extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
 
+            extremeColors['blue'],extremeColors['median'],extremeColors['red']=_getExtremes(colorCurveDict[color]['time'],colorCurveDict[color][color],colorTable,color)
+            if sncosmo.get_bandpass(_filters[color[0]]).wave_eff>_UVrightBound:
+                shiftedCurve=_shiftCurve(colorCurveDict[color]['time'],extremeColors,blackbody,color,zpsys)
+            else:
+                shiftedCurve=extremeColors
             tempMask=colorTable[color].mask
 
             colorTable[color].mask=tempMask
             if once:
                 sedfile=newsedfile
             tempTable=colorTable[~colorTable[color].mask]
-            UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],extremeColors[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
+            UV,IR=_extrapolatesed(sedfile,newsedfile,color,tempTable,colorCurveDict[color]['time'],shiftedCurve[colorExtreme], bandDict,zpsys,bandsDone,UVoverwrite,IRoverwrite,niter=50)
             if UV:
                 boundUV=True
                 bandsDone.append(color[0])
@@ -721,8 +772,11 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
                 bandsDone.append(color[-1])
             once=True
 
-
         _addCCSpec(snType,newsedfile,origWave,specList,specName)
+        #phase,wave,flux=sncosmo.read_griddata_ascii(newsedfile)
+        #temp=sncosmo.Model(sncosmo.TimeSeriesSource(phase,wave,flux))
+        #for col in [('sdss::r','paritel::j'),('sdss::r','paritel::h'),('sdss::r','paritel::ks')]:
+        #    print(temp.color(col[0],col[1],'vega',0),blackbody.color(col[0],col[1],'vega',0))
 
         if showplots:
             plotSED(newsedfile,day=showplots)

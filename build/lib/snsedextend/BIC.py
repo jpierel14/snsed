@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 #import seaborn as sns
-import sys,os,warnings
+import sys,os,warnings,matplotlib
 #from astropy.io import ascii
 from contextlib import contextmanager
 
@@ -63,7 +63,7 @@ from matplotlib.offsetbox import AnchoredText
 
 
 def getModels(models, traces, rawdata,table, xlims,
-              datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None,color=None,savefig=False,vr=None):
+              datamodelnm='linear', modelnms=None,bestModel=None,allDat=None,typ=None,bic=None,color=None,savefig=False):
     if savefig:
         colors=['b','k','y','orange','cyan','violet','r','g']
         import seaborn as sns
@@ -71,8 +71,11 @@ def getModels(models, traces, rawdata,table, xlims,
         ax=fig.gca()
 
 
-
-        sne,types=np.loadtxt('bianco/type.ref',dtype='str',unpack=True)
+        if typ =='II':
+            d='hicken'
+        else:
+            d='bianco'
+        sne,types=np.loadtxt(os.path.join(d,'type.ref'),dtype='str',unpack=True)
         typeDict={'SN_'+sne[i][3:]:types[i] for i in range(len(sne))}
         colorDict={np.unique([typeDict[x] for x in table['SN']])[i]:colors[i] for i in range(len(np.unique([typeDict[x] for x in table['SN']])))}
         table['snTypes']=[typeDict[x] for x in table['SN']]
@@ -96,6 +99,7 @@ def getModels(models, traces, rawdata,table, xlims,
                                ,columns=['025','250','500','750','975'])
             dfp['x'] = x
             if savefig:
+
                 '''
                 pal = sns.color_palette('Reds')
                 ax.fill_between(dfp['x'], dfp['025'], dfp['975'], alpha=0.5
@@ -111,11 +115,12 @@ def getModels(models, traces, rawdata,table, xlims,
                     types.append(ax.errorbar(table['time'][table['snTypes']==type],table['mag'][table['snTypes']==type],yerr=table['magerr'][table['snTypes']==type],fmt='.',color=colorDict[type]))
                 _ = sns.regplot(x='x', y='y', data=rawdata, fit_reg=False
                                 ,scatter_kws={'alpha':0.7,'s':100, 'lw':2,'edgecolor':'w'}, ax=ax)
-                
-                
                 ax.set_xlabel('Days After Peak',size=14)
                 ax.set_ylabel('Color (Magnitude)', size=14)
-                #plt.figlegend(types,[str(x) for x in np.unique([typeDict[x] for x in rawdata['names']])],bbox_to_anchor=(.7,.23))
+                plt.figlegend(types,[str(x) for x in np.unique([typeDict[x] for x in rawdata['names']])],bbox_to_anchor=(.7,.23))
+                
+                plt.savefig('type'+typ+'_'+out.upper()+'_fits.pdf',format='pdf')
+                plt.close()
                 '''
                 if color[0]=='U':
                     out='U'
@@ -139,13 +144,13 @@ def getModels(models, traces, rawdata,table, xlims,
                 #norm = matplotlib.colors.Normalize(vmin=min(table['mag']), vmax=max(table['mag']))
                 allVR=[]
                 shapes=['.','*','o','^','+','8','s']
-                for sn in sne:
-                    allVR=np.append(allVR,vr[sn][70])
-                print(allVR)
+
                 b=0
                 for sn in sne:
-
-                    temp=ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],c=[vr[sn][70] for i in range(len(table[table['SN']==sn]))],vmin=np.min(allVR),vmax=np.max(allVR),cmap=cmap,marker=shapes[b],label=sn)
+                    ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],label=sn)
+                    b+=1
+                    ax.errorbar(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],yerr=table['magerr'][table['SN']==sn],fmt=None, marker=None, mew=0,lw=.5,color='k',alpha=.4,label=None)#,c=cmap,fmt='.')
+                    temp=ax.scatter(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],marker=shapes[b],label=sn)
                     b+=1
                     ax.errorbar(table['time'][table['SN']==sn],table['mag'][table['SN']==sn],yerr=table['magerr'][table['SN']==sn],fmt=None, marker=None, mew=0,lw=.5,color='k',alpha=.4,label=None)#,c=cmap,fmt='.')
                 plt.colorbar(temp)
@@ -157,13 +162,13 @@ def getModels(models, traces, rawdata,table, xlims,
                 ax.set_xlabel('Days After Peak',size=14)
                 ax.set_ylabel('Color (Magnitude)', size=14)
                 ax.set_title('Color Curve by Supernova: Type {} -- Color={}'.format(typ,color))
+                
                 plt.savefig('type'+typ+'_'+out.upper()+'_fits_SNe.pdf',format='pdf')
                 #sys.exit()
             return(dfp)
 
-def BICrun(table,color=None,type='II',verbose=False,savefig=False,vr=None):
-    table=table[table['time']<=50]
-    print(table)
+def BICrun(table,color=None,type='II',verbose=False,savefig=False):
+    #table=table[table['time']<=50]
     modelList=['k1','k2']
     #print(logging.Logger.manager.loggerDict)
     temp=pd.DataFrame({'x':np.array(table['time']),'y':np.array(table['mag']),'error':np.array(table['magerr']),'names':table['SN']})
@@ -184,7 +189,7 @@ def BICrun(table,color=None,type='II',verbose=False,savefig=False,vr=None):
     best=dfwaic[dfwaic['lin']==np.min(dfwaic['lin'])].index[0]
     dfwaic = pd.melt(dfwaic.reset_index(), id_vars=['model'], value_name='waic')
 
-    return(getModels(models_lin,traces_lin,temp,table,temp_xlims, bestModel=best,modelnms=modelList,bic=dfwaic,typ=type,color=color,savefig=savefig,vr=vr))
+    return(getModels(models_lin,traces_lin,temp,table,temp_xlims, bestModel=best,modelnms=modelList,bic=dfwaic,typ=type,color=color,savefig=savefig))
 
 
 

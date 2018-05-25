@@ -115,8 +115,8 @@ def _specChi(const,sedFlux,tempFlux):
 	return(_chisquared(sedFlux,tempFlux*const))
 
 def _findBest(snType,wave,flux):
-	flux=flux[wave>4000][wave[wave>4000]<7500]
-	wave=wave[wave>4000][wave[wave>4000]<7500]
+	flux=flux[wave>4200][wave[wave>4200]<6500]
+	wave=wave[wave>4200][wave[wave>4200]<6500]
 
 	mySpline=spl(wave,flux,k=5,ext=1)
 	tempSpline=mySpline(wave)
@@ -128,7 +128,8 @@ def _findBest(snType,wave,flux):
 	bestConst=None
 	for spec in mySpecs:
 		data=_readSpec(os.path.join(__dir__,'data','spectra',spec+'.lnw'))
-		x=[float(col[2:]) for col in data.colnames if col !='wave']
+		x=np.array([float(col[2:]) for col in data.colnames if col !='wave'])
+
 
 		if len(x)<2:
 			continue

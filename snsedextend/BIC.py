@@ -73,6 +73,8 @@ def getModels(models, traces, rawdata,table, xlims,
 
         if typ =='II':
             d='hicken'
+        elif typ=='IIn':
+            d='hicken/IIn'
         else:
             d='bianco'
         sne,types=np.loadtxt(os.path.join(d,'type.ref'),dtype='str',unpack=True)

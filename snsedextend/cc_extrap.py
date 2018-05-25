@@ -658,7 +658,8 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
 
 
 
-def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
+def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',
+             sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -772,7 +773,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
                 bandsDone.append(color[-1])
             once=True
 
-        _addCCSpec(snType,newsedfile,origWave,specList,specName)
+        #_addCCSpec(snType,newsedfile,origWave,specList,specName)
         #phase,wave,flux=sncosmo.read_griddata_ascii(newsedfile)
         #temp=sncosmo.Model(sncosmo.TimeSeriesSource(phase,wave,flux))
         #for col in [('sdss::r','paritel::j'),('sdss::r','paritel::h'),('sdss::r','paritel::ks')]:

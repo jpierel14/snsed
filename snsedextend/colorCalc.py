@@ -408,6 +408,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 fit=color[-1]
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
+        #return (bestFit,bestRes,t0,fitted,notFitted)
 
         tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
 
@@ -432,7 +433,6 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
 
         bandFit=None
     colorTable.sort(_get_default_prop_name('time'))
-
     return(colorTable)
 
 
