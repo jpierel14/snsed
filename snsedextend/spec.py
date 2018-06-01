@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 from .utils import __dir__,_defaultSpec
-from helpers import _find_nearest
+from .helpers import _find_nearest
 
 '''
 sne=np.loadtxt(os.path.join('data','spectra','snlist'),dtype='str')
@@ -210,22 +210,12 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 		for j in range(len(waves)):
 			ind2=np.where(newWave==waves[j])[0][0]
 			flux[ind][ind2]=max(0,flux[ind][ind2]+finalFlux[i][j])
-<<<<<<< HEAD
 	#fig=plt.figure()
 	#ax=fig.gca()
 	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*const)
 	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
 	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
 	#plt.close()
-=======
-
-	fig=plt.figure()
-	ax=fig.gca()
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],tempFlux[4]*final)
-	ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
-	plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
-	plt.close()
->>>>>>> master
 	sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
 	return
 
