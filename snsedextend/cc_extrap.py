@@ -725,6 +725,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
     for sedfile in sedlist:
+<<<<<<< HEAD
 
         phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
         bbWave,blackbody=getBB(phase,wave,flux)
@@ -734,6 +735,12 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
 
 
 
+=======
+        origWave=_getWave(sedfile)
+        phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+        bbWave,blackbody=getBB(phase,wave,flux)
+        blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
+>>>>>>> e2909db11e04cb2035cf3417ba84bab939438b36
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
             print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
