@@ -116,7 +116,7 @@ class WavelengthGrid(object):
         return
 
     def extrapolate_linearto0(self, outfilename, refwave=8500,
-                              maxwave=25000, maxwaveval=0):
+                              maxwave=25000, maxwaveval=0.0):
         """ use a super-crude linear-fit extension of the value array
         to extrapolate this model component to the IR at all phases """
         outlines = []
@@ -1785,13 +1785,18 @@ def savitzky_golay(y, window_size=5, order=3, deriv=0):
     return np.convolve( m, y, mode='valid')
 
 
-def extend_dispersion_files(refwave=7000, maxwave=25000, modeldir=__MODELDIR__,
+def extend_dispersion_files(refwaveUV=3200, minwave=1700,
+                            refwaveIR=8500, maxwave=25000,
+                            modeldir=__MODELDIR__,
                             salt2indir='salt2-4', salt2irsubdir='salt2-extended',
                             extrapolate=True, showplots=True):
     """ extend and/or plot the *dispersion.dat files for SALT2 that define
     the model uncertainty
-     -- using a flatline extension of the red tail to 2.5 microns
+     -- using a downward linear extension of the IR tail
+     -- TODO: using a flatline extension of the UV tail
      """
+    #TODO: add a flatline extension on the UV side
+
     salt2modeldir = os.path.join(modeldir, salt2indir)
     salt2irmodeldir = os.path.join(modeldir, salt2irsubdir)
 
@@ -1814,11 +1819,11 @@ def extend_dispersion_files(refwave=7000, maxwave=25000, modeldir=__MODELDIR__,
                 datagrid = WavelengthGrid(infile)
                 # Alternative: flat-line extrapolation
                 #datagrid.extrapolate_flatline(
-                #    outfilename=outfile, refwave=refwave,
+                #    outfilename=outfile, refwaveIR=refwaveIR,
                 #    maxwave=25000)
                 # linear extrapolation to zero at 25000 angstroms
                 datagrid.extrapolate_linearto0(
-                    outfilename=outfile, refwave=refwave,
+                    outfilename=outfile, refwave=refwaveIR,
                     maxwave=maxwave, maxwaveval=0.01)
 
             else:
@@ -1826,7 +1831,7 @@ def extend_dispersion_files(refwave=7000, maxwave=25000, modeldir=__MODELDIR__,
 
                 # linear extrapolation to zero at 25000 angstroms
                 datagrid.extrapolate_linearto0(
-                    outfilename=outfile, refwave=refwave,
+                    outfilename=outfile, refwave=refwaveIR,
                     maxwave=maxwave, maxwaveval=1.0)
 
         if showplots:
@@ -1876,7 +1881,7 @@ def extend_dispersion_files(refwave=7000, maxwave=25000, modeldir=__MODELDIR__,
             pl.subplots_adjust(hspace=0, wspace=0)
 
 
-def extend_variance_covariance(refwaveUV=3200, minwave=2000,
+def extend_variance_covariance(refwaveUV=3200, minwave=1700,
                                refwaveIR=8500, maxwave=25000,
                                modeldir=__MODELDIR__,
                                salt2indir='salt2-4', salt2outdir='salt2-extended',
@@ -1912,9 +1917,11 @@ def extend_variance_covariance(refwaveUV=3200, minwave=2000,
             timeseriesNew = TimeSeriesGrid(outfile)
             for phase, color in zip([-5, 0, 5, 15],['r','darkorange','g','b']):
                 timeseries.plot_at_phase(phase, color='0.5', lw=3.2,
-                                         ls='-', marker=' ')
+                                         ls='-', marker=' ',
+                                         label='__nolabel__')
                 timeseriesNew.plot_at_phase(phase, color=color, lw=1,
-                                            ls='--', marker=' ')
+                                            ls='--', marker=' ',
+                                            label='t=%i'%phase)
             #ax.text(0.90, 0.9, title, transform=ax.transAxes,
             #        fontsize='large', ha='right', va='top')
             #if iax==1:
@@ -1923,6 +1930,8 @@ def extend_variance_covariance(refwaveUV=3200, minwave=2000,
             #    ax.set_ylim(-5e-4,3e-3)
             #else:
             #    ax.set_ylim(-5e-6,5e-5)
+            if iax==1:
+                pl.legend(loc='upper right', ncol=2)
             if iax<3:
                 pl.setp(ax.get_xticklabels(), visible=False)
                 ax.set_yscale('log')
@@ -1934,7 +1943,7 @@ def extend_variance_covariance(refwaveUV=3200, minwave=2000,
             ax.xaxis.set_minor_locator(ticker.MultipleLocator(500))
             #ax.yaxis.set_major_locator(ticker.MaxNLocator(3))
             #ax.yaxis.set_minor_locator(ticker.MaxNLocator(6))
-            ax.text(0.95, 0.95, title,
+            ax.text(0.5, 0.95, title,
                     ha='right', va='top', transform=ax.transAxes)
             ax.set_xlabel('Wavelength $(\\rm{\\AA})$')
             pl.subplots_adjust(hspace=0, wspace=0)
