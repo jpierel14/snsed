@@ -2,10 +2,12 @@ README.md
 setup.py
 snsedextend/BIC.py
 snsedextend/__init__.py
+snsedextend/bb.py
 snsedextend/cc_extrap.py
 snsedextend/colorCalc.py
 snsedextend/example.py
 snsedextend/helpers.py
+snsedextend/salt2irextend.py
 snsedextend/spec.py
 snsedextend/utils.py
 snsedextend.egg-info/PKG-INFO

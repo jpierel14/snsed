@@ -8,7 +8,7 @@ from .utils import __dir__
 from .colorCalc import *
 from .cc_extrap import *
 from .example import *
-
+from .salt2extend import *
 
 
 u_wave,u_trans=np.loadtxt(os.path.join(__dir__,'data','bands','uBand','tophatU.dat'),unpack=True)
