@@ -1,2 +1,0 @@
-*.psd filter=lfs diff=lfs merge=lfs -text
-snsnedextend/salt2-ir/salt2irdata filter=lfs diff=lfs merge=lfs -text
