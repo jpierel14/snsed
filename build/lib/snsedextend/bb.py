@@ -29,9 +29,7 @@ def fluxFromBB(temp,const,wave):
     bbFlux=np.array([x*const for x in bbFlux])
     return(bbFlux)
 
-def getBB(phase,wave,flux):
-
-    #fluxes=[]
+def getBB(phase,wave,flux,name,startWave=4200,endWave=9000,winConst=6,constant=1,ax=None):
 
     newWave=np.arange(5000,30000,50)
     allFlux=[]
@@ -39,12 +37,13 @@ def getBB(phase,wave,flux):
         if phase[p]>3 or phase[p]<-3:
             allFlux.append(np.zeros(len(newWave)))
         else:
-            flux2=flux[p][wave<9000][wave[wave<9000]>4200]
-            wave2=wave[wave<9000][wave[wave<9000]>4200]*u.AA
-            win=int(len(flux2)/3) if (int(len(flux2)/3))%2!=0 else int(len(flux)/3)+1
-            res=minimize(_bbChi,np.array([6000,1]),args=(wave2,smooth(flux2,win,2)),bounds=((0,None),(0,None)))
+            flux2=flux[p][wave<endWave][wave[wave<endWave]>startWave]*constant
+            wave2=wave[wave<endWave][wave[wave<endWave]>startWave]*u.AA
+            win=int(len(flux2)/winConst) if int(len(flux2)/winConst)%2==1 else int(len(flux2)/winConst)+1
+            res=minimize(_bbChi,np.array([6000,1]),args=(wave2,smooth(flux2,win,2)),bounds=((1000,20000),(1,None)))
 
             temp,const=res.x
+            const/=constant
             bbFlux=fluxFromBB(temp,const,newWave)
             allFlux.append(bbFlux)
     return(newWave,np.array(allFlux))

@@ -8,11 +8,22 @@ from astropy.io import ascii
 import sncosmo
 import pickle
 
+
+#salt2ErrorExtrap()
+
+#rodneyExtrap()
+#sys.exit()
+#snsedextend.extendIa()
+#phase,wave,m0,m1=_getSalt2extended()
+#plotFullModel(phase,wave,[1 for i in range(len(phase))],deltaM15toX1(1.1),m0,m1)
+#sys.exit()
+
+#sys.exit()
 sndataroot = os.environ['SNDATA_ROOT']
 
 
-dir='bianco'
-snType=['Ic']
+dir='hicken'
+snType=['II','IIP']
 filelist=[os.path.basename(file) for file in glob.glob(os.path.join(dir,'*.dat'))]
 
 #filelist=['lc_2002bx.dat','lc_2006ca.dat','lc_2006cd.dat','lc_2006it.dat','lc_2007aa.dat','lc_2007av.dat','lc_2008bj.dat','lc_2008bn','lc_2008in.dat','lc_2009ay.dat','lc_2009kn.dat',]
@@ -103,7 +114,7 @@ for i in range(len(filelist)):
 #sys.exit()
 typeColors=snsedextend.colorTableCombine(colorTables)
 
-ascii.write(typeColors,'hicken/IIn/IInColors.tab')#os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
+ascii.write(typeColors,os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
 #with open('tempvr.dat','wb') as handle:
 #    pickle.dump(vrDict,handle)
 
@@ -113,7 +124,7 @@ ascii.write(typeColors,'hicken/IIn/IInColors.tab')#os.path.join('snsedextend','d
 curveDict=snsedextend.fitColorCurve(typeColors,type=snType[0],savefig=False)
 #sys.exit()
 
-with open('hicken/IIn/Curve.pick','wb') as handle:#os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
+with open(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Curve.pick'),'wb') as handle:
     pickle.dump(curveDict,handle)
 
 #typeColors=ascii.read(os.path.join('snsedextend','data','default','type'+snType[0],snType[0]+'Colors.dat'))
@@ -131,7 +142,7 @@ seds=np.loadtxt(os.path.join('snsedextend','data','default','NON1A.LIST'),dtype=
 sedlist=[seds[3][i]+'.SED' for i in range(len(seds[3])) if seds[2][i] in snType and seds[3][i]+'.SED' in [os.path.basename(x) for x in glob.glob(os.path.join(sndataroot,'snsed','NON1A','*.SED'))]]
 
 #sedlist=[os.path.join(sndataroot,'snsed','NON1A','CSP-2004fe.SED')]
-seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc='.',colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True,showplots=1)
+seds=snsedextend.extendCC(typeColors,curveDict,snType[0],outFileLoc='.',colorExtreme='median',sedlist=sedlist,zpsys='Vega',verbose=True,showplots=False)
 #outFileLoc=os.path.join('/Users','jpierel','rodney','SED_Repository','SEDs.P18-UV2IR','Type_'+snType[0])
 #snsedextend.extendNon1a(colorTable,sedlist='SDSS-0 13449.SED',verbose=True)
 #typeColors.sort('time')

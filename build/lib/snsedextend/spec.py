@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 from .utils import __dir__,_defaultSpec
-from helpers import _find_nearest
+from .helpers import _find_nearest
 
 '''
 sne=np.loadtxt(os.path.join('data','spectra','snlist'),dtype='str')

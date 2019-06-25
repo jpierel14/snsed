@@ -217,7 +217,6 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
 	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
 	#plt.close()
-<<<<<<< HEAD
 
 	#fig=plt.figure()
 	#ax=fig.gca()
@@ -225,8 +224,6 @@ def _addCCSpec(snType,sedFile,oldWave,specList=None,specName=None):
 	#ax.plot(newWave[newWave<7500][newWave[newWave<7500]>4000],splines[4])
 	#plt.savefig('test_'+os.path.basename(sedFile[:-3])+'pdf',format='pdf',overwrite=True)
 	#plt.close()
-=======
->>>>>>> e2909db11e04cb2035cf3417ba84bab939438b36
 	sncosmo.write_griddata_ascii(phase,newWave,flux,sedFile)
 	return
 

@@ -237,13 +237,13 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     :param kwargs: Catches all SNCOSMO fitting parameters here
     :returns: colorTable: Astropy Table object containing color information
     """
-
+    if not isinstance(colors,(tuple,list)):
+        colors=[colors]
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
         if band not in bandDict.keys() and band in bands:
             bandDict[band]=sncosmo.get_bandpass(_filters[band])
-    if not isinstance(colors,(tuple,list)):
-        colors=[colors]
+    
     zpMag=sncosmo.get_magsystem(zpsys)
 
     if isinstance(lc,str):
@@ -291,7 +291,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             red=curve[curve[_get_default_prop_name('band')]==color[-1]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for color %s but missing necessary band(s)'%color)
+                print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[1]))
             bandFit=None
             continue
 

@@ -237,13 +237,13 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     :param kwargs: Catches all SNCOSMO fitting parameters here
     :returns: colorTable: Astropy Table object containing color information
     """
-
+    if not isinstance(colors,(tuple,list)):
+        colors=[colors]
     bands=append([col[0] for col in colors],[col[-1] for col in colors])
     for band in _filters:
         if band not in bandDict.keys() and band in bands:
             bandDict[band]=sncosmo.get_bandpass(_filters[band])
-    if not isinstance(colors,(tuple,list)):
-        colors=[colors]
+    
     zpMag=sncosmo.get_magsystem(zpsys)
 
     if isinstance(lc,str):
@@ -291,7 +291,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             red=curve[curve[_get_default_prop_name('band')]==color[-1]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for color %s but missing necessary band(s)'%color)
+                print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[1]))
             bandFit=None
             continue
 
@@ -408,7 +408,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 fit=color[-1]
             else:
                 raise RuntimeError('Neither band "%s" nor band "%s" has more points, and you have not specified which to fit.'%(color[0],color[-1]))
-        return (bestFit,bestRes,t0,fitted,notFitted)
+        #return (bestFit,bestRes,t0,fitted,notFitted)
 
         tGrid,bestMag=_snmodel_to_mag(bestFit,fitted,zpsys,bandDict[fit])
 

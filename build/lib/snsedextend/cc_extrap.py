@@ -381,7 +381,10 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
         y2=y3
         x2=xWave[-1]
         tried=False
+        if y3==0:
+            i=niter+1
         while(abs(area-bArea)/(area+bArea)>accuracy and i<=niter):
+
             if area>bArea:
                 y3=y2
             else:
@@ -402,8 +405,8 @@ def _extrapolate_ir(band,vArea,color,xTrans,xWave,d,f,w,niter,log,index,doneIR,b
     else:
         y1=f[-1]
         y2=0
-    if abs(area-bArea)>.001*bArea:
-        log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for index %i \n'%(band,vArea-ms.band_flux_to_mag((area+overlapArea)/sncosmo.constants.HC_ERG_AA,bandDict[band]),color,index))
+    #if abs(area-bArea)>.001*bArea:
+    #    log.write('WARNING: The parameters you chose led to an integration in the %s-Band of %e instead of %e for index %i \n'%(band,vArea-ms.band_flux_to_mag((area+overlapArea)/sncosmo.constants.HC_ERG_AA,bandDict[band]),color,index))
     (a,b,rval,pval,stderr)=stats.linregress(append(w[-1],x2),append(y1,y2))
 
 
@@ -445,20 +448,19 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
     """
     dlist,wlist,flist = _getsed( sedfile ) #first time this is read in, should be in ergs/s/cm^2/AA
 
-    i=0
+    #i=0
 
-    while dlist[i][0]<time[0]:
-        i+=1
-    dlist=dlist[i:]
-    wlist=wlist[i:]
-    flist=flist[i:]
-    i=-1
-    while dlist[i][0]>time[-1]:
-        i-=1
-    if i!=-1:
-        dlist=dlist[:i+1]
-        wlist=wlist[:i+1]
-        flist=flist[:i+1]
+
+
+    #dlist=dlist[i:]
+    #wlist=wlist[i:]
+    #flist=flist[i:]
+    #i=-1
+
+    #if i!=-1:
+    #    dlist=dlist[:i+1]
+    #    wlist=wlist[:i+1]
+    #    flist=flist[:i+1]
 
 
     blue=color[0]
@@ -470,9 +472,17 @@ def _extrapolatesed(sedfile, newsedfile,color,table,time,modColor, bands,zpsys,b
 
     bInterpFunc=scint.interp1d(bWave,bTrans)
     rInterpFunc=scint.interp1d(rWave,rTrans)
+    colorData=[]
     cInterpFunc=scint.interp1d(time,modColor)
-    tempTime=[x[0] for x in dlist]
-    colorData=cInterpFunc(tempTime)
+    for i in range(len(dlist)):
+        if dlist[i][0]<time[0]:
+            colorData.append(modColor[0])
+        elif dlist[i][0]>time[-1]:
+            colorData.append(modColor[-1])
+        else:
+            #tempTime=[x[0] for x in dlist]
+
+            colorData.append(cInterpFunc(dlist[i][0]))
 
     sed=createSNSED(sedfile,rescale=False) #now the original sed is in ergs/s/cm^2/AA
     model=sncosmo.Model(sed)
@@ -658,7 +668,8 @@ def fitColorCurve(table,confidence=50,type='II',verbose=True,savefig=False):
 
 
 
-def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
+def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,colorExtreme='median',colors=None,zpsys='AB',
+             sedlist=None,showplots=None,verbose=True,UVoverwrite=False,IRoverwrite=True,specList=None,specName=None):
     """
     Function used at top level to extend a core-collapse SED.
 
@@ -726,13 +737,18 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
     for sedfile in sedlist:
 
         phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
-        bbWave,blackbody=getBB(phase,wave,flux)
-        blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
+        #bbWave,blackbody=getBB(phase,wave,flux)
+        #blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
 
         origWave=_getWave(sedfile,bandDict,colors)
 
 
 
+        #phase,wave,flux=sncosmo.read_griddata_ascii(sedfile)
+        bbWave,blackbody=getBB(phase,wave,flux,os.path.basename(sedfile)[:-4])
+
+
+        blackbody=sncosmo.Model(source=sncosmo.TimeSeriesSource(phase,bbWave,blackbody))
         newsedfile=os.path.join(outFileLoc,os.path.basename(sedfile))
         if verbose:
             print("EXTRAPOLATING %s"%os.path.basename(newsedfile))
@@ -772,7 +788,7 @@ def extendCC(colorTable,colorCurveDict,snType,outFileLoc='.',bandDict=_filters,c
                 bandsDone.append(color[-1])
             once=True
 
-        _addCCSpec(snType,newsedfile,origWave,specList,specName)
+        #_addCCSpec(snType,newsedfile,origWave,specList,specName)
         #phase,wave,flux=sncosmo.read_griddata_ascii(newsedfile)
         #temp=sncosmo.Model(sncosmo.TimeSeriesSource(phase,wave,flux))
         #for col in [('sdss::r','paritel::j'),('sdss::r','paritel::h'),('sdss::r','paritel::ks')]:
@@ -814,7 +830,6 @@ def plotSED( sedfile,day, normalize=False,MINWAVE=1200,MAXWAVE=25000,saveFig=Tru
 
     dlist,wlist,flist = sncosmo.read_griddata_ascii(sedfile)
     ind,dayVal=_find_nearest(dlist,day)
-    print(dayVal)
     fig=plt.figure()
     ax=fig.gca()
 
