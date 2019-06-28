@@ -291,7 +291,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             red=curve[curve[_get_default_prop_name('band')]==color[-1]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[1]))
+                print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[-1]))
             bandFit=None
             continue
 
