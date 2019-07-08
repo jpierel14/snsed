@@ -280,7 +280,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
                 bandFit=color[-1]
             if singleBand:
                 color_bands=[color[-1]]
-            blue=curve[curve[_get_default_prop_name('band')]==color[0]] #curve on the blue side of current color
+            blue=curve[curve[_get_default_prop_name('band')]==color[:color.find('-')]] #curve on the blue side of current color
             red=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]] #curve on the red side of current color
         else: #must be extrapolating into the IR
             if not bandFit:
@@ -288,7 +288,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             if singleBand:
                 color_bands=[color[0]]
             blue=curve[[x in color_bands for x in curve[_get_default_prop_name('band')]]]
-            red=curve[curve[_get_default_prop_name('band')]==color[-1]]
+            red=curve[curve[_get_default_prop_name('band')]==color[color.find('-')+1:]]
         if len(blue)==0 or len(red)==0:
             if verbose:
                 print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[1]))
