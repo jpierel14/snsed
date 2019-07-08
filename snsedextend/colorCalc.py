@@ -239,9 +239,9 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     """
     if not isinstance(colors,(tuple,list)):
         colors=[colors]
-    bands=append([col[0] for col in colors],[col[-1] for col in colors])
+    bands=append([col[:col.find('-')] for col in colors],[col[col.find('-')+1:] for col in colors])
     for band in _filters:
-        if band not in bandDict.keys() and band in bands:
+        if band not in bandDict.keys() and band in bands or _filters[band] in bands:
             bandDict[band]=sncosmo.get_bandpass(_filters[band])
     
     zpMag=sncosmo.get_magsystem(zpsys)
@@ -291,7 +291,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
             red=curve[curve[_get_default_prop_name('band')]==color[color.find('-')+1:]]
         if len(blue)==0 or len(red)==0:
             if verbose:
-                print('Asked for color %s-%s but missing necessary band(s)'%(color[0],color[1]))
+                print('Asked for color %s-%s but missing necessary band(s)'%(color[:color.find('-')],color[color.find('-')+1:]))
             bandFit=None
             continue
 
