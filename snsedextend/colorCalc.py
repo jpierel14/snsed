@@ -241,7 +241,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         colors=[colors]
     bands=append([col[:col.find('-')] for col in colors],[col[col.find('-')+1:] for col in colors])
     for band in _filters:
-        if band not in bandDict.keys() and band in bands or _filters[band] in bands:
+        if band not in bandDict.keys() or band in bands or _filters[band] in bands:
             bandDict[band]=sncosmo.get_bandpass(_filters[band])
     
     zpMag=sncosmo.get_magsystem(zpsys)
