@@ -53,7 +53,7 @@ def _snFit(args):
     """
     warnings.simplefilter('ignore')
     sn_func={'minuit': sncosmo.fit_lc, 'mcmc': sncosmo.mcmc_lc, 'nest': sncosmo.nest_lc}
-    dust_dict={'SFD98Map':sncosmo.SFD98Map,'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
+    dust_dict={'CCM89Dust':sncosmo.CCM89Dust,'OD94Dust':sncosmo.OD94Dust,'F99Dust':sncosmo.F99Dust}
     model,curve,method,params,bounds,ignore,constants,dust,effect_names,effect_frames=args
     if dust:
         dust=dust_dict[dust]()
