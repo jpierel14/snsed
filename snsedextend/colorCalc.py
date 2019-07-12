@@ -210,7 +210,7 @@ def _ccm_extinction(wave, ebv, r_v=3.1):
     return a_lambda
 
 
-def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
+def curveToColor(lc,colors,snName,bandFit=None,snType='II',bandDict=_filters,color_bands=_opticalBands,zpsys='AB',model=None,singleBand=False,verbose=True, **kwargs):
     """
     Function takes a lightcurve file and creates a color table for it.
 
@@ -218,6 +218,8 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
     :type lc: str or astropy.Table
     :param colors: Colors you want to calculate for the given SN (i.e U-B, r'-J)
     :type colors: str or list of strings
+    :param snName: Name of the SN being used
+    :type snName: str
     :param bandFit: If there is a specific band you would like to fit instead of default
     :type bandFit: str,optional
     :param snType: Classification of SN
@@ -438,6 +440,7 @@ def curveToColor(lc,colors,bandFit=None,snType='II',bandDict=_filters,color_band
         colorTable[color[0]+color[-1]+'_err']=MaskedColumn(append([1 for j in range(len(colorTable)-len(magerr))],magerr+array(notFitted[_get_default_prop_name('magerr')])),mask=[True if j<(len(colorTable)-len(magerr)) else False for j in range(len(colorTable))])
 
         bandFit=None
+    colorTable['SN']=snName
     colorTable.sort(_get_default_prop_name('time'))
     return(colorTable)
 

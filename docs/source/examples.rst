@@ -43,7 +43,7 @@ Produce a color table from the example data with some assumptions. You can set a
 
 .. code-block:: python
 
-		colorTable=snsedextend.curveToColor(myLC,colors=['U-B', 'r-J', 'r-H', 'r-K'],
+		colorTable=snsedextend.curveToColor(myLC,colors=['U-B', 'r-J', 'r-H', 'r-K'],snName='testSN',
 		                 snType='Ic', zpsys='vega', bounds={'hostebv': (-1, 1),
 				 't0': (53787.94, 53797.94)},constants={'mwr_v': 3.1,
 				 'mwebv': '0.1267', 'z': '0.033529863', 'hostr_v': 3.1},
