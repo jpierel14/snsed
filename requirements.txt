@@ -1,0 +1,11 @@
+cython
+numpy
+scipy
+sncosmo
+astropy
+matplotlib
+pandas
+pymc3
+pyParz
+iminuit
+theano
