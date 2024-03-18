@@ -1,5 +1,5 @@
 numpy
 cython
 pyParz
-astropy==2.0.4
+astropy==5.3.3
 scipy
